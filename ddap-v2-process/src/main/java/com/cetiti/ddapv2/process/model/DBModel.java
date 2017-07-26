@@ -4,6 +4,12 @@ import java.sql.Date;
 
 import com.cetiti.ddapv2.process.util.SequenceGenerator;
 
+/**
+ * @Description TODO
+ * @author Wuwuhao
+ * @date 2017年7月13日
+ * 
+ */
 public class DBModel {
 	
 	public static final char STATE_NEW = 'N';

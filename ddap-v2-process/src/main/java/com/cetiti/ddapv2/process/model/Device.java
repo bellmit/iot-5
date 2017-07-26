@@ -58,5 +58,4 @@ public class Device extends Thing{
 		this.deviceSecret = deviceSecret;
 	}
 	
-	
 }

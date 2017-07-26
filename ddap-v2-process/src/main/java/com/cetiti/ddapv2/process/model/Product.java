@@ -1,6 +1,12 @@
 package com.cetiti.ddapv2.process.model;
 import java.util.Map;
 
+/**
+ * @Description TODO
+ * @author Wuwuhao
+ * @date 2017年7月15日
+ * 
+ */
 public class Product extends Thing {
 	
 	private String protocol;

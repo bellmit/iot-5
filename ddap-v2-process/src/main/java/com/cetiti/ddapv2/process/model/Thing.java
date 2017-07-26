@@ -1,11 +1,17 @@
 package com.cetiti.ddapv2.process.model;
 
+/**
+ * @Description TODO
+ * @author Wuwuhao
+ * @date 2017年7月16日
+ * 
+ */
 public class Thing extends DBModel{
 
 	private String id;
 	private String name;
 	private String description;
-	
+	private String owner;
 	
 	public String getId() {
 		return id;
@@ -24,6 +30,12 @@ public class Thing extends DBModel{
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public String getOwner() {
+		return owner;
+	}
+	public void setOwner(String owner) {
+		this.owner = owner;
 	}
 	
 }
