@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+        
+    <context:component-scan base-package="com.cetiti.ddapv2.process">
+	    <context:exclude-filter type="regex"
+				expression="com.cetiti.ddapv2.process.web.*" />
+    </context:component-scan>
+    
+    <context:property-placeholder location="classpath:config.properties,classpath:store.properties"/>
+    
+    <bean id="demoChannelInitializer" class="com.cetiti.ddapv2.process.handler.demo.DemoChannelInitializer" />
+    <bean id="demoAcceptor" class="com.cetiti.ddapv2.process.acceptor.TcpServerAcceptor">
+	    <constructor-arg name="name" value="${tcp.server.demoAcceptor.name}"/>
+	    <constructor-arg name="port" value="${tcp.server.demoAcceptor.port}"/>
+    	<property name="channelHandler" ref="demoChannelInitializer"/>
+    </bean>
+   
+    
+    <bean id="httpChannelInitializer" class="com.cetiti.ddapv2.process.handler.http.HttpServerInitializer" />
+    <bean id="httpAcceptor" class="com.cetiti.ddapv2.process.acceptor.TcpServerAcceptor">
+	    <constructor-arg name="name" value="${tcp.server.httpAcceptor.name}"/>
+	    <constructor-arg name="port" value="${tcp.server.httpAcceptor.port}"/>
+    	<property name="channelHandler" ref="httpChannelInitializer"/>
+    </bean>
+    
+    <bean id="webServerAcceptor" class="com.cetiti.ddapv2.process.web.WebServerAcceptor">
+	    <constructor-arg name="port" value="${tcp.server.webServerAcceptor.port}"/>
+    </bean>
+    
+    <bean id="processer" class="com.cetiti.ddapv2.process.Processer">
+        <property name="acceptors">
+        	<list>
+	        	<!-- <ref bean="demoAcceptor"/>
+	        	<ref bean="httpAcceptor"/> -->
+	        	<ref bean="webServerAcceptor"/>
+        	</list>
+        </property>
+    </bean>
+
+</beans>

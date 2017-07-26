@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+        
+    <context:property-placeholder location="classpath:store.properties"/>
+    
+    <bean id="ddapDataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${ddap.jdbc.driverClassName}"/>
+        <property name="url" value="${ddap.jdbc.url}"/>
+        <property name="username" value="${ddap.jdbc.username}"/>
+        <property name="password" value="${ddap.jdbc.password}"/>
+    </bean>
+   <!--  <bean id="ddapDao" class="com.cetiti.ddapv2.hub.hiktech.RfidDaoImpl">
+    	<property name="dataSource" ref="ddapDataSource"/> 
+    </bean>
+    
+    <bean id="lampDao" class="com.cetiti.ddapv2.hub.eboy.LampDaoImpl">
+    	<property name="dataSource" ref="ddapDataSource"/>
+    </bean> -->
+    
+</beans>

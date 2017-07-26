@@ -1,0 +1,177 @@
+[05-27 13:41:31:411][main][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:84] 
+[05-27 13:58:13:362][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:84] 
+[05-27 15:12:38:145][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:84] 
+[05-27 15:12:38:145][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8080] 
+[05-27 15:12:38:146][Thread-2][DEBUG][com.cetiti.ddapv2.process.server.udp.UdpServer]- udp server start up at [10.70.7.72:8090] 
+[05-27 15:13:17:351][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8080] 
+[05-27 15:13:17:352][Thread-2][DEBUG][com.cetiti.ddapv2.process.server.udp.UdpServer]- udp server start up at [10.70.7.72:8090] 
+[05-27 15:13:17:351][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:84] 
+[05-27 15:38:27:592][Thread-2][DEBUG][com.cetiti.ddapv2.process.server.udp.UdpServer]- udp server start up at [10.70.7.72:8090] 
+[05-27 15:38:27:600][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8080] 
+[05-27 15:38:27:600][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:84] 
+[05-31 09:23:58:722][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:80] 
+[05-31 09:23:58:722][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8080] 
+[05-31 09:23:58:732][Thread-2][DEBUG][com.cetiti.ddapv2.process.server.udp.UdpServer]- udp server start up at [10.70.7.72:8090] 
+[05-31 10:41:41:372][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:80] 
+[05-31 10:41:41:372][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8080] 
+[05-31 10:41:41:374][Thread-2][DEBUG][com.cetiti.ddapv2.process.server.udp.UdpServer]- udp server start up at [10.70.7.72:8090] 
+[05-31 10:49:42:558][Thread-2][DEBUG][com.cetiti.ddapv2.process.server.udp.UdpServer]- udp server start up at [10.70.7.72:8090] 
+[05-31 10:49:42:563][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8080] 
+[05-31 10:49:42:563][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:80] 
+[05-31 10:56:44:856][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8080] 
+[05-31 10:56:44:860][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:80] 
+[05-31 10:56:44:866][Thread-2][DEBUG][com.cetiti.ddapv2.process.server.udp.UdpServer]- udp server start up at [10.70.7.72:8090] 
+[05-31 11:05:58:708][Thread-2][DEBUG][com.cetiti.ddapv2.process.server.udp.UdpServer]- udp server start up at [10.70.7.72:8090] 
+[05-31 11:05:58:715][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:80] 
+[05-31 11:05:58:715][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8080] 
+[05-31 11:17:27:577][Thread-2][ERROR][com.cetiti.ddapv2.process.server.udp.UdpServer]- failed to start udp server start up at [10.70.7.72:8090], message:Address already in use: bind 
+[05-31 11:17:27:583][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8081] 
+[05-31 11:17:27:583][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:81] 
+[05-31 11:18:09:267][Thread-2][ERROR][com.cetiti.ddapv2.process.server.udp.UdpServer]- failed to start udp server start up at [10.70.7.72:8090], message:Address already in use: bind 
+[05-31 11:18:09:273][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:81] 
+[05-31 11:18:09:273][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8081] 
+[05-31 11:31:40:819][Thread-2][DEBUG][com.cetiti.ddapv2.process.server.udp.UdpServer]- udp server start up at [10.70.7.72:8090] 
+[05-31 11:31:40:828][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:80] 
+[05-31 11:31:40:828][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8080] 
+[05-31 11:51:11:184][Thread-2][DEBUG][com.cetiti.ddapv2.process.server.udp.UdpServer]- udp server start up at [10.70.7.72:8090] 
+[05-31 11:51:11:194][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:80] 
+[05-31 11:51:11:194][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8080] 
+[05-31 16:50:39:038][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:80] 
+[05-31 16:51:48:183][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:80] 
+[05-31 16:58:02:484][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:82] 
+[05-31 17:14:52:704][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:83] 
+[05-31 17:14:52:704][Thread-2][ERROR][com.cetiti.ddapv2.process.server.udp.UdpServer]- failed to start udp server start up at [10.70.7.72:8090], message:null 
+[05-31 17:14:52:705][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8080] 
+[05-31 17:17:26:720][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8080] 
+[05-31 17:17:26:720][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:83] 
+[05-31 17:17:26:721][Thread-2][ERROR][com.cetiti.ddapv2.process.server.udp.UdpServer]- failed to start udp server start up at [10.70.7.72:8090], message:null 
+[05-31 17:19:57:091][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:84] 
+[05-31 17:19:57:092][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8082] 
+[05-31 17:19:57:093][Thread-2][ERROR][com.cetiti.ddapv2.process.server.udp.UdpServer]- failed to start udp server start up at [10.70.7.72:8090], message:null 
+[05-31 17:21:29:895][Thread-2][DEBUG][com.cetiti.ddapv2.process.server.udp.UdpServer]- udp server start up at [10.70.7.72:8090] 
+[05-31 17:21:29:901][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8082] 
+[05-31 17:21:29:901][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:84] 
+[05-31 17:34:19:935][Thread-2][ERROR][com.cetiti.ddapv2.process.server.udp.UdpServer]- failed to start udp server start up at [10.70.7.72:8090], message:Address already in use: bind 
+[05-31 17:34:19:943][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8083] 
+[05-31 17:34:19:943][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:85] 
+[05-31 18:42:24:340][Thread-2][ERROR][com.cetiti.ddapv2.process.server.udp.UdpServer]- failed to start udp server start up at [10.70.7.72:8090], message:Address already in use: bind 
+[05-31 18:42:24:348][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8083] 
+[05-31 18:42:24:348][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:85] 
+[05-31 18:49:12:531][main][ERROR][com.cetiti.ddapv2.process.BootStrap]- processer start up. 
+[05-31 18:49:12:796][Thread-2][ERROR][com.cetiti.ddapv2.process.server.udp.UdpServer]- failed to start udp server start up at [10.70.7.72:8090], message:Address already in use: bind 
+[05-31 18:49:12:806][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8084] 
+[05-31 18:49:12:809][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:80] 
+[05-31 18:51:20:191][main][INFO][com.cetiti.ddapv2.process.BootStrap]- processer startup. 
+[05-31 18:51:20:465][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8084] 
+[05-31 18:51:20:471][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:80] 
+[05-31 18:51:20:473][Thread-2][ERROR][com.cetiti.ddapv2.process.server.udp.UdpServer]- failed to start udp server start up at [10.70.7.72:8090], message:Address already in use: bind 
+[05-31 18:52:55:256][main][INFO][com.cetiti.ddapv2.process.BootStrap]- processer startup. 
+[05-31 18:52:55:521][Thread-2][ERROR][com.cetiti.ddapv2.process.server.udp.UdpServer]- failed to start udp server start up at [10.70.7.72:8090], message:Address already in use: bind 
+[05-31 18:52:55:531][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:80] 
+[05-31 18:52:55:532][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8084] 
+[05-31 19:01:20:012][main][INFO][com.cetiti.ddapv2.process.BootStrap]- processer startup. 
+[05-31 19:01:20:284][Thread-2][ERROR][com.cetiti.ddapv2.process.server.udp.UdpServer]- failed to start udp server start up at [10.70.7.72:8090], message:Address already in use: bind 
+[05-31 19:01:20:294][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8084] 
+[05-31 19:01:20:295][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:87] 
+[05-31 19:13:00:559][main][INFO][com.cetiti.ddapv2.process.BootStrap]- processer startup. 
+[05-31 19:13:00:824][Thread-2][DEBUG][com.cetiti.ddapv2.process.server.udp.UdpServer]- udp server start up at [10.70.7.72:8090] 
+[05-31 19:13:00:832][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:80] 
+[05-31 19:13:00:832][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8082] 
+[05-31 19:35:10:045][Thread-2][DEBUG][com.cetiti.ddapv2.process.server.udp.UdpServer]- udp server start up at [10.70.7.72:8090] 
+[05-31 19:35:10:055][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8082] 
+[05-31 19:35:10:055][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:80] 
+[05-31 19:35:19:714][main][INFO][com.cetiti.ddapv2.process.BootStrap]- processer startup. 
+[05-31 19:35:19:714][Thread-0][ERROR][com.cetiti.ddapv2.process.server.http.HttpServer]- failed to start http server start up at [10.70.7.72:80], message:null 
+[05-31 19:35:19:714][Thread-1][ERROR][com.cetiti.ddapv2.process.server.tcp.TcpServer]- failed to start tcp server start up at [10.70.7.72:8082], message:null 
+[05-31 19:35:19:715][Thread-2][ERROR][com.cetiti.ddapv2.process.server.udp.UdpServer]- failed to start udp server start up at [10.70.7.72:8090], message:null 
+[05-31 19:35:22:819][Thread-3][INFO][com.cetiti.ddapv2.process.BootStrap]- processer shutdown. 
+[05-31 19:38:14:646][Thread-2][DEBUG][com.cetiti.ddapv2.process.server.udp.UdpServer]- udp server start up at [10.70.7.72:8090] 
+[05-31 19:38:14:656][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:80] 
+[05-31 19:38:14:656][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8082] 
+[05-31 19:38:30:990][main][INFO][com.cetiti.ddapv2.process.BootStrap]- processer startup. 
+[05-31 19:38:31:889][Thread-3][INFO][com.cetiti.ddapv2.process.BootStrap]- processer shutdown. 
+[06-01 10:43:05:412][main][INFO][com.cetiti.ddapv2.process.BootStrap]- processer startup. 
+[06-01 10:43:05:779][Thread-2][DEBUG][com.cetiti.ddapv2.process.server.udp.UdpServer]- udp server start up at [10.70.7.72:8090] 
+[06-01 10:43:05:781][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8082] 
+[06-01 10:43:05:781][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:80] 
+[06-01 10:43:05:782][Thread-3][DEBUG][com.cetiti.ddapv2.process.server.mqtt.MqttServer]- mqtt server start up at [10.70.7.72:1883] 
+[06-01 14:07:54:219][main][INFO][com.cetiti.ddapv2.process.Bootstrap]- processer startup. 
+[06-01 14:07:55:989][Thread-2][ERROR][com.cetiti.ddapv2.process.server.udp.UdpServer]- failed to start udp server start up at [10.70.7.72:8090], message:Address already in use: bind 
+[06-01 14:07:55:994][Thread-3][DEBUG][com.cetiti.ddapv2.process.server.mqtt.MqttServer]- mqtt server start up at [10.70.7.72:1884] 
+[06-01 14:07:55:995][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:84] 
+[06-01 14:07:55:996][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8085] 
+[06-01 14:22:53:146][main][INFO][com.cetiti.ddapv2.process.Bootstrap]- processer startup. 
+[06-01 14:22:53:473][Thread-2][ERROR][com.cetiti.ddapv2.process.server.udp.UdpServer]- failed to start udp server start up at [10.70.7.72:8090], message:Address already in use: bind 
+[06-01 14:22:53:477][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8085] 
+[06-01 14:22:53:477][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:84] 
+[06-01 14:22:53:477][Thread-3][DEBUG][com.cetiti.ddapv2.process.server.mqtt.MqttServer]- mqtt server start up at [10.70.7.72:1884] 
+[06-01 14:33:11:073][main][WARN][com.cetiti.ddapv2.process.Bootstrap]- Bootstrap command [stop00] does not exist. 
+[06-01 14:34:29:981][main][INFO][com.cetiti.ddapv2.process.Bootstrap]- processer startup. 
+[06-01 14:34:30:313][Thread-2][ERROR][com.cetiti.ddapv2.process.server.udp.UdpServer]- failed to start udp server start up at [10.70.7.72:8090], message:Address already in use: bind 
+[06-01 14:34:30:316][Thread-3][DEBUG][com.cetiti.ddapv2.process.server.mqtt.MqttServer]- mqtt server start up at [10.70.7.72:1885] 
+[06-01 14:34:30:319][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:86] 
+[06-01 14:34:30:319][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8086] 
+[06-01 14:40:50:123][main][INFO][com.cetiti.ddapv2.process.Bootstrap]- processer startup. 
+[06-01 14:40:50:452][Thread-2][ERROR][com.cetiti.ddapv2.process.server.udp.UdpServer]- failed to start udp server start up at [10.70.7.72:8090], message:Address already in use: bind 
+[06-01 14:40:50:457][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8087] 
+[06-01 14:40:50:457][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:88] 
+[06-01 14:40:50:458][Thread-3][DEBUG][com.cetiti.ddapv2.process.server.mqtt.MqttServer]- mqtt server start up at [10.70.7.72:1886] 
+[06-01 14:49:47:009][main][INFO][com.cetiti.ddapv2.process.Bootstrap]- processer startup. 
+[06-01 14:49:47:322][Thread-2][ERROR][com.cetiti.ddapv2.process.server.udp.UdpServer]- failed to start udp server start up at [10.70.7.72:8090], message:Address already in use: bind 
+[06-01 14:49:47:325][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:89] 
+[06-01 14:49:47:326][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8088] 
+[06-01 14:49:47:327][Thread-3][DEBUG][com.cetiti.ddapv2.process.server.mqtt.MqttServer]- mqtt server start up at [10.70.7.72:1887] 
+[06-01 14:50:07:852][main][INFO][com.cetiti.ddapv2.process.Bootstrap]- processer startup. 
+[06-01 14:50:08:451][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:89] 
+[06-01 14:50:08:451][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8088] 
+[06-01 14:50:08:452][Thread-2][ERROR][com.cetiti.ddapv2.process.server.udp.UdpServer]- failed to start udp server start up at [10.70.7.72:8090], message:Address already in use: bind 
+[06-01 14:50:08:455][Thread-3][DEBUG][com.cetiti.ddapv2.process.server.mqtt.MqttServer]- mqtt server start up at [10.70.7.72:1887] 
+[06-01 14:51:03:812][main][INFO][com.cetiti.ddapv2.process.Bootstrap]- processer startup. 
+[06-01 14:51:04:123][Thread-2][ERROR][com.cetiti.ddapv2.process.server.udp.UdpServer]- failed to start udp server start up at [10.70.7.72:8090], message:Address already in use: bind 
+[06-01 14:51:04:128][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:90] 
+[06-01 14:51:04:130][Thread-3][DEBUG][com.cetiti.ddapv2.process.server.mqtt.MqttServer]- mqtt server start up at [10.70.7.72:1888] 
+[06-01 14:51:04:129][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8089] 
+[06-01 14:52:11:134][main][INFO][com.cetiti.ddapv2.process.Bootstrap]- processer startup. 
+[06-01 14:52:11:695][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8089] 
+[06-01 14:52:11:709][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:90] 
+[06-01 14:52:11:711][Thread-2][ERROR][com.cetiti.ddapv2.process.server.udp.UdpServer]- failed to start udp server start up at [10.70.7.72:8090], message:Address already in use: bind 
+[06-01 14:52:11:716][Thread-3][DEBUG][com.cetiti.ddapv2.process.server.mqtt.MqttServer]- mqtt server start up at [10.70.7.72:1888] 
+[06-01 14:53:59:029][main][INFO][com.cetiti.ddapv2.process.Bootstrap]- processer startup. 
+[06-01 14:53:59:439][Thread-2][ERROR][com.cetiti.ddapv2.process.server.udp.UdpServer]- failed to start udp server start up at [10.70.7.72:8090], message:Address already in use: bind 
+[06-01 14:53:59:453][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:91] 
+[06-01 14:53:59:453][Thread-3][DEBUG][com.cetiti.ddapv2.process.server.mqtt.MqttServer]- mqtt server start up at [10.70.7.72:1889] 
+[06-01 14:53:59:453][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8090] 
+[06-01 16:57:11:972][main][INFO][com.cetiti.ddapv2.process.Bootstrap]- processer startup. 
+[06-01 16:57:13:105][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8088] 
+[06-01 16:57:13:105][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:89] 
+[06-01 16:57:13:107][Thread-3][DEBUG][com.cetiti.ddapv2.process.server.mqtt.MqttServer]- mqtt server start up at [10.70.7.72:1887] 
+[06-01 16:57:13:111][Thread-2][ERROR][com.cetiti.ddapv2.process.server.udp.UdpServer]- failed to start udp server start up at [10.70.7.72:8090], message:Address already in use: bind 
+[06-01 16:58:11:293][main][INFO][com.cetiti.ddapv2.process.Bootstrap]- processer startup. 
+[06-01 16:58:11:678][Thread-1][DEBUG][com.cetiti.ddapv2.process.server.tcp.TcpServer]- tcp server start up at [10.70.7.72:8088] 
+[06-01 16:58:11:678][Thread-0][DEBUG][com.cetiti.ddapv2.process.server.http.HttpServer]- http server start up at [10.70.7.72:89] 
+[06-01 16:58:11:684][Thread-3][DEBUG][com.cetiti.ddapv2.process.server.mqtt.MqttServer]- mqtt server start up at [10.70.7.72:1887] 
+[06-01 16:58:11:687][Thread-2][ERROR][com.cetiti.ddapv2.process.server.udp.UdpServer]- failed to start udp server start up at [10.70.7.72:8090], message:Address already in use: bind 
+[06-06 18:16:02:476][main][INFO][com.cetiti.ddapv2.process.Bootstrap]- processer startup. 
+[06-06 18:16:02:996][Thread-0][DEBUG][com.cetiti.ddapv2.process.acceptor.TcpAcceptor]- demoAcceptor start up at [10.70.7.72:8080] 
+[06-06 18:25:18:210][main][INFO][com.cetiti.ddapv2.process.Bootstrap]- processer startup. 
+[06-06 18:25:18:472][Thread-0][DEBUG][com.cetiti.ddapv2.process.acceptor.TcpAcceptor]- demoAcceptor start up at [10.70.7.72:8080] 
+[06-06 18:33:00:385][main][INFO][com.cetiti.ddapv2.process.Bootstrap]- processer startup. 
+[06-06 18:33:00:644][Thread-1][DEBUG][com.cetiti.ddapv2.process.acceptor.TcpAcceptor]- demoAcceptor2 start up at [10.70.7.72:8080] 
+[06-06 18:33:00:645][Thread-0][ERROR][com.cetiti.ddapv2.process.acceptor.TcpAcceptor]- failed to start up demoAcceptor at [10.70.7.72:8080], message:Address already in use: bind 
+[06-06 18:36:53:126][main][INFO][com.cetiti.ddapv2.process.Bootstrap]- processer startup. 
+[06-06 18:36:53:408][Thread-1][DEBUG][com.cetiti.ddapv2.process.acceptor.TcpAcceptor]- demoAcceptor2 start up at [10.70.7.72:8081] 
+[06-06 18:36:53:408][Thread-0][DEBUG][com.cetiti.ddapv2.process.acceptor.TcpAcceptor]- demoAcceptor start up at [10.70.7.72:8080] 
+[06-06 19:01:35:605][main][INFO][com.cetiti.ddapv2.process.Bootstrap]- processer startup. 
+[06-06 19:01:35:888][Thread-0][DEBUG][com.cetiti.ddapv2.process.acceptor.TcpAcceptor]- demoAcceptor start up at [10.70.7.72:8080] 
+[06-06 19:01:35:888][Thread-1][DEBUG][com.cetiti.ddapv2.process.acceptor.TcpAcceptor]- demoAcceptor2 start up at [10.70.7.72:8081] 
+[06-06 20:06:45:795][main][INFO][com.cetiti.ddapv2.process.Bootstrap]- processer startup. 
+[06-06 20:06:46:075][Thread-0][ERROR][com.cetiti.ddapv2.process.acceptor.TcpAcceptor]- failed to start up demoAcceptor at [10.70.7.72:8080], message:Address already in use: bind 
+[06-06 20:06:46:075][Thread-1][ERROR][com.cetiti.ddapv2.process.acceptor.TcpAcceptor]- failed to start up demoAcceptor2 at [10.70.7.72:8081], message:Address already in use: bind 
+[06-06 20:06:46:075][Thread-2][DEBUG][com.cetiti.ddapv2.process.acceptor.TcpAcceptor]- httpAcceptor start up at [10.70.7.72:80] 
+[06-06 20:07:16:690][main][INFO][com.cetiti.ddapv2.process.Bootstrap]- processer startup. 
+[06-06 20:07:17:010][Thread-0][ERROR][com.cetiti.ddapv2.process.acceptor.TcpAcceptor]- failed to start up demoAcceptor at [10.70.7.72:8080], message:Address already in use: bind 
+[06-06 20:07:17:010][Thread-2][DEBUG][com.cetiti.ddapv2.process.acceptor.TcpAcceptor]- httpAcceptor start up at [10.70.7.72:80] 
+[06-06 20:07:17:010][Thread-1][ERROR][com.cetiti.ddapv2.process.acceptor.TcpAcceptor]- failed to start up demoAcceptor2 at [10.70.7.72:8081], message:Address already in use: bind 
+[06-06 20:08:46:780][main][INFO][com.cetiti.ddapv2.process.Bootstrap]- processer startup. 
+[06-06 20:08:47:043][Thread-0][DEBUG][com.cetiti.ddapv2.process.acceptor.TcpAcceptor]- demoAcceptor start up at [10.70.7.72:8090] 
+[06-06 20:08:47:043][Thread-1][DEBUG][com.cetiti.ddapv2.process.acceptor.TcpAcceptor]- httpAcceptor start up at [10.70.7.72:80] 
