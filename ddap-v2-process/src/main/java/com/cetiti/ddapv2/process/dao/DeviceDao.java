@@ -12,6 +12,8 @@ public interface DeviceDao {
 	
 	int updateDevice(Device device);
 	
+	Device selectDevice(String deviceId);
+	
 	List<Device> selectDeviceList();
 
 }

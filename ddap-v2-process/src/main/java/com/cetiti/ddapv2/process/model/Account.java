@@ -92,5 +92,14 @@ public class Account extends DBModel {
 	public void setToken(String token) {
 		this.token = token;
 	}
+
+	@Override
+	public String toString() {
+		return "Account [account=" + account + ", password=" + password + ", role=" + role + ", privileges="
+				+ privileges + ", phone=" + phone + ", email=" + email + ", address=" + address + ", token=" + token
+				+ ", userKey=" + userKey + ", userSercret=" + userSercret + ", id=" + id + ", getDataState()="
+				+ getDataState() + ", getCreateTime()=" + getCreateTime() + ", getUpdateTime()=" + getUpdateTime()
+				+ "]";
+	}
 	
 }

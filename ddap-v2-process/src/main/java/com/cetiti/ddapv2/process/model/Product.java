@@ -48,4 +48,13 @@ public class Product extends Thing {
 		this.productSecret = productSecret;
 	}
 	
+	@Override
+	public String toString() {
+		return "Product [protocol=" + protocol + ", attributes=" + attributes + ", attributeMap=" + attributeMap
+				+ ", productKey=" + productKey + ", productSecret=" + productSecret + ", id=" + id + ", getName()="
+				+ getName() + ", getDescription()=" + getDescription() + ", getOwner()=" + getOwner()
+				+ ", getDataState()=" + getDataState() + ", getCreateTime()=" + getCreateTime() + ", getUpdateTime()="
+				+ getUpdateTime() + "]";
+	}
+	
 }

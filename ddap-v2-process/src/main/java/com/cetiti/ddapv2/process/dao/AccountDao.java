@@ -6,12 +6,14 @@ import com.cetiti.ddapv2.process.model.Account;
 
 public interface AccountDao {
 	
-	int insertUser(Account account);
+	int insertAccount(Account account);
 	
-	int deleteUser(String accountName);
+	int deleteAccount(String accountName);
 	
-	int updateUser(Account account);
+	int updateAccount(Account account);
 	
-	List<Account> selectUserList();
+	List<Account> selectAccountList();
+	
+	Account selectAccount(String account);
 
 }

@@ -1,5 +1,6 @@
 package com.cetiti.ddapv2.process.model;
 
+import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -57,5 +58,16 @@ public class Device extends Thing{
 	public void setDeviceSecret(String deviceSecret) {
 		this.deviceSecret = deviceSecret;
 	}
+	
+	@Override
+	public String toString() {
+		return "Device [productId=" + productId + ", rawData=" + Arrays.toString(rawData) + ", data=" + data
+				+ ", deviceStatus=" + deviceStatus + ", deviceKey=" + deviceKey + ", deviceSecret=" + deviceSecret
+				+ ", id=" + id + ", getName()=" + getName() + ", getDescription()=" + getDescription() + ", getOwner()="
+				+ getOwner() + ", getDataState()=" + getDataState() + ", getCreateTime()=" + getCreateTime()
+				+ ", getUpdateTime()=" + getUpdateTime() + "]";
+	}
+	
+	
 	
 }

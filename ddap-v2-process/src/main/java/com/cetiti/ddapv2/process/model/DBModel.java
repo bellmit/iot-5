@@ -1,6 +1,6 @@
 package com.cetiti.ddapv2.process.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 import com.cetiti.ddapv2.process.util.SequenceGenerator;
 
@@ -17,7 +17,7 @@ public class DBModel {
 	public static final char STATE_LOCK = 'L';
 	public static final char STATE_DELETE = 'D';
 	
-	private String id = SequenceGenerator.next();
+	protected String id = SequenceGenerator.next();
 	private char dataState;
 	private Date createTime;
 	private Date updateTime;

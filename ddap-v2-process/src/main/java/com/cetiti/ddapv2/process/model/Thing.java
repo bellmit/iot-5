@@ -8,17 +8,10 @@ package com.cetiti.ddapv2.process.model;
  */
 public class Thing extends DBModel{
 
-	private String id;
 	private String name;
 	private String description;
 	private String owner;
 	
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
 	public String getName() {
 		return name;
 	}
