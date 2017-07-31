@@ -122,7 +122,7 @@ public class AccountDaoImpl implements AccountDao {
 		update.append("update ddap_account set update_time = ?");
 		values[i] = new Date(); 
 		i++;
-		if(StringUtils.isEmpty(account.getDataState())){
+		if(!StringUtils.isEmpty(account.getDataState())){
 			update.append(", data_state = ?");
 			values[i] = String.valueOf(account.getDataState());
 			i++;

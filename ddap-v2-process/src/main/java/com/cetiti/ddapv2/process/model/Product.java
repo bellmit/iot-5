@@ -14,6 +14,10 @@ public class Product extends Thing {
 	//标签和单位
 	private Map<String, String> attributeMap; 
 	
+	public Product() {
+		this.id = PREFIX_PRODUCT+this.id;
+	}
+
 	private String productKey;
 	private String productSecret;
 	

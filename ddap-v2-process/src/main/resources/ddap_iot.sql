@@ -73,7 +73,7 @@ CREATE TABLE `ddap_product` (
   `protocol` char(16) DEFAULT NULL,
   `attributes` varchar(255) DEFAULT NULL,
   `product_key` char(32) DEFAULT NULL,
-  `procuct_secret` char(32) DEFAULT NULL,
+  `product_secret` char(32) DEFAULT NULL,
   `data_state` char(1) DEFAULT NULL,
   `owner` char(32) DEFAULT NULL,
   `create_time` datetime DEFAULT NULL,

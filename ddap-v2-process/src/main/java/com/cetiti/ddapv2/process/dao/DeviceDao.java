@@ -8,7 +8,7 @@ public interface DeviceDao {
 	
 	int insertDevice(Device device);
 	
-	int deleteDevice(Device device);
+	int deleteDevice(String deviceId);
 	
 	int updateDevice(Device device);
 	
