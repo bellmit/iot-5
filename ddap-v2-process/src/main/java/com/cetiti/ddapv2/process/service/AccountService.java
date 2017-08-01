@@ -1,5 +1,7 @@
 package com.cetiti.ddapv2.process.service;
 
+import java.util.List;
+
 import com.cetiti.ddapv2.process.model.Account;
 
 /**
@@ -12,13 +14,13 @@ public interface AccountService {
 	
 	Account getAccount(String account);
 	
-	int addAccount(Account account);
+	boolean addAccount(Account account);
 	
-	int deleteAccount(String account);
+	boolean deleteAccount(String account);
 	
-	int updateAccount(Account account);
+	boolean updateAccount(Account account);
 	
-	boolean login(String account, String password);
+	boolean login(Account account);
 	
-	boolean logout();
+	List<Account> getAccountList();
 }

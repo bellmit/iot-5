@@ -14,8 +14,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import com.cetiti.ddapv2.process.dao.ProductDao;
-import com.cetiti.ddapv2.process.model.DBModel;
 import com.cetiti.ddapv2.process.model.Product;
+import com.cetiti.ddapv2.process.util.SequenceGenerator;
 
 @Repository
 public class ProductDaoImpl implements ProductDao {
@@ -32,8 +32,9 @@ public class ProductDaoImpl implements ProductDao {
 		if(null==product){
 			return 0;
 		}
+		product.setId(Product.PREFIX_PRODUCT+SequenceGenerator.next());
 		product.setCreateTime(new Date());
-		product.setDataState(DBModel.STATE_NEW);
+		product.setDataState(Product.STATE_NEW);
 		return this.jdbcTemplate.update("insert into ddap_product (id, name, description, "
 				+ "protocol, attributes, product_key, product_secret, data_state, owner, create_time) "
 				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -77,10 +78,12 @@ public class ProductDaoImpl implements ProductDao {
 	}
 
 	@Override
-	public List<Product> selectProductList() {
-		return this.jdbcTemplate.query("select "
-				+ "id, name, description, protocol, attributes, product_key, product_secret, data_state, owner "
-				+ "from ddap_product", new ProductMapper());
+	public List<Product> selectProductList(Product product) {
+		Object[] select = buildSelectSql(product);
+		String sql = (String)select[select.length-1];
+		Object[] values = new Object[select.length-1];
+		System.arraycopy(select, 0, values, 0, select.length-1);
+		return this.jdbcTemplate.query(sql, values, new ProductMapper());
 	}
 	
 	private static final class ProductMapper implements RowMapper<Product> {
@@ -101,6 +104,64 @@ public class ProductDaoImpl implements ProductDao {
 	        product.setOwner(rs.getString("owner"));
 	        return product;
 	    }
+	}
+	
+	private Object[] buildSelectSql(Product product){
+		StringBuilder select = new StringBuilder();
+		select.append("select id, name, description, protocol, attributes, product_key, "
+				+ "product_secret, data_state, owner from ddap_product where 1");
+		if(null==product){
+			return new Object[]{select.toString()};
+		}
+		Object[] values = new Object[20];
+		int i = 0;
+		if(StringUtils.hasText(product.getId())){
+			select.append(" and id = ?");
+			values[i] = product.getId();
+			i++;
+		}
+		if(StringUtils.hasText(product.getName())){
+			select.append(" and name like ?");
+			values[i] = "%"+product.getName()+"%";
+			i++;
+		}
+		if(StringUtils.hasText(product.getProtocol())){
+			select.append(" and protocol = ?");
+			values[i] = product.getProtocol();
+			i++;
+		}
+		if(StringUtils.isEmpty(product.getAttributes())){
+			select.append(" and attributes like ?");
+			values[i] = "%"+product.getAttributes()+"%";
+			i++;
+		}
+		if(StringUtils.hasText(product.getProductKey())){
+			select.append(" and product_key = ?");
+			values[i] = product.getProductKey();
+			i++;
+		}
+		if(StringUtils.hasText(product.getProductSecret())){
+			select.append(" and product_secret = ?");
+			values[i] = product.getProductSecret();
+			i++;
+		}
+		if(StringUtils.isEmpty(product.getDataState())){
+			select.append(" and data_state = ?");
+			values[i] = String.valueOf(product.getDataState());
+			i++;
+		}
+		if(StringUtils.hasText(product.getOwner())){
+			select.append(" and owner = ?");
+			values[i] = product.getOwner();
+			i++;
+		}
+		values[i] = select.toString();
+		i++;
+		
+		Object[] retn = new Object[i];
+		System.arraycopy(values, 0, retn, 0, i);
+		
+		return retn;
 	}
 	
 	private Object[] buildUpdateSql(Product product) {

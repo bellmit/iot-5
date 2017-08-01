@@ -16,6 +16,7 @@ import org.springframework.util.StringUtils;
 import com.cetiti.ddapv2.process.dao.AccountDao;
 import com.cetiti.ddapv2.process.model.Account;
 import com.cetiti.ddapv2.process.model.DBModel;
+import com.cetiti.ddapv2.process.util.SequenceGenerator;
 
 /**
  * @Description TODO
@@ -39,6 +40,7 @@ public class AccountDaoImpl implements AccountDao {
 		if(null==account){
 			return 0;
 		}
+		account.setId(SequenceGenerator.next());
 		account.setCreateTime(new Date());
 		account.setDataState(DBModel.STATE_NEW);
 		return this.jdbcTemplate.update("insert into ddap_account (id, account, password, "

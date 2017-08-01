@@ -14,6 +14,6 @@ public interface DeviceDao {
 	
 	Device selectDevice(String deviceId);
 	
-	List<Device> selectDeviceList();
+	List<Device> selectDeviceList(Device device);
 
 }

@@ -7,7 +7,7 @@ package com.cetiti.ddapv2.process.util;
  * @date 2017年7月21日
  * 
  */
-public class RequestMessageContext {
+public class MessageContext {
 	
 	private static ThreadLocal<String> msgContext = new ThreadLocal<>();
 	

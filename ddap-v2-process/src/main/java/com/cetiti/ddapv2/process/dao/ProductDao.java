@@ -14,6 +14,6 @@ public interface ProductDao {
 	
 	Product selectProduct(String productId);
 	
-	List<Product> selectProductList();
+	List<Product> selectProductList(Product product);
 
 }

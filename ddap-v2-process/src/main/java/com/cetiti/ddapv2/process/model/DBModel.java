@@ -17,10 +17,10 @@ public class DBModel {
 	public static final char STATE_LOCK = 'L';
 	public static final char STATE_DELETE = 'D';
 	
-	protected static final String PREFIX_DEVICE = "D";
-	protected static final String PREFIX_PRODUCT = "P";
+	public static final String PREFIX_DEVICE = "D";
+	public static final String PREFIX_PRODUCT = "P";
 	
-	protected String id = SequenceGenerator.next();
+	protected String id;
 	private char dataState;
 	private Date createTime;
 	private Date updateTime;

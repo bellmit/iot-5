@@ -22,10 +22,6 @@ public class Device extends Thing{
 	private String deviceKey;
 	private String deviceSecret;
 	
-	public Device() {
-		this.id = PREFIX_DEVICE+this.id;
-	}
-	
 	public String getProductId() {
 		return productId;
 	}

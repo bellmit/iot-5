@@ -14,8 +14,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import com.cetiti.ddapv2.process.dao.DeviceDao;
-import com.cetiti.ddapv2.process.model.DBModel;
 import com.cetiti.ddapv2.process.model.Device;
+import com.cetiti.ddapv2.process.util.SequenceGenerator;
 
 @Repository
 public class DeviceDaoImpl implements DeviceDao{
@@ -32,8 +32,9 @@ public class DeviceDaoImpl implements DeviceDao{
 		if(null==device){
 			return 0;
 		}
+		device.setId(Device.PREFIX_DEVICE+SequenceGenerator.next());
 		device.setCreateTime(new Date());
-		device.setDataState(DBModel.STATE_NEW);
+		device.setDataState(Device.STATE_NEW);
 		return this.jdbcTemplate.update("insert into ddap_device (id, name, description, "
 				+ "product_id, device_status, device_key, device_secret, data_state, owner, create_time) "
 				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -67,12 +68,14 @@ public class DeviceDaoImpl implements DeviceDao{
 		System.arraycopy(update, 0, values, 0, update.length-1);
 		return this.jdbcTemplate.update(sql, values);
 	}
-
+	
 	@Override
-	public List<Device> selectDeviceList() {
-		return this.jdbcTemplate.query("select "
-				+ "id, name, description, product_id, device_status, device_key, device_secret, data_state, owner "
-				+ "from ddap_device ", new DeviceMapper());
+	public List<Device> selectDeviceList(Device device) {
+		Object[] select = buildSelectSql(device);
+		String sql = (String)select[select.length-1];
+		Object[] values = new Object[select.length-1];
+		System.arraycopy(select, 0, values, 0, select.length-1);
+		return this.jdbcTemplate.query(sql, values, new DeviceMapper());
 	}
 
 	@Override
@@ -104,6 +107,64 @@ public class DeviceDaoImpl implements DeviceDao{
 	        device.setOwner(rs.getString("owner"));
 	        return device;
 	    }
+	}
+	
+	private Object[] buildSelectSql(Device device) {
+		StringBuilder select = new StringBuilder();
+		select.append("select id, name, description, product_id, device_status, "
+				+ "device_key, device_secret, data_state, owner from ddap_device where 1");
+		if(null==device){
+			return new Object[]{select.toString()};
+		}
+		Object[] values = new Object[20];
+		int i = 0;
+		if(StringUtils.hasText(device.getId())){
+			select.append(" and id = ?");
+			values[i] = device.getId();
+			i++;
+		}
+		if(StringUtils.hasText(device.getName())){
+			select.append(" and name like ?");
+			values[i] = "%"+device.getName()+"%";
+			i++;
+		}
+		if(StringUtils.hasText(device.getProductId())){
+			select.append(" and product_id = ?");
+			values[i] = device.getProductId();
+			i++;
+		}
+		if(StringUtils.isEmpty(device.getDeviceStatus())){
+			select.append(" and device_status = ?");
+			values[i] = String.valueOf(device.getDeviceStatus());
+			i++;
+		}
+		if(StringUtils.hasText(device.getDeviceKey())){
+			select.append(" and device_key = ?");
+			values[i] = device.getDeviceKey();
+			i++;
+		}
+		if(StringUtils.hasText(device.getDeviceSecret())){
+			select.append(" and device_secret = ?");
+			values[i] = device.getDeviceSecret();
+			i++;
+		}
+		if(StringUtils.isEmpty(device.getDataState())){
+			select.append(" and data_state = ?");
+			values[i] = String.valueOf(device.getDataState());
+			i++;
+		}
+		if(StringUtils.hasText(device.getOwner())){
+			select.append(" and owner = ?");
+			values[i] = device.getOwner();
+			i++;
+		}
+		values[i] = select.toString();
+		i++;
+		
+		Object[] retn = new Object[i];
+		System.arraycopy(values, 0, retn, 0, i);
+		
+		return retn;
 	}
 	
 	private Object[] buildUpdateSql(Device device) {

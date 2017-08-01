@@ -63,9 +63,17 @@ public class ProductDaoImplTest extends AbstractJUnit4SpringContextTests {
 		System.out.println(productDao.selectProduct("P1501488252787"));
 	}
 
-	@Ignore
+	@Test
 	public void testSelectProductList() {
-		productDao.selectProductList().stream().forEach(System.out::println);
+		Product product = new Product();
+		product.setName("TH sensor");
+		product.setDescription("temperature humidity sensor");
+		product.setProtocol("http");
+		product.setAttributes("temperture,humidity");
+		//product.setProductKey(EncryptUtil.generateProductKey(product));
+		//product.setProductSecret(EncryptUtil.generateProductSecret(product));
+		product.setOwner("admin");
+		productDao.selectProductList(product).stream().forEach(System.out::println);
 	}
 
 }
