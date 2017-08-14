@@ -87,7 +87,7 @@ private static final Logger LOGGER = LoggerFactory.getLogger(Processer.class);
 		}
 	}
 	
-	@ManagedOperation(description="hub info")
+	@ManagedOperation(description="acceptor info")
 	public String info(){
 		return acceptors.stream().map(Acceptor::getInfo).collect(Collectors.joining("; "));
 	}

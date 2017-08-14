@@ -1,5 +1,5 @@
 package com.cetiti.ddapv2.process.model;
-import java.util.Map;
+import java.util.List;
 
 /**
  * @Description TODO
@@ -11,8 +11,8 @@ public class Product extends Thing {
 	
 	private String protocol;
 	private String attributes;
-	//标签和单位
-	private Map<String, String> attributeMap; 
+	//标签和单位 考虑加一个label
+	private List<DataItem> attributeList; 
 
 	private String productKey;
 	private String productSecret;
@@ -29,11 +29,11 @@ public class Product extends Thing {
 	public void setAttributes(String attributes) {
 		this.attributes = attributes;
 	}
-	public Map<String, String> getAttributeMap() {
-		return attributeMap;
+	public List<DataItem> getAttributeList() {
+		return attributeList;
 	}
-	public void setAttributeMap(Map<String, String> attributeMap) {
-		this.attributeMap = attributeMap;
+	public void setAttributeList(List<DataItem> attributeList) {
+		this.attributeList = attributeList;
 	}
 	public String getProductKey() {
 		return productKey;
@@ -50,7 +50,7 @@ public class Product extends Thing {
 	
 	@Override
 	public String toString() {
-		return "Product [protocol=" + protocol + ", attributes=" + attributes + ", attributeMap=" + attributeMap
+		return "Product [protocol=" + protocol + ", attributes=" + attributes + ", attributeList=" + attributeList
 				+ ", productKey=" + productKey + ", productSecret=" + productSecret + ", id=" + id + ", getName()="
 				+ getName() + ", getDescription()=" + getDescription() + ", getOwner()=" + getOwner()
 				+ ", getDataState()=" + getDataState() + ", getCreateTime()=" + getCreateTime() + ", getUpdateTime()="

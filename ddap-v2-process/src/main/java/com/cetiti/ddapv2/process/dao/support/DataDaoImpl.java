@@ -52,10 +52,7 @@ public class DataDaoImpl implements DataDao {
 	    public Data mapRow(ResultSet rs, int rowNum) throws SQLException {
 	        Data data = new Data();
 	        data.setDeviceId(rs.getString("device_id"));
-	        String d = rs.getString("data");
-	        if(d!=null){
-	        	data.setData(d.getBytes());
-	        }
+	        data.setStrData(rs.getString("data"));
 	        data.setTimeStamp(rs.getInt("time_stamp"));
 	    	
 	        return data;

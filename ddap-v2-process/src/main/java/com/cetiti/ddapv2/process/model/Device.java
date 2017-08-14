@@ -18,6 +18,8 @@ public class Device extends Thing{
 	private byte[] rawData;
 	private Map<String, Object> data;
 	private char deviceStatus;
+	private float longitude;
+	private float latitude;
 	
 	private String deviceKey;
 	private String deviceSecret;
@@ -58,16 +60,27 @@ public class Device extends Thing{
 	public void setDeviceSecret(String deviceSecret) {
 		this.deviceSecret = deviceSecret;
 	}
+	public float getLongitude() {
+		return longitude;
+	}
+	public void setLongitude(float longitude) {
+		this.longitude = longitude;
+	}
+	public float getLatitude() {
+		return latitude;
+	}
+	public void setLatitude(float latitude) {
+		this.latitude = latitude;
+	}
 	
 	@Override
 	public String toString() {
 		return "Device [productId=" + productId + ", rawData=" + Arrays.toString(rawData) + ", data=" + data
-				+ ", deviceStatus=" + deviceStatus + ", deviceKey=" + deviceKey + ", deviceSecret=" + deviceSecret
-				+ ", id=" + id + ", getName()=" + getName() + ", getDescription()=" + getDescription() + ", getOwner()="
-				+ getOwner() + ", getDataState()=" + getDataState() + ", getCreateTime()=" + getCreateTime()
-				+ ", getUpdateTime()=" + getUpdateTime() + "]";
+				+ ", deviceStatus=" + deviceStatus + ", longitude=" + longitude + ", latitude=" + latitude
+				+ ", deviceKey=" + deviceKey + ", deviceSecret=" + deviceSecret + ", id=" + id + ", getName()="
+				+ getName() + ", getDescription()=" + getDescription() + ", getOwner()=" + getOwner()
+				+ ", getDataState()=" + getDataState() + ", getCreateTime()=" + getCreateTime() + ", getUpdateTime()="
+				+ getUpdateTime() + "]";
 	}
-	
-	
 	
 }
