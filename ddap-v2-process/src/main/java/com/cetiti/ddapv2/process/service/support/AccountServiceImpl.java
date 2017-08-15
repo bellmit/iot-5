@@ -48,29 +48,32 @@ public class AccountServiceImpl implements AccountService{
 	}
 
 	@Override
-	public boolean addAccount(Account account) {
+	public Account addAccount(Account account) {
 		if(null==account){
-			return false;
+			return null;
 		}
 		if(!StringUtils.hasText(account.getAccount())){
 			MessageContext.setMsg(msgUtil.get("account.null"));
-			return false;
+			return null;
 		}
 		if(!StringUtils.hasText(account.getPassword())){
 			MessageContext.setMsg(msgUtil.get("password.null"));
-			return false;
+			return null;
 		}
 		if(null!=getAccount(account.getAccount())){
 			MessageContext.setMsg(msgUtil.get("account.exist"));
-			return false;
+			return null;
 		}
+		account.setRole(Account.ROLE_PLATFORM);
+		account.setUserKey(EncryptUtil.generateUserKey(account));
+		account.setUserSercret(EncryptUtil.generateUserSecret(account));
 		try{
 			accountDao.insertAccount(account);
-			return true;
+			return account;
 		}catch (Exception e) {
 			MessageContext.setMsg(msgUtil.get("db.exception"));
 			LOGGER.error("addAccount [{}]", e.getMessage());
-			return false;
+			return null;
 		}
 	}
 
@@ -106,29 +109,41 @@ public class AccountServiceImpl implements AccountService{
 	}
 
 	@Override
-	public boolean login(Account account) {
+	public Account login(Account account) {
 		if(null==account||!StringUtils.hasText(account.getAccount())
 				||!StringUtils.hasText(account.getPassword())){
 			MessageContext.setMsg(msgUtil.get("password.incorrect"));
-			return false;
+			return null;
 		}
 		Account dbaccount = getAccount(account.getAccount());
 		if(null==dbaccount){
 			MessageContext.setMsg(msgUtil.get("account.null"));
-			return false;
+			return null;
 		}
 		if(!account.getPassword().equals(EncryptUtil.md5(dbaccount.getPassword()+account.getToken()))){
 			MessageContext.setMsg(msgUtil.get("password.incorrect"));
-			return false;
+			return null;
 		}
 		
-		return true;
+		return dbaccount;
 	}
 
 	@Override
-	public List<Account> getAccountList() {
+	public List<Account> getAccountList(Account account) {
+		if(null==account||null==account.getAccount()){
+			return new ArrayList<>();
+		}
 		try{
-			return accountDao.selectAccountList();
+			if(account.isAdmin()){
+				return accountDao.selectAccountList();
+			}else {
+				Account dbAccount = accountDao.selectAccount(account.getAccount());
+				List<Account> retn = new ArrayList<>();
+				if(null!=dbAccount){
+					retn.add(dbAccount);
+				}
+				return retn;
+			}
 		}catch (Exception e) {
 			MessageContext.setMsg(msgUtil.get("db.exception"));
 			LOGGER.error("getAccountList [{}]", e.getMessage());

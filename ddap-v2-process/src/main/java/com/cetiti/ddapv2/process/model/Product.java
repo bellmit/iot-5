@@ -10,9 +10,9 @@ import java.util.List;
 public class Product extends Thing {
 	
 	private String protocol;
-	private String attributes;
+	private String dataAttributes;
 	//标签和单位 考虑加一个label
-	private List<DataItem> attributeList; 
+	private List<DataItem> dataAttributeList;
 
 	private String productKey;
 	private String productSecret;
@@ -23,17 +23,18 @@ public class Product extends Thing {
 	public void setProtocol(String protocol) {
 		this.protocol = protocol;
 	}
-	public String getAttributes() {
-		return attributes;
+	
+	public String getDataAttributes() {
+		return dataAttributes;
 	}
-	public void setAttributes(String attributes) {
-		this.attributes = attributes;
+	public void setDataAttributes(String dataAttributes) {
+		this.dataAttributes = dataAttributes;
 	}
-	public List<DataItem> getAttributeList() {
-		return attributeList;
+	public List<DataItem> getDataAttributeList() {
+		return dataAttributeList;
 	}
-	public void setAttributeList(List<DataItem> attributeList) {
-		this.attributeList = attributeList;
+	public void setDataAttributeList(List<DataItem> dataAttributeList) {
+		this.dataAttributeList = dataAttributeList;
 	}
 	public String getProductKey() {
 		return productKey;
@@ -50,9 +51,10 @@ public class Product extends Thing {
 	
 	@Override
 	public String toString() {
-		return "Product [protocol=" + protocol + ", attributes=" + attributes + ", attributeList=" + attributeList
-				+ ", productKey=" + productKey + ", productSecret=" + productSecret + ", id=" + id + ", getName()="
-				+ getName() + ", getDescription()=" + getDescription() + ", getOwner()=" + getOwner()
+		return "Product [protocol=" + protocol + ", dataAttributes=" + dataAttributes + ", dataAttributeList="
+				+ dataAttributeList + ", productKey=" + productKey + ", productSecret=" + productSecret + ", id=" + id
+				+ ", getName()=" + getName() + ", getDescription()=" + getDescription() + ", getOwner()=" + getOwner()
+				+ ", getDescAttributes()=" + getDescAttributes() + ", getDescAttributeList()=" + getDescAttributeList()
 				+ ", getDataState()=" + getDataState() + ", getCreateTime()=" + getCreateTime() + ", getUpdateTime()="
 				+ getUpdateTime() + "]";
 	}

@@ -20,7 +20,7 @@ public interface DeviceService {
 	
 	boolean updateDevice(Account account, Device device);
 	
-	boolean deleteDevice(Account account, Device device);
+	boolean deleteDevice(Account account, String deviceId);
 	
 	List<Device> getDeviceList(Account account, Device device);
 	

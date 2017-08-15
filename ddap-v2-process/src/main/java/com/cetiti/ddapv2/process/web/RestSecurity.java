@@ -3,16 +3,23 @@ package com.cetiti.ddapv2.process.web;
 import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import com.cetiti.ddapv2.process.model.Account;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 
+/**
+ * @Description TODO
+ * @author Wuwuhao
+ * @date 2017年7月15日
+ * 
+ */
 public class RestSecurity {
 	private static final String SESSION_NAME = "account";
 	private static final String TOKEN = "token";
 	
-	private static Cache<String, com.cetiti.ddapv2.process.model.Account> sessionCache = 
+	private static Cache<String, Account> sessionCache = 
 			CacheBuilder.newBuilder().expireAfterAccess(30, TimeUnit.MINUTES).build();
 	
 	public static String writeSession(Account account, HttpServletRequest request){
@@ -25,6 +32,28 @@ public class RestSecurity {
 		request.getSession().setAttribute(SESSION_NAME, account);
 		sessionCache.put(sessionId, account);
 		return sessionId;
+	}
+	
+	public static void removeSession(HttpServletRequest request){
+		if(null==request){
+			return;
+		}
+		String sessionId = null;
+		HttpSession session = request.getSession();
+		if(null!=session){
+			sessionId = session.getId();
+			session.invalidate();
+		}
+		if(null==sessionId){
+			sessionId = request.getHeader(TOKEN);
+		}
+		if(null==sessionId){
+			sessionId = request.getParameter(TOKEN);
+		}
+		if(null==sessionId){
+			return;
+		}
+		sessionCache.invalidate(sessionId);
 	}
 	
 	public static Account getSessionAccount(HttpServletRequest request){

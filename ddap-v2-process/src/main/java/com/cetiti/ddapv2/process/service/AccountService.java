@@ -14,13 +14,13 @@ public interface AccountService {
 	
 	Account getAccount(String account);
 	
-	boolean addAccount(Account account);
+	Account addAccount(Account account);
 	
 	boolean deleteAccount(String account);
 	
 	boolean updateAccount(Account account);
 	
-	boolean login(Account account);
+	Account login(Account account);
 	
-	List<Account> getAccountList();
+	List<Account> getAccountList(Account account);
 }

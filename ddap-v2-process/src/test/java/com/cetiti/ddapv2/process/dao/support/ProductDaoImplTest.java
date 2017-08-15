@@ -32,8 +32,9 @@ public class ProductDaoImplTest extends AbstractJUnit4SpringContextTests {
 		Product product = new Product();
 		product.setName("TH sensor");
 		product.setDescription("temperature humidity sensor");
+		product.setDescAttributes("department, position");
 		product.setProtocol("http");
-		product.setAttributes("temperture,humidity");
+		product.setDataAttributes("temperture,humidity");
 		product.setProductKey(EncryptUtil.generateProductKey(product));
 		product.setProductSecret(EncryptUtil.generateProductSecret(product));
 		product.setOwner("admin");
@@ -42,34 +43,35 @@ public class ProductDaoImplTest extends AbstractJUnit4SpringContextTests {
 
 	@Ignore
 	public void testDeleteProduct() {
-		productDao.deleteProduct("P1501488252787");
+		productDao.deleteProduct("P1501488322947");
 	}
 
-	@Ignore
+	@Test
 	public void testUpdateProduct() {
 		Product product = new Product();
-		product.setId("P1501488252787");
+		product.setId("P1502708690274");
 		product.setName("TH sensoru");
 		product.setDescription("temperature humidity sensoru");
-		product.setProtocol("httpu");
-		product.setAttributes("temperture,humidityu");
+		product.setDescAttributes("producer, fix");
+		product.setProtocol("mqtt");
+		product.setDataAttributes("temperture,humidityu");
 		
 		product.setOwner("adminu");
 		productDao.updateProduct(product);
 	}
 
-	@Ignore
+	@Test
 	public void testSelectProduct() {
-		System.out.println(productDao.selectProduct("P1501488252787"));
+		System.out.println(productDao.selectProduct("P1502708690274"));
 	}
 
-	@Test
+	@Ignore
 	public void testSelectProductList() {
 		Product product = new Product();
 		product.setName("TH sensor");
 		product.setDescription("temperature humidity sensor");
 		product.setProtocol("http");
-		product.setAttributes("temperture,humidity");
+		product.setDataAttributes("temperture,humidity");
 		//product.setProductKey(EncryptUtil.generateProductKey(product));
 		//product.setProductSecret(EncryptUtil.generateProductSecret(product));
 		product.setOwner("admin");

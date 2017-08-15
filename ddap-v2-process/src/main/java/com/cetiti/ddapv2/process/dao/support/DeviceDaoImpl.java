@@ -35,15 +35,18 @@ public class DeviceDaoImpl implements DeviceDao{
 		device.setId(Device.PREFIX_DEVICE+SequenceGenerator.next());
 		device.setCreateTime(new Date());
 		device.setDataState(Device.STATE_NEW);
-		return this.jdbcTemplate.update("insert into ddap_device (id, name, description, "
-				+ "product_id, device_status, device_key, device_secret, data_state, owner, create_time) "
-				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+		return this.jdbcTemplate.update("insert into ddap_device (id, name, description, desc_attributes, "
+				+ "product_id, device_status, longitude, latitude, device_key, device_secret, data_state, owner, create_time) "
+				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 				new Object[]{
 						device.getId(),
 						device.getName(),
 						device.getDescription(),
+						device.getDescAttributes(),
 						device.getProductId(),
 						String.valueOf(device.getDeviceStatus()),
+						device.getLongitude(),
+						device.getLatitude(),
 						device.getDeviceKey(),
 						device.getDeviceSecret(),
 						String.valueOf(device.getDataState()),
@@ -81,7 +84,8 @@ public class DeviceDaoImpl implements DeviceDao{
 	@Override
 	public Device selectDevice(String deviceId) {
 		return this.jdbcTemplate.queryForObject("select "
-				+ "id, name, description, product_id, device_status, device_key, device_secret, data_state, owner "
+				+ "id, name, description, desc_attributes, product_id, device_status, longitude, "
+				+ "latitude, device_key, device_secret, data_state, owner "
 				+ "from ddap_device where id = ?", 
 				new Object[]{deviceId},  new DeviceMapper());
 	}
@@ -92,12 +96,15 @@ public class DeviceDaoImpl implements DeviceDao{
 	        Device device = new Device();
 	    	device.setId(rs.getString("id"));
 	    	device.setName(rs.getString("name"));
-	    	device.setDescription("description");
+	    	device.setDescription(rs.getString("description"));
+	    	device.setDescAttributes(rs.getString("desc_attributes"));
 	    	device.setProductId(rs.getString("product_id"));
 	    	String status = rs.getString("device_status");
 	    	if(null!=status){
 	    		device.setDeviceStatus(status.charAt(0));
 	    	}
+	    	device.setLongitude(rs.getDouble("longitude"));
+	    	device.setLatitude(rs.getDouble("latitude"));
 	    	device.setDeviceKey(rs.getString("device_key"));
 	    	device.setDeviceSecret(rs.getString("device_secret"));
 	    	String state = rs.getString("data_state");
@@ -111,8 +118,8 @@ public class DeviceDaoImpl implements DeviceDao{
 	
 	private Object[] buildSelectSql(Device device) {
 		StringBuilder select = new StringBuilder();
-		select.append("select id, name, description, product_id, device_status, "
-				+ "device_key, device_secret, data_state, owner from ddap_device where 1");
+		select.append("select id, name, description, desc_attributes, product_id, device_status, "
+				+ "longitude, latitude, device_key, device_secret, data_state, owner from ddap_device where 1");
 		if(null==device){
 			return new Object[]{select.toString()};
 		}
@@ -128,6 +135,11 @@ public class DeviceDaoImpl implements DeviceDao{
 			values[i] = "%"+device.getName()+"%";
 			i++;
 		}
+		if(StringUtils.hasText(device.getDescAttributes())){
+			select.append(" and desc_attributes like ?");
+			values[i] = "%"+device.getDescAttributes()+"%";
+			i++;
+		}
 		if(StringUtils.hasText(device.getProductId())){
 			select.append(" and product_id = ?");
 			values[i] = device.getProductId();
@@ -136,6 +148,13 @@ public class DeviceDaoImpl implements DeviceDao{
 		if(StringUtils.isEmpty(device.getDeviceStatus())){
 			select.append(" and device_status = ?");
 			values[i] = String.valueOf(device.getDeviceStatus());
+			i++;
+		}
+		if(device.getLongitude()>0&&device.getLatitude()>0){
+			select.append(" and abs(longitude - ?) < 0.03 and abs(latitude - ?) < 0.03");
+			values[i] = device.getLongitude();
+			i++;
+			values[i] = device.getLatitude();
 			i++;
 		}
 		if(StringUtils.hasText(device.getDeviceKey())){
@@ -192,6 +211,11 @@ public class DeviceDaoImpl implements DeviceDao{
 			values[i] = device.getDescription();
 			i++;
 		}
+		if(StringUtils.hasText(device.getDescAttributes())){
+			update.append(", desc_attributes = ?");
+			values[i] = device.getDescAttributes();
+			i++;
+		}
 		if(StringUtils.hasText(device.getProductId())){
 			update.append(", product_id = ?");
 			values[i] = device.getProductId();
@@ -200,6 +224,16 @@ public class DeviceDaoImpl implements DeviceDao{
 		if(!StringUtils.isEmpty(device.getDeviceStatus())){
 			update.append(", device_status = ?");
 			values[i] = String.valueOf(device.getDeviceStatus());
+			i++;
+		}
+		if(device.getLongitude()>0){
+			update.append(", longitude = ?");
+			values[i] = device.getLongitude();
+			i++;
+		}
+		if(device.getLatitude()>0){
+			update.append(", latitude = ?");
+			values[i] = device.getLatitude();
 			i++;
 		}
 		if(StringUtils.hasText(device.getDeviceKey())){

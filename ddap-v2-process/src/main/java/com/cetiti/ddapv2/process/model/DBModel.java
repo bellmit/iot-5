@@ -2,8 +2,6 @@ package com.cetiti.ddapv2.process.model;
 
 import java.util.Date;
 
-import com.cetiti.ddapv2.process.util.SequenceGenerator;
-
 /**
  * @Description TODO
  * @author Wuwuhao
@@ -48,6 +46,12 @@ public class DBModel {
 	}
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
+	}
+	
+	@Override
+	public String toString() {
+		return "DBModel [id=" + id + ", dataState=" + dataState + ", createTime=" + createTime + ", updateTime="
+				+ updateTime + "]";
 	}
 	
 }

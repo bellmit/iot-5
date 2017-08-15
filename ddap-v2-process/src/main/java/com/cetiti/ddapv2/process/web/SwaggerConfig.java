@@ -42,7 +42,6 @@ public class SwaggerConfig {
             .version(msgUtil.get("swagger.version"))
             .termsOfServiceUrl(msgUtil.get("swagger.service.url"))
             .build();
-      
     }
 
 }

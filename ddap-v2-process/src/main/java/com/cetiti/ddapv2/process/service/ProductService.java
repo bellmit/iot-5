@@ -15,7 +15,7 @@ public interface ProductService {
 	
 	boolean addProduct(Account account, Product product);
 	
-	boolean deleteProduct(Account account, Product product);
+	boolean deleteProduct(Account account, String productId);
 	
 	boolean updateProduct(Account account, Product product);
 	

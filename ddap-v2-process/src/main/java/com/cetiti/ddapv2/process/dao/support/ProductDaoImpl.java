@@ -35,15 +35,16 @@ public class ProductDaoImpl implements ProductDao {
 		product.setId(Product.PREFIX_PRODUCT+SequenceGenerator.next());
 		product.setCreateTime(new Date());
 		product.setDataState(Product.STATE_NEW);
-		return this.jdbcTemplate.update("insert into ddap_product (id, name, description, "
-				+ "protocol, attributes, product_key, product_secret, data_state, owner, create_time) "
-				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+		return this.jdbcTemplate.update("insert into ddap_product (id, name, description, desc_attributes, "
+				+ "protocol, data_attributes, product_key, product_secret, data_state, owner, create_time) "
+				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 				new Object[]{
 						product.getId(),
 						product.getName(),
 						product.getDescription(),
+						product.getDescAttributes(),
 						product.getProtocol(),
-						product.getAttributes(),
+						product.getDataAttributes(),
 						product.getProductKey(),
 						product.getProductSecret(),
 						String.valueOf(product.getDataState()),
@@ -72,7 +73,7 @@ public class ProductDaoImpl implements ProductDao {
 	@Override
 	public Product selectProduct(String productId) {
 		return this.jdbcTemplate.queryForObject("select "
-				+ "id, name, description, protocol, attributes, product_key, product_secret, data_state, owner "
+				+ "id, name, description, desc_attributes, protocol, data_attributes, product_key, product_secret, data_state, owner "
 				+ "from ddap_product where id = ?", 
 				new Object[]{productId},  new ProductMapper());
 	}
@@ -92,9 +93,10 @@ public class ProductDaoImpl implements ProductDao {
 	        Product product = new Product();
 	    	product.setId(rs.getString("id"));
 	    	product.setName(rs.getString("name"));
-	    	product.setDescription("description");
+	    	product.setDescription(rs.getString("description"));
+	    	product.setDescAttributes(rs.getString("desc_attributes"));
 	    	product.setProtocol(rs.getString("protocol"));
-	    	product.setAttributes("attributes");
+	    	product.setDataAttributes(rs.getString("data_attributes"));
 	    	product.setProductKey(rs.getString("product_key"));
 	    	product.setProductSecret(rs.getString("product_secret"));
 	    	String state = rs.getString("data_state");
@@ -108,7 +110,7 @@ public class ProductDaoImpl implements ProductDao {
 	
 	private Object[] buildSelectSql(Product product){
 		StringBuilder select = new StringBuilder();
-		select.append("select id, name, description, protocol, attributes, product_key, "
+		select.append("select id, name, description, desc_attributes, protocol, data_attributes, product_key, "
 				+ "product_secret, data_state, owner from ddap_product where 1");
 		if(null==product){
 			return new Object[]{select.toString()};
@@ -130,9 +132,14 @@ public class ProductDaoImpl implements ProductDao {
 			values[i] = product.getProtocol();
 			i++;
 		}
-		if(StringUtils.isEmpty(product.getAttributes())){
-			select.append(" and attributes like ?");
-			values[i] = "%"+product.getAttributes()+"%";
+		if(StringUtils.hasText(product.getDescAttributes())){
+			select.append(" and desc_attributes like ?");
+			values[i] = "%"+product.getDescAttributes()+"%";
+			i++;
+		}
+		if(StringUtils.isEmpty(product.getDataAttributes())){
+			select.append(" and data_attributes like ?");
+			values[i] = "%"+product.getDataAttributes()+"%";
 			i++;
 		}
 		if(StringUtils.hasText(product.getProductKey())){
@@ -189,14 +196,19 @@ public class ProductDaoImpl implements ProductDao {
 			values[i] = product.getDescription();
 			i++;
 		}
+		if(StringUtils.hasText(product.getDescAttributes())){
+			update.append(", desc_attributes = ?");
+			values[i] = product.getDescAttributes();
+			i++;
+		}
 		if(StringUtils.hasText(product.getProtocol())){
 			update.append(", protocol = ?");
 			values[i] = product.getProtocol();
 			i++;
 		}
-		if(StringUtils.hasText(product.getAttributes())){
-			update.append(", attributes = ?");
-			values[i] = product.getAttributes();
+		if(StringUtils.hasText(product.getDataAttributes())){
+			update.append(", data_attributes = ?");
+			values[i] = product.getDataAttributes();
 			i++;
 		}
 		if(StringUtils.hasText(product.getProductKey())){
