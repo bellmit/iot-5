@@ -11,10 +11,13 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
 	
     /* 
      * @see https://stackoverflow.com/questions/26720090/a-simple-way-to-implement-swagger-in-a-spring-mvc-application
+     * https://stackoverflow.com/questions/21123437/how-do-i-use-spring-boot-to-serve-static-content-located-in-dropbox-folder
      */
     @Override 
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+        registry.addResourceHandler("*.html").addResourceLocations("classpath:/static/html/");
+        registry.addResourceHandler("/resources/**").addResourceLocations("classpath:/static/resources/");
     }
 }

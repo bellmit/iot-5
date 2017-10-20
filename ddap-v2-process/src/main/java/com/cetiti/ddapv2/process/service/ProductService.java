@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.cetiti.ddapv2.process.model.Product;
 import com.cetiti.ddapv2.process.model.Account;
+import com.cetiti.ddapv2.process.model.Page;
 
 /**
  * @Description TODO
@@ -20,5 +21,7 @@ public interface ProductService {
 	boolean updateProduct(Account account, Product product);
 	
 	List<Product> getProductList(Account account, Product product);
+	
+	Page<Product> getProductPage(Account account, Product product, Page<Product> page);
 	
 }

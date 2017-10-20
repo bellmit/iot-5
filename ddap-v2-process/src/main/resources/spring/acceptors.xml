@@ -7,12 +7,12 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
         
-    <context:component-scan base-package="com.cetiti.ddapv2.process">
+   <!--  <context:component-scan base-package="com.cetiti.ddapv2.process">
 	    <context:exclude-filter type="regex"
 				expression="com.cetiti.ddapv2.process.web.*" />
-    </context:component-scan>
+    </context:component-scan> -->
     
-    <context:property-placeholder location="classpath:config.properties,classpath:store.properties"/>
+    <context:property-placeholder location="classpath:config.properties,classpath:store.properties,classpath:ddapHttpClient.properties"/>
     
     <bean id="demoChannelInitializer" class="com.cetiti.ddapv2.process.handler.demo.DemoChannelInitializer" />
     <bean id="demoAcceptor" class="com.cetiti.ddapv2.process.acceptor.TcpServerAcceptor">
@@ -29,16 +29,12 @@
     	<property name="channelHandler" ref="httpChannelInitializer"/>
     </bean>
     
-    <bean id="webServerAcceptor" class="com.cetiti.ddapv2.process.web.WebServerAcceptor">
-	    <constructor-arg name="port" value="${tcp.server.webServerAcceptor.port}"/>
-    </bean>
-    
     <bean id="processer" class="com.cetiti.ddapv2.process.Processer">
         <property name="acceptors">
         	<list>
-	        	<!-- <ref bean="demoAcceptor"/>
-	        	<ref bean="httpAcceptor"/> -->
-	        	<ref bean="webServerAcceptor"/>
+	        	<ref bean="demoAcceptor"/>
+	        	<ref bean="httpAcceptor"/> 
+	        	<!-- <ref bean="webServerAcceptor"/> -->
         	</list>
         </property>
     </bean>

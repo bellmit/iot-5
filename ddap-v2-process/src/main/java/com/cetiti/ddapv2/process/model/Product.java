@@ -1,5 +1,12 @@
 package com.cetiti.ddapv2.process.model;
 import java.util.List;
+import java.util.Map;
+
+import org.springframework.util.StringUtils;
+
+import com.cetiti.ddapv2.process.util.JsonUtil;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * @Description TODO
@@ -10,11 +17,14 @@ import java.util.List;
 public class Product extends Thing {
 	
 	private String protocol;
+	@ApiModelProperty(hidden=true)
 	private String dataAttributes;
 	//标签和单位 考虑加一个label
+	@ApiModelProperty(hidden=true)
 	private List<DataItem> dataAttributeList;
-
+	@ApiModelProperty(hidden=true)
 	private String productKey;
+	@ApiModelProperty(hidden=true)
 	private String productSecret;
 	
 	public String getProtocol() {
@@ -47,6 +57,32 @@ public class Product extends Thing {
 	}
 	public void setProductSecret(String productSecret) {
 		this.productSecret = productSecret;
+	}
+	
+	@Override
+	public Map<String, Object> toMap() {
+		Map<String, Object> map = super.toMap();
+		if(StringUtils.hasText(this.protocol)){
+			map.put("protocol", this.protocol);
+		}
+		if(StringUtils.hasText(this.dataAttributes)){
+			if(null==dataAttributeList){
+				JsonUtil jsonUtil = new JsonUtil();
+				dataAttributeList = jsonUtil.listFromJson(this.dataAttributes, DataItem.class);
+			}
+			for(DataItem item:dataAttributeList){
+				map.put(item.getKey(), item.getLabel());
+				map.put(item.getKey()+"Unit", item.getUnit());
+			}
+		}
+		if(StringUtils.hasText(this.productKey)){
+			map.put("productKey", this.productKey);
+		}
+		if(StringUtils.hasText(this.productSecret)){
+			map.put("productSecret", productSecret);
+		}
+		
+		return map;
 	}
 	
 	@Override

@@ -12,6 +12,17 @@ public class Item {
 	private String key;
 	private Object value;
 	
+	
+	public Item() {
+		
+	}
+
+	public Item(String label, String key, Object value) {
+		this.label = label;
+		this.key = key;
+		this.value = value;
+	}
+	
 	public String getLabel() {
 		return label;
 	}

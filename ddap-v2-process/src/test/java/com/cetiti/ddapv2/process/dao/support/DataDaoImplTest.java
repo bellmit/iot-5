@@ -32,7 +32,7 @@ public class DataDaoImplTest extends AbstractJUnit4SpringContextTests {
 
 	@Test
 	public void testSelectData() {
-		dataDao.selectData("12313200", 100).stream().forEach(System.out::println);
+		//dataDao.selectData("12313200", 100).stream().forEach(System.out::println);
 	}
 
 }

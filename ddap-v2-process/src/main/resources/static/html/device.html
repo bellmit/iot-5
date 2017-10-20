@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>物联网数据平台</title>
+
+<link href="/resources/css/bootstrap.css" rel="stylesheet">
+<link href="/resources/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="/resources/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="/resources/css/platform.css" rel="stylesheet">
+</head>
+<body>
+  <header>
+  	<div class="wrapper">
+  	  <h1 class="col-md-3">物联网数据平台</h1>
+  	  <form class="col-md-offset-5 col-md-3 form-inline" role="search">
+  	  	<div class="input-group">
+  	  	  <span class="glyphicon glyphicon-search input-group-addon" aria-hidden="true"></span>
+          <input id="searchInput" type="text" class="form-control" placeholder="搜索"> 
+        </div>
+  	  </form>
+  	  <div class="col-md-1 u-panel">
+  	    <a href="#">登录</a>
+  	  </div>
+ 
+  	</div>
+  	  
+  </header>
+  <div>
+    <nav id="left-menu" >
+      <span class="glyphicon glyphicon-align-justify nav-icon-active" aria-hidden="true"></span>
+      <ul class="list-unstyled">
+        <li>
+          <a href="product.html">产品管理</a>
+        </li>
+        <li>
+          <a href="device.html">设备管理</a>
+        </li>
+        <li>
+          <a href="rule.html">规则管理</a>
+        </li>
+      </ul>
+    </nav>
+    <div id="main">
+      <ul class="nav nav-tabs">
+        <li class="active">
+          <a href="#list" data-toggle="tab">设备列表</a>
+        </li>
+        <li>
+          <a id="detailTab" href="#detail" data-toggle="tab">设备详情</a>
+        </li>
+        <li>
+          <a id="newTab" href="#detail" data-toggle="tab">新建设备</a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div id="list" class="tab-pane fade in active">
+          <div>
+	   		<!-- <h4><strong>平台用户</strong></h4> -->
+	    	<table id="listTable" class="table table-striped table-bordered"  >
+	    		<thead>
+	    			<tr>
+	    				<th class="col-md-2" >设备编号</th>
+	    				<th class="col-md-2" >产品编号</th>
+	    				<th class="col-md-2" >设备序列号</th>
+	    				<th class="col-md-2" >设备名称</th>
+		    			<th class="col-md-3" >设备描述</th>
+		    			<!-- <th class="col-md-3" style="min-width:150px;">应用地址</th> -->
+		    			<th class="col-md-4" >操作</th>
+		    		</tr>
+	    		</thead>
+	    		<tbody>
+	    			
+	    		</tbody>
+	    	</table>
+	      </div>
+          
+        </div>
+        <div id="detail" class="tab-pane fade">
+          <fieldset>
+            <div class="col-md-6 border-right">
+              <h4>基本信息</h4>
+              <div class="col-md-6">
+	            <label>编号</label>
+	            <div class="col-md-10">
+	              <input type="text" v-model="product.id"  readonly="true" class="form-control">
+	            </div>
+	          </div>
+	          <div class="col-md-6">
+	            <label>产品</label>
+	            <div class="col-md-10">
+	              <input type="text" v-model="product.productId" class="form-control">
+	            </div>
+	          </div>
+	          <div class="col-md-6">
+	            <label>序列号</label>
+	            <div class="col-md-10">
+	              <input type="text" v-model="product.serialNumber" class="form-control">
+	            </div>
+	          </div>
+	          <div class="col-md-6">
+	            <label>名称</label>
+	            <div class="col-md-10">
+	              <input type="text" v-model="product.name" class="form-control" >
+	            </div>
+	          </div>
+	           <div class="col-md-6">
+	            <label>经度</label>
+	            <div class="col-md-10">
+	              <input type="text" v-model="product.longitude" class="form-control" >
+	            </div>
+	          </div>
+	          <div class="col-md-6">
+	            <label>纬度</label>
+	            <div class="col-md-10">
+	              <input type="text" v-model="product.latitude" class="form-control" >
+	            </div>
+	          </div>
+	          <div class="col-md-12">
+	            <label>描述</label>
+	            <div class="col-md-11">
+	              <input type="text" v-model="product.description" class="form-control" >
+	            </div>
+	          </div>
+            </div>
+            <div class="col-md-6 border-left">
+              <h4>设备描述属性</h4>
+              <table>
+              	<thead>
+              	  <tr>
+              	    <th>属性名称</th>
+              	    <th>属性值</th>
+              	    <th>属性说明</th>
+              	    <th>操作</th>
+              	  </tr>
+              	</thead>
+              	<tbody>
+              	  <tr v-for="(attr, i) in product.descAttributes">
+              	    <td>{{attr.key}}</td>
+              	    <td>{{attr.value}}</td>
+              	    <td>{{attr.label}}</td>
+              	    <td><button class="btn btn-default" @click="deleteDescAttr(i)">删除</button></td>
+              	  </tr>
+              	  <tr>
+              	    <td><input class="form-control" v-model="descAttr.key" type="text"></td>
+              	    <td><input class="form-control" v-model="descAttr.value" type="text"></td>
+              	    <td><input class="form-control" v-model="descAttr.label" type="text"></td>
+              	    <td><button class="btn btn-default" @click="addDescAttr()">添加</button></td>
+              	  </tr>
+              	</tbody>
+              </table>
+            </div>
+          </fieldset>
+          <div class="op-save">
+            <button class="btn btn-primary" @click="save()">保存</button>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+  <div class="container">
+    <div id="confirmModal" class="modal fade in" style="z-index:1080;">
+        <div class="modal-dialog modal-content" style="margin-top:12%; width:400px;">
+            <div class="modal-header" style="background-color: #428bca; padding: 3px 10px;" ><strong>确定删除数据?</strong></div>
+            <div class="modal-body container-fluid">
+                <p class="confirm-content"></p>
+            </div>
+            <div class="modal-footer" style="padding:5px 15px;">
+                <button name="submit" class="btn btn-primary">确认</button>
+                <button class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+  </div>
+  
+  <footer>
+    <p>Copyright©2017 中电海康集团有限公司  版权所有</p>
+  </footer>
+  
+  <script src="/resources/js/jquery-1.12.3.min.js"></script>
+  <script src="/resources/js/bootstrap.js"></script>
+  <script src="/resources/js/vue.js"></script>
+  <script src="/resources/js/jquery.dataTables.min.js"></script>
+  <script>
+    $(function(){
+		$("#searchInput").keyup( function() {
+			$("#listTable").DataTable().draw()	
+		})
+		$("#detailTab").click(function(){
+			if(listTable.rowData&&listTable.rowData.id){
+				detailVue.update(listTable.rowData)
+			}else{
+				detailVue.add()
+			}
+		})
+		
+		$("#left-menu li.active").removeClass("active")
+		$("#left-menu a[href^='device']").parent().addClass("active")
+		
+		$("#newTab").click(function(){
+			detailVue.add()
+		})
+		var computeStyle = function(){
+			$("#left-menu").css('min-height', ($(window).height() -100) + 'px')
+			$("#main").css('width', ($(window).width() -200) + 'px')
+		}
+		computeStyle()
+	})
+  
+    var detailVue = new Vue({
+        el: '#detail',
+        data: {
+        	apiUrl:'',
+      	  	descAttr: {
+	      		label:'',
+	      		key:'',
+	      		value:''
+	      	},
+      	  	product: {
+      			id:'',
+      			productId:'',
+      			name:'',
+      			description:'',
+      			serialNumber:'',
+      			longitude:null,
+      			latitude:null,
+      			descAttributes:[]
+      	  	},
+      	  	initProduct:{}
+        },
+        created: function () {
+        	this.initProduct = this.product
+        },
+        methods: {
+        	init: function() {
+        		this.product = this.initProduct;
+        		this.descAttr = {label:'', key:'', value:''}
+        	},
+          	setProduct: function(product){
+        		if(product) { 
+        			this.product = product
+        			this.$set(this.product, 'descAttributes', JSON.parse(product.descAttributes))	
+        		}
+          	},
+          	addDescAttr: function(){
+        		this.product.descAttributes.push(this.descAttr)
+        		this.descAttr = {label:'', key:'', value:''}
+         	},
+          	deleteDescAttr: function(index) {
+        		this.product.descAttributes.splice(index,1)
+          	},
+          	add: function() {
+          		this.init()
+          		this.apiUrl='/device/new'
+          	},
+          	update: function(p) {
+          		this.setProduct(p)
+          		this.apiUrl='/device/update'
+          	},
+          	save: function(api) {
+        		var vm = this.product
+        		var param = {
+	      			id:vm.id,
+	      			productId:vm.productId,
+	      			name:vm.name,
+	      			description:vm.description,
+	      			serialNumber:vm.serialNumber,
+	      			longitude:vm.longitude,
+	      			latitude:vm.latitude,
+	      			descAttributes:JSON.stringify(vm.descAttributes)
+	      	  	}
+        		console.log('url'+this.apiUrl)
+        		$.ajax({
+			  		type:"post",
+			  		url:this.apiUrl,
+			  		dataType:"json",
+			  		data: param,
+			  		success:function(data){
+			  			listTable.reload()
+			  		}
+		    	}) 
+       		}
+        
+         }
+	})
+    
+    $.fn.dataTable.ext.search.push(
+		function( settings, data, dataIndex ) {
+			var search = $("#searchInput").val()
+			for(i in data){
+				if(data[i].indexOf(search)>=0){
+					return true
+				}
+			}
+			return false
+		}
+	)
+	
+    var listTable={
+    		rowId:null,
+    		rowData:{},
+    		table: $("#listTable").DataTable({
+    			"bAutoWidth": false,
+    			//"ajax": "user/personUerList",
+    			"ajax":{
+    				"url":"/device/list",
+    				"contentType": "application/json",
+    				"data":function(d){
+    					return d.data
+    				}
+    			},
+    			"columnDefs": [
+                	{	                          
+                    	"defaultContent": "",
+                        "targets": "_all"
+                   	},
+                	{
+                   		"targets" : 5,
+						"render" : function(data, type, row) {
+							var r = JSON.stringify(row);
+							var op = "<button type='button' onclick='listTable.updateDetail("+ r +")' class='btn btn-default btn-sm'>"
+							op += "<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>"
+							op += "</button>"
+							op += "<button type='button' onclick='listTable.deleteModal("+ r +")' class='btn btn-default btn-sm'>"
+							op += "<span class='glyphicon glyphicon-trash' aria-hidden='true'></span>"
+							op += "</button>"
+
+							return op
+						}
+                   	}
+                ],	      
+    			"columns":[
+    				{"data":"id"},
+    				{"data":"productId"},
+    				{"data":"serialNumber"},
+    				{"data":"name"},
+    				{"data":"description"}
+    			],
+    			"bStateSave": true,
+    			"oLanguage": {
+					"sLengthMenu": "每页显示 _MENU_ 条记录",
+				    "sZeroRecords": "<p>对不起，查询不到任何相关数据</p> <span onclick='application.addModal();' class='btn btn-default btn-xs'>新增</span>",
+				    "sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
+				    "sInfoEmtpy": "找不到相关数据",
+				    "sInfoFiltered": "数据表中共为 _MAX_ 条记录)",
+				    "sProcessing": "正在加载中...",
+				    "sSearch": "搜索",
+				    "sUrl": "", 
+				    "oPaginate": {
+				    	"sFirst":    "第一页",
+				        "sPrevious": " 上一页 ",
+				        "sNext":     " 下一页 ",
+				        "sLast":     " 最后一页 "
+				     }
+				}, 
+				"aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+				"bInfo": false,
+				"bFilter": true,  //l-每页显示数量 f-过滤输入  t-表单Table i-信息  p-翻页 r-pRocessing
+				"sDom": '<"top"i>rt<"bottom"pl><"clear">',
+    		}),
+    		updateDetail:function(p){
+    			$("#detailTab").click()
+    			detailVue.update(p)
+    		},
+    		reload:function(){
+    			this.table.ajax.reload()
+	    	},
+	    	deleteModal:function(row){
+	    		if(!row){
+	    			return
+	    		}
+	    		console.log(row);
+	    		$("#confirmModal .confirm-content").html(row.name)
+	    		$("#confirmModal button[name='submit']").attr("onclick","listTable.del('"+ row.id +"')")
+	    		$("#confirmModal").modal('show')
+	    	},
+	    	del:function(id){
+	    		var $this = this
+	    		$.post("/device/delete", {deviceId:id}, function(data){
+	    			$this.reload()
+    				$("#confirmModal").modal('hide')
+	    		}, "json")
+	    	}
+	    	
+    	}
+    	
+    	$('#listTable tbody').on('click', 'tr', function(){
+ 	        if ($(this).hasClass('selected')) {
+ 	            $(this).removeClass('selected')
+ 	        } else {
+ 	            $('#listTable').DataTable().$('tr.selected').removeClass('selected')
+ 	            $(this).addClass('selected')
+ 	        }
+ 	        var data = $('#listTable').DataTable().row('.selected').data()
+ 	        listTable.rowData = data
+ 	        if(data){
+ 	        	listTable.rowId = data.id
+ 	        }
+ 	        //console.log(data);
+ 	    })
+		
+		
+  </script> 
+  
+</body>
+
+</html>

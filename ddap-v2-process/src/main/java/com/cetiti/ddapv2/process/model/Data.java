@@ -1,10 +1,16 @@
 package com.cetiti.ddapv2.process.model;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.util.StringUtils;
+
 public class Data {
+	
+	public static final char STATE_NOMAL = '0';
+	public static final char STATE_WARNING = '1';
 	
 	private String deviceId;
 	
@@ -12,9 +18,13 @@ public class Data {
 	
 	private String strData;
 	
-	private List<Map<String, Object>> lmData;
+	private Map<String, Object> mapData;
 	
 	private List<DataItem> objData;
+	
+	private char warningState = STATE_NOMAL;
+	
+	private String warningRuleId;
 	
 	private int timeStamp;
 	
@@ -43,12 +53,12 @@ public class Data {
 		this.strData = strData;
 	}
 
-	public List<Map<String, Object>> getLmData() {
-		return lmData;
+	public Map<String, Object> getMapData() {
+		return mapData;
 	}
 
-	public void setLmData(List<Map<String, Object>> lmData) {
-		this.lmData = lmData;
+	public void setMapData(Map<String, Object> mapData) {
+		this.mapData = mapData;
 	}
 
 	public List<DataItem> getObjData() {
@@ -59,6 +69,22 @@ public class Data {
 		this.objData = objData;
 	}
 
+	public char getWarningState() {
+		return warningState;
+	}
+
+	public void setWarningState(char warningState) {
+		this.warningState = warningState;
+	}
+	
+	public String getWarningRuleId() {
+		return warningRuleId;
+	}
+
+	public void setWarningRuleId(String warningRuleId) {
+		this.warningRuleId = warningRuleId;
+	}
+
 	public int getTimeStamp() {
 		return timeStamp;
 	}
@@ -66,11 +92,29 @@ public class Data {
 	public void setTimeStamp(int timeStamp) {
 		this.timeStamp = timeStamp;
 	}
+	
+	public Map<String, Object> toMap(){
+		Map<String, Object> map = new HashMap<>();
+		map.put("deviceId", this.deviceId);
+		if(null!=this.mapData){
+			map.putAll(this.mapData);
+		}
+		map.put("warningState", this.warningState);
+		if(StringUtils.hasText(warningRuleId)){
+			map.put("warningRuleId", this.warningRuleId);
+		}
+		if(timeStamp==0){
+			this.timeStamp = (int)System.currentTimeMillis()/1000;
+		}
+		map.put("timeStamp", this.timeStamp);
+		return map;
+	}
 
 	@Override
 	public String toString() {
 		return "Data [deviceId=" + deviceId + ", rawData=" + Arrays.toString(rawData) + ", strData=" + strData
-				+ ", timeStamp=" + timeStamp + "]";
+				+ ", mapData=" + mapData + ", objData=" + objData + ", warningState=" + warningState
+				+ ", warningRuleId=" + warningRuleId + ", timeStamp=" + timeStamp + "]";
 	}
 	
 }

@@ -2,6 +2,7 @@ package com.cetiti.ddapv2.process.dao;
 
 import java.util.List;
 
+import com.cetiti.ddapv2.process.model.Page;
 import com.cetiti.ddapv2.process.model.Product;
 
 public interface ProductDao {
@@ -15,5 +16,9 @@ public interface ProductDao {
 	Product selectProduct(String productId);
 	
 	List<Product> selectProductList(Product product);
+	
+	List<Product> selectProductList(Product product, Page<?> page);
+	
+	int countProduct(Product product);
 
 }

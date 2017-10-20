@@ -1,6 +1,12 @@
 package com.cetiti.ddapv2.process.model;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.util.StringUtils;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * @Description TODO
@@ -17,11 +23,20 @@ public class DBModel {
 	
 	public static final String PREFIX_DEVICE = "D";
 	public static final String PREFIX_PRODUCT = "P";
+	public static final String PREFIX_RULE = "R";
 	
 	protected String id;
+	@ApiModelProperty(hidden=true)
 	private char dataState;
+	@ApiModelProperty(hidden=true)
 	private Date createTime;
+	@ApiModelProperty(hidden=true)
 	private Date updateTime;
+	
+	public static boolean isLegalDataState(char state){
+		return STATE_NEW==state||STATE_CHECKED==state||
+				STATE_LOCK==state||STATE_DELETE==state;
+	}
 	
 	public String getId() {
 		return id;
@@ -46,6 +61,14 @@ public class DBModel {
 	}
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
+	}
+	
+	public Map<String, Object> toMap() {
+		Map<String, Object> map = new HashMap<>();
+		if(StringUtils.hasText(this.id)){
+			map.put("id", this.id);
+		}
+		return map;
 	}
 	
 	@Override

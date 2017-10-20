@@ -2,6 +2,9 @@ package com.cetiti.ddapv2.process.service.support;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -10,9 +13,11 @@ import org.springframework.stereotype.Service;
 
 import com.cetiti.ddapv2.process.dao.ProductDao;
 import com.cetiti.ddapv2.process.model.Account;
+import com.cetiti.ddapv2.process.model.Page;
 import com.cetiti.ddapv2.process.model.Product;
 import com.cetiti.ddapv2.process.service.ProductService;
 import com.cetiti.ddapv2.process.util.EncryptUtil;
+import com.cetiti.ddapv2.process.util.LocalCache;
 import com.cetiti.ddapv2.process.util.MessageContext;
 import com.cetiti.ddapv2.process.util.MessageUtil;
 
@@ -30,6 +35,8 @@ public class ProductServiceImpl implements ProductService{
 	private ProductDao productDao;
 	@Resource
 	private MessageUtil msgUtil;
+	@Resource
+	private LocalCache cache;
 	
 	@Override
 	public boolean addProduct(Account account, Product product) {
@@ -49,13 +56,23 @@ public class ProductServiceImpl implements ProductService{
 		
 		return true;
 	}
+	
+	private Product getProduct(String productId){
+		try{
+			return productDao.selectProduct(productId);
+		}catch (Exception e) {
+			MessageContext.setMsg(msgUtil.get("db.exception"));
+			LOGGER.error("getProduct [{}] execption [{}]", productId, e.getMessage());
+		}
+		return null;
+	}
 
 	@Override
 	public boolean deleteProduct(Account account, String productId) {
 		if(null==account||null==account.getAccount()||null==productId){
 			return false;
 		}
-		Product product = productDao.selectProduct(productId);
+		Product product = getProduct(productId);
 		if(null==product){
 			return true;
 		}
@@ -79,7 +96,7 @@ public class ProductServiceImpl implements ProductService{
 				||null==product||null==product.getId()){
 			return false;
 		}
-		Product dbProduct = productDao.selectProduct(product.getId());
+		Product dbProduct = getProduct(product.getId());
 		if(null==dbProduct){
 			MessageContext.setMsg(msgUtil.get("parameter.not.exist", product.getId()));
 			return false;
@@ -90,9 +107,10 @@ public class ProductServiceImpl implements ProductService{
 		}
 		try{
 			productDao.updateProduct(product);
+			cache.removeProduct(product.getId());
 		}catch (Exception e) {
 			MessageContext.setMsg(msgUtil.get("db.exception"));
-			LOGGER.error("updateProduct [{}]", e.getMessage());
+			LOGGER.error("updateProduct [{}] exception [{}]", product, e.getMessage());
 			return false;
 		}
 		return true;
@@ -113,9 +131,47 @@ public class ProductServiceImpl implements ProductService{
 			return productDao.selectProductList(product);
 		}catch (Exception e) {
 			MessageContext.setMsg(msgUtil.get("db.exception"));
-			LOGGER.error("getProductList [{}]", e.getMessage());
+			LOGGER.error("getProductList [{}] exception [{}]", product, e.getMessage());
 		}
 		return new ArrayList<>();
 	}
+
+	@Override
+	public Page<Product> getProductPage(Account account, final Product product, Page<Product> page) {
+		if(null==account||null==account.getAccount()){
+			return page;
+		}
+		if(!account.isAdmin()){
+			product.setOwner(account.getAccount());
+		}
+		CompletableFuture<List<Product>> productFuture = new CompletableFuture<>();
+		new Thread(() -> {
+			List<Product> list = new ArrayList<>();
+			try{
+				list = productDao.selectProductList(product, page);
+				productFuture.complete(list);
+			}catch (Exception e) {
+				MessageContext.setMsg(msgUtil.get("db.exception"));
+				productFuture.completeExceptionally(e);
+				LOGGER.error("getProductPage [{}] page [{}] exception [{}]", product, page, e.getMessage());
+			}
+		}).start();
+		int count = 0;
+		try{
+			count = productDao.countProduct(product);
+		}catch (Exception e) {
+			MessageContext.setMsg(msgUtil.get("db.exception"));
+			LOGGER.error("getProductPage [{}] exception [{}]", product, e.getMessage());
+		}
+		page.setTotal(count);
+		try {
+			page.setList(productFuture.get());
+		} catch (InterruptedException | ExecutionException e) {
+			LOGGER.error("page.setList [{}]", e.getMessage());
+			return null;
+		}
+		return page;
+	}
+	
 
 }

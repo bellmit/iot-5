@@ -99,8 +99,12 @@ public class AccountController {
 	
 	@ApiOperation("获取用户列表")
 	@RequestMapping(value="/list", method=RequestMethod.GET)
-	public RestResult getAccount(HttpServletRequest request){
-		Account account = RestSecurity.getSessionAccount(request);
+	public RestResult getAccount(Account account, HttpServletRequest request){
+		Account sessionAccount = RestSecurity.getSessionAccount(request);
+		account = null==account?new Account():account;
+		if(!RestSecurity.isAdmin(request)){
+			account.setAccount(sessionAccount.getAccount());
+		}
 		return RestResult.defaultSuccessResult(accountService.getAccountList(account));
 	}
 

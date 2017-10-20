@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cetiti.ddapv2.process.model.Account;
@@ -29,7 +30,7 @@ public class DeviceController {
 	private DeviceService deviceService;
 	
 	@ApiOperation("新增设备")
-	@RequestMapping("/new")
+	@RequestMapping(value="/new", method=RequestMethod.POST)
 	public RestResult addDevice(Device device, HttpServletRequest request){
 		Account account = RestSecurity.getSessionAccount(request);
 		if(deviceService.addDevice(account, device)){
@@ -40,7 +41,7 @@ public class DeviceController {
 	}
 	
 	@ApiOperation("修改设备")
-	@RequestMapping("/update")
+	@RequestMapping(value="/update", method=RequestMethod.POST)
 	public RestResult updateDevice(Device device, HttpServletRequest request){
 		Account account = RestSecurity.getSessionAccount(request);
 		if(deviceService.updateDevice(account, device)){
@@ -51,7 +52,7 @@ public class DeviceController {
 	}
 	
 	@ApiOperation("删除设备")
-	@RequestMapping("/delete")
+	@RequestMapping(value="/delete", method=RequestMethod.POST)
 	public RestResult deleteDevice(String deviceId, HttpServletRequest request){
 		Account account = RestSecurity.getSessionAccount(request);
 		if(deviceService.deleteDevice(account, deviceId)){
@@ -62,7 +63,7 @@ public class DeviceController {
 	}
 	
 	@ApiOperation("获取设备列表")
-	@RequestMapping("/list")
+	@RequestMapping(value="/list", method=RequestMethod.GET)
 	public RestResult getDevice(Device device, HttpServletRequest request){
 		Account account = RestSecurity.getSessionAccount(request);
 		return RestResult.defaultSuccessResult(deviceService.getDeviceList(account, device));

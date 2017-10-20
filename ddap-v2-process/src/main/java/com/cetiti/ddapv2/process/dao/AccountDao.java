@@ -12,7 +12,7 @@ public interface AccountDao {
 	
 	int updateAccount(Account account);
 	
-	List<Account> selectAccountList();
+	List<Account> selectAccountList(Account account);
 	
 	Account selectAccount(String account);
 

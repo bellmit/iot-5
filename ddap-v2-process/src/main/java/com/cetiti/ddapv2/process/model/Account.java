@@ -28,6 +28,8 @@ public class Account extends DBModel {
 	private String userKey;
 	private String userSercret;
 	
+	private String dataPostUrl;
+	
 	public boolean isAdmin(){
 		return ROLE_ADMIN.equals(getRole());
 	}
@@ -92,14 +94,20 @@ public class Account extends DBModel {
 	public void setToken(String token) {
 		this.token = token;
 	}
+	public String getDataPostUrl() {
+		return dataPostUrl;
+	}
+
+	public void setDataPostUrl(String dataPostUrl) {
+		this.dataPostUrl = dataPostUrl;
+	}
 
 	@Override
 	public String toString() {
 		return "Account [account=" + account + ", password=" + password + ", role=" + role + ", privileges="
 				+ privileges + ", phone=" + phone + ", email=" + email + ", address=" + address + ", token=" + token
-				+ ", userKey=" + userKey + ", userSercret=" + userSercret + ", id=" + id + ", getDataState()="
-				+ getDataState() + ", getCreateTime()=" + getCreateTime() + ", getUpdateTime()=" + getUpdateTime()
-				+ "]";
+				+ ", userKey=" + userKey + ", userSercret=" + userSercret + ", dataPostUrl=" + dataPostUrl + "]";
 	}
+
 	
 }

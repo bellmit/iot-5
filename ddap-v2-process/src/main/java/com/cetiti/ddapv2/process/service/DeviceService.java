@@ -3,6 +3,7 @@ package com.cetiti.ddapv2.process.service;
 import java.util.List;
 
 import com.cetiti.ddapv2.process.model.Device;
+import com.cetiti.ddapv2.process.model.Page;
 import com.cetiti.ddapv2.process.model.Account;
 
 /**
@@ -23,6 +24,8 @@ public interface DeviceService {
 	boolean deleteDevice(Account account, String deviceId);
 	
 	List<Device> getDeviceList(Account account, Device device);
+	
+	Page<Device> getDevicePage(Account account, Device device, Page<Device> page);
 	
 	int cmd(Account account, Device device, String cmd);
 }

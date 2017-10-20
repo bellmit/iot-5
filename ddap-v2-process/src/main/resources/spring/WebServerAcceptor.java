@@ -169,5 +169,9 @@ public class WebServerAcceptor extends AbstractAcceptor{
 		// Strip off "WEB-INF/web.xml"
 		return urlStr.substring(0, urlStr.length() - 15);
 	}
+	
+	public static void main(String[] args) throws Exception {
+		Class.forName(CLASSONLYAVAILABLEINIDE);
+	}
 
 }

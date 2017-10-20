@@ -15,12 +15,10 @@
         <property name="username" value="${ddap.jdbc.username}"/>
         <property name="password" value="${ddap.jdbc.password}"/>
     </bean>
-   <!--  <bean id="ddapDao" class="com.cetiti.ddapv2.hub.hiktech.RfidDaoImpl">
-    	<property name="dataSource" ref="ddapDataSource"/> 
-    </bean>
     
-    <bean id="lampDao" class="com.cetiti.ddapv2.hub.eboy.LampDaoImpl">
-    	<property name="dataSource" ref="ddapDataSource"/>
-    </bean> -->
-    
+     <bean id="ddapJdbcTemplate" class="com.cetiti.ddapv2.process.dao.PaginationJdbcTemplate">
+		<property name="dataSource" ref="ddapDataSource" />
+	</bean>
+   
+   
 </beans>

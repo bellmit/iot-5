@@ -13,9 +13,11 @@ import org.springframework.util.StringUtils;
 import com.cetiti.ddapv2.process.dao.AccountDao;
 import com.cetiti.ddapv2.process.model.Account;
 import com.cetiti.ddapv2.process.service.AccountService;
-import com.cetiti.ddapv2.process.util.MessageUtil;
 import com.cetiti.ddapv2.process.util.EncryptUtil;
+import com.cetiti.ddapv2.process.util.LocalCache;
 import com.cetiti.ddapv2.process.util.MessageContext;
+import com.cetiti.ddapv2.process.util.MessageUtil;
+
 
 /**
  * @Description TODO
@@ -32,6 +34,8 @@ public class AccountServiceImpl implements AccountService{
 	private AccountDao accountDao;
 	@Resource
 	private MessageUtil msgUtil;
+	@Resource
+	private LocalCache cache;
 	
 	@Override
 	public Account getAccount(String account) {
@@ -84,6 +88,7 @@ public class AccountServiceImpl implements AccountService{
 		}
 		try{
 			accountDao.deleteAccount(account);
+			cache.removeAccount(account);
 			return true;
 		}catch (Exception e) {
 			MessageContext.setMsg(msgUtil.get("db.exception"));
@@ -100,6 +105,7 @@ public class AccountServiceImpl implements AccountService{
 		}
 		try{
 			accountDao.updateAccount(account);
+			cache.removeAccount(account.getAccount());
 			return true;
 		}catch (Exception e) {
 			MessageContext.setMsg(msgUtil.get("db.exception"));
@@ -130,20 +136,8 @@ public class AccountServiceImpl implements AccountService{
 
 	@Override
 	public List<Account> getAccountList(Account account) {
-		if(null==account||null==account.getAccount()){
-			return new ArrayList<>();
-		}
 		try{
-			if(account.isAdmin()){
-				return accountDao.selectAccountList();
-			}else {
-				Account dbAccount = accountDao.selectAccount(account.getAccount());
-				List<Account> retn = new ArrayList<>();
-				if(null!=dbAccount){
-					retn.add(dbAccount);
-				}
-				return retn;
-			}
+			return accountDao.selectAccountList(account);
 		}catch (Exception e) {
 			MessageContext.setMsg(msgUtil.get("db.exception"));
 			LOGGER.error("getAccountList [{}]", e.getMessage());

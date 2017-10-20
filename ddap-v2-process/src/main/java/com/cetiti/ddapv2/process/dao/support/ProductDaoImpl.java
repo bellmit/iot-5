@@ -5,27 +5,24 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
-import javax.sql.DataSource;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
+import javax.annotation.Resource;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
+import com.cetiti.ddapv2.process.dao.PaginationJdbcTemplate;
 import com.cetiti.ddapv2.process.dao.ProductDao;
+import com.cetiti.ddapv2.process.model.DBModel;
+import com.cetiti.ddapv2.process.model.Page;
 import com.cetiti.ddapv2.process.model.Product;
 import com.cetiti.ddapv2.process.util.SequenceGenerator;
+
 
 @Repository
 public class ProductDaoImpl implements ProductDao {
 
-	private JdbcTemplate jdbcTemplate;
-	
-	@Autowired
-    public void setDataSource(DataSource dataSource) {
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
-    }
+	@Resource(name="ddapJdbcTemplate")
+	private PaginationJdbcTemplate jdbcTemplate;
 	
 	@Override
 	public int insertProduct(Product product) {
@@ -80,11 +77,30 @@ public class ProductDaoImpl implements ProductDao {
 
 	@Override
 	public List<Product> selectProductList(Product product) {
-		Object[] select = buildSelectSql(product);
+		Object[] select = buildSelectSql("select * from ddap_product", product);
 		String sql = (String)select[select.length-1];
 		Object[] values = new Object[select.length-1];
 		System.arraycopy(select, 0, values, 0, select.length-1);
 		return this.jdbcTemplate.query(sql, values, new ProductMapper());
+	}
+	
+	@Override
+	public List<Product> selectProductList(Product product, Page<?> page) {
+		Object[] select = buildSelectSql("select * from ddap_product", product);
+		String sql = (String)select[select.length-1];
+		Object[] values = new Object[select.length-1];
+		System.arraycopy(select, 0, values, 0, select.length-1);
+		return this.jdbcTemplate.queryPagination(sql, values, 
+				page.getPageNum(), page.getPageSize(), new ProductMapper());
+	}
+	
+	@Override
+	public int countProduct(Product product) {
+		Object[] select = buildSelectSql("select count(*) from ddap_product", product);
+		String sql = (String)select[select.length-1];
+		Object[] values = new Object[select.length-1];
+		System.arraycopy(select, 0, values, 0, select.length-1);
+		return this.jdbcTemplate.queryForObject(sql, Integer.class, values);
 	}
 	
 	private static final class ProductMapper implements RowMapper<Product> {
@@ -108,10 +124,10 @@ public class ProductDaoImpl implements ProductDao {
 	    }
 	}
 	
-	private Object[] buildSelectSql(Product product){
+	private Object[] buildSelectSql(String selectOrCount, Product product){
 		StringBuilder select = new StringBuilder();
-		select.append("select id, name, description, desc_attributes, protocol, data_attributes, product_key, "
-				+ "product_secret, data_state, owner from ddap_product where 1");
+		select.append(selectOrCount);
+		select.append(" where 1");
 		if(null==product){
 			return new Object[]{select.toString()};
 		}
@@ -137,7 +153,7 @@ public class ProductDaoImpl implements ProductDao {
 			values[i] = "%"+product.getDescAttributes()+"%";
 			i++;
 		}
-		if(StringUtils.isEmpty(product.getDataAttributes())){
+		if(StringUtils.hasText(product.getDataAttributes())){
 			select.append(" and data_attributes like ?");
 			values[i] = "%"+product.getDataAttributes()+"%";
 			i++;
@@ -152,7 +168,7 @@ public class ProductDaoImpl implements ProductDao {
 			values[i] = product.getProductSecret();
 			i++;
 		}
-		if(StringUtils.isEmpty(product.getDataState())){
+		if(DBModel.isLegalDataState(product.getDataState())){
 			select.append(" and data_state = ?");
 			values[i] = String.valueOf(product.getDataState());
 			i++;
@@ -160,6 +176,13 @@ public class ProductDaoImpl implements ProductDao {
 		if(StringUtils.hasText(product.getOwner())){
 			select.append(" and owner = ?");
 			values[i] = product.getOwner();
+			i++;
+		}
+		if(null!=product.getUpdateTime()){
+			select.append(" and create_time >= ? or update_time >= ?");
+			values[i] = product.getUpdateTime();
+			i++;
+			values[i] = product.getUpdateTime();
 			i++;
 		}
 		values[i] = select.toString();
@@ -181,7 +204,7 @@ public class ProductDaoImpl implements ProductDao {
 		update.append("update ddap_product set update_time = ?");
 		values[i] = new Date(); 
 		i++;
-		if(!StringUtils.isEmpty(product.getDataState())){
+		if(DBModel.isLegalDataState(product.getDataState())){
 			update.append(", data_state = ?");
 			values[i] = String.valueOf(product.getDataState());
 			i++;

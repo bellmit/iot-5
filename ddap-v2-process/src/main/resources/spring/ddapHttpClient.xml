@@ -61,7 +61,7 @@
 		        <entry key="command" value="getrtulist"/>  
 		    </map>  
 		</property> 
-		<property name="cron" value="0/3 * * * * ?" />
+		<!-- <property name="cron" value="0/3 * * * * ?" /> -->
 		<property name="httpMethod" value="post" />
 		<property name="requestConfig" ref="defaultRequestConfig" />
 	</bean>

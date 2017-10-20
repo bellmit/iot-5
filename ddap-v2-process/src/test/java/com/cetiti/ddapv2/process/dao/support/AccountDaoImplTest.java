@@ -61,7 +61,7 @@ public class AccountDaoImplTest {
 	
 	@Ignore
 	public void testSelectAccountList(){
-		accountDao.selectAccountList().stream().forEach(System.out::println);
+		accountDao.selectAccountList(null).stream().forEach(System.out::println);
 	}
 	
 

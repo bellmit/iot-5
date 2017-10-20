@@ -11,10 +11,16 @@ import org.springframework.jmx.export.annotation.ManagedResource;
 
 import com.cetiti.ddapv2.process.acceptor.Acceptor;
 
+/**
+ * @Description TODO
+ * @author Wuwuhao
+ * @date 2017年7月20日
+ * 
+ */
 @ManagedResource
 public class Processer {
 	
-private static final Logger LOGGER = LoggerFactory.getLogger(Processer.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(Processer.class);
 	
 	private List<Acceptor> acceptors;
 	private Thread[] workers;
@@ -48,7 +54,7 @@ private static final Logger LOGGER = LoggerFactory.getLogger(Processer.class);
 					}
 				}
 			}
-		}, "hubWatchDog");
+		}, "processerWatchDog");
 		watchDog.start();
 	}
 	

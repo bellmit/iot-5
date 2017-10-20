@@ -15,14 +15,11 @@ package com.cetiti.ddapv2.process.util;
 import java.security.MessageDigest;
 
 /**
- * 〈一句话功能简述〉
- * 
+ * @Description TODO
  * @author Wuwuhao
- * @version WSERP V1.0.0, 2016-6-15
- * @see
- * @since WSERP V1.0.0
+ * @date 2017年6月15日
+ * 
  */
-
 public class EncryptUtil {
 	
 	private static final String SALT_KEY = "20170728";

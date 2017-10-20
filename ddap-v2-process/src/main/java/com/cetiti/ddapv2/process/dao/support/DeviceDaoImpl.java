@@ -5,27 +5,29 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
-import javax.sql.DataSource;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
+import javax.annotation.Resource;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import com.cetiti.ddapv2.process.dao.DeviceDao;
+import com.cetiti.ddapv2.process.dao.PaginationJdbcTemplate;
+import com.cetiti.ddapv2.process.model.DBModel;
 import com.cetiti.ddapv2.process.model.Device;
+import com.cetiti.ddapv2.process.model.Page;
 import com.cetiti.ddapv2.process.util.SequenceGenerator;
 
+/**
+ * @Description TODO
+ * @author Wuwuhao
+ * @date 2017年7月21日
+ * 
+ */
 @Repository
 public class DeviceDaoImpl implements DeviceDao{
 	
-	private JdbcTemplate jdbcTemplate;
-	
-	@Autowired
-    public void setDataSource(DataSource dataSource) {
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
-    }
+	@Resource(name="ddapJdbcTemplate")
+	private PaginationJdbcTemplate jdbcTemplate;
 
 	@Override
 	public int insertDevice(Device device) {
@@ -35,11 +37,12 @@ public class DeviceDaoImpl implements DeviceDao{
 		device.setId(Device.PREFIX_DEVICE+SequenceGenerator.next());
 		device.setCreateTime(new Date());
 		device.setDataState(Device.STATE_NEW);
-		return this.jdbcTemplate.update("insert into ddap_device (id, name, description, desc_attributes, "
+		return this.jdbcTemplate.update("insert into ddap_device (id, serial_number, name, description, desc_attributes, "
 				+ "product_id, device_status, longitude, latitude, device_key, device_secret, data_state, owner, create_time) "
-				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 				new Object[]{
 						device.getId(),
+						device.getSerialNumber(),
 						device.getName(),
 						device.getDescription(),
 						device.getDescAttributes(),
@@ -73,21 +76,40 @@ public class DeviceDaoImpl implements DeviceDao{
 	}
 	
 	@Override
+	public Device selectDevice(String deviceId) {
+		return this.jdbcTemplate.queryForObject("select "
+				+ "id, serial_number, name, description, desc_attributes, product_id, device_status, longitude, "
+				+ "latitude, device_key, device_secret, data_state, owner "
+				+ "from ddap_device where id = ?", 
+				new Object[]{deviceId},  new DeviceMapper());
+	}
+	
+	@Override
 	public List<Device> selectDeviceList(Device device) {
-		Object[] select = buildSelectSql(device);
+		Object[] select = buildSelectSql("select * from ddap_device", device);
 		String sql = (String)select[select.length-1];
 		Object[] values = new Object[select.length-1];
 		System.arraycopy(select, 0, values, 0, select.length-1);
 		return this.jdbcTemplate.query(sql, values, new DeviceMapper());
 	}
+	
+	@Override
+	public List<Device> selectDeviceList(Device device, Page<?> page) {
+		Object[] select = buildSelectSql("select * from ddap_device", device);
+		String sql = (String)select[select.length-1];
+		Object[] values = new Object[select.length-1];
+		System.arraycopy(select, 0, values, 0, select.length-1);
+		return this.jdbcTemplate.queryPagination(sql, values, 
+				page.getPageNum(), page.getPageSize(), new DeviceMapper());
+	}
 
 	@Override
-	public Device selectDevice(String deviceId) {
-		return this.jdbcTemplate.queryForObject("select "
-				+ "id, name, description, desc_attributes, product_id, device_status, longitude, "
-				+ "latitude, device_key, device_secret, data_state, owner "
-				+ "from ddap_device where id = ?", 
-				new Object[]{deviceId},  new DeviceMapper());
+	public int countDevice(Device device) {
+		Object[] select = buildSelectSql("select count(*) from ddap_device", device);
+		String sql = (String)select[select.length-1];
+		Object[] values = new Object[select.length-1];
+		System.arraycopy(select, 0, values, 0, select.length-1);
+		return this.jdbcTemplate.queryForObject(sql, Integer.class, values);
 	}
 	
 	private static final class DeviceMapper implements RowMapper<Device> {
@@ -95,6 +117,7 @@ public class DeviceDaoImpl implements DeviceDao{
 	    public Device mapRow(ResultSet rs, int rowNum) throws SQLException {
 	        Device device = new Device();
 	    	device.setId(rs.getString("id"));
+	    	device.setSerialNumber(rs.getString("serial_number"));
 	    	device.setName(rs.getString("name"));
 	    	device.setDescription(rs.getString("description"));
 	    	device.setDescAttributes(rs.getString("desc_attributes"));
@@ -116,10 +139,10 @@ public class DeviceDaoImpl implements DeviceDao{
 	    }
 	}
 	
-	private Object[] buildSelectSql(Device device) {
+	private Object[] buildSelectSql(String selectOrCount, Device device) {
 		StringBuilder select = new StringBuilder();
-		select.append("select id, name, description, desc_attributes, product_id, device_status, "
-				+ "longitude, latitude, device_key, device_secret, data_state, owner from ddap_device where 1");
+		select.append(selectOrCount);
+		select.append(" where 1");
 		if(null==device){
 			return new Object[]{select.toString()};
 		}
@@ -128,6 +151,11 @@ public class DeviceDaoImpl implements DeviceDao{
 		if(StringUtils.hasText(device.getId())){
 			select.append(" and id = ?");
 			values[i] = device.getId();
+			i++;
+		}
+		if(StringUtils.hasText(device.getSerialNumber())){
+			select.append(" and serial_number = ?");
+			values[i] = device.getSerialNumber();
 			i++;
 		}
 		if(StringUtils.hasText(device.getName())){
@@ -167,7 +195,7 @@ public class DeviceDaoImpl implements DeviceDao{
 			values[i] = device.getDeviceSecret();
 			i++;
 		}
-		if(StringUtils.isEmpty(device.getDataState())){
+		if(DBModel.isLegalDataState(device.getDataState())){
 			select.append(" and data_state = ?");
 			values[i] = String.valueOf(device.getDataState());
 			i++;
@@ -175,6 +203,13 @@ public class DeviceDaoImpl implements DeviceDao{
 		if(StringUtils.hasText(device.getOwner())){
 			select.append(" and owner = ?");
 			values[i] = device.getOwner();
+			i++;
+		}
+		if(null!=device.getUpdateTime()){
+			select.append(" and create_time >= ? or update_time >= ?");
+			values[i] = device.getUpdateTime();
+			i++;
+			values[i] = device.getUpdateTime();
 			i++;
 		}
 		values[i] = select.toString();
@@ -196,7 +231,7 @@ public class DeviceDaoImpl implements DeviceDao{
 		update.append("update ddap_device set update_time = ?");
 		values[i] = new Date(); 
 		i++;
-		if(!StringUtils.isEmpty(device.getDataState())){
+		if(DBModel.isLegalDataState(device.getDataState())){
 			update.append(", data_state = ?");
 			values[i] = String.valueOf(device.getDataState());
 			i++;
@@ -204,6 +239,11 @@ public class DeviceDaoImpl implements DeviceDao{
 		if(StringUtils.hasText(device.getName())){
 			update.append(", name = ?");
 			values[i] = device.getName();
+			i++;
+		}
+		if(StringUtils.hasText(device.getSerialNumber())){
+			update.append(", serial_number = ?");
+			values[i] = device.getSerialNumber();
 			i++;
 		}
 		if(StringUtils.hasText(device.getDescription())){
@@ -263,6 +303,5 @@ public class DeviceDaoImpl implements DeviceDao{
 		
 		return retn;
 	}
-
 
 }

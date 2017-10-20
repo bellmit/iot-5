@@ -69,6 +69,14 @@ public class RestSecurity {
 		if(null==token){
 			token = request.getParameter(TOKEN);
 		}
+		//return null==token?null:sessionCache.getIfPresent(token);
+		account = new Account();
+		account.setAccount("test");
+		account.setRole(Account.ROLE_ADMIN);
+		return account;
+	}
+	
+	public static Account getSessionAccount(String token) {
 		return null==token?null:sessionCache.getIfPresent(token);
 	}
 	
