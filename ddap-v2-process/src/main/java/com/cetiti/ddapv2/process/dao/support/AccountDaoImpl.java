@@ -40,7 +40,7 @@ public class AccountDaoImpl implements AccountDao {
 		account.setDataState(Account.STATE_NEW);
 		return this.jdbcTemplate.update("insert into ddap_account (id, account, password, "
 				+ "role, phone, email, address, u_key, u_secret, data_post_url, data_state, create_time) "
-				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 				new Object[]{
 					account.getId(),
 					account.getAccount(),

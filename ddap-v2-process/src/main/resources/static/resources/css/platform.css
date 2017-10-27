@@ -75,7 +75,10 @@ table+div.bottom {
 	margin-bottom:0;
 	margin-top: 7px;
 	float:left;
-	width:42px;
+	min-width:45px;
+}
+.label5{
+	width:80px;
 }
 #detail thead>tr {
 	background:#f7f7f7;

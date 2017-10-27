@@ -54,7 +54,7 @@ public class Processer {
 					}
 				}
 			}
-		}, "processerWatchDog");
+		}, "PS-WatchDog");
 		watchDog.start();
 	}
 	

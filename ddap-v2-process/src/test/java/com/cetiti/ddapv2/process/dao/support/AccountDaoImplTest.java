@@ -8,15 +8,17 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import com.cetiti.ddapv2.process.dao.AccountDao;
 import com.cetiti.ddapv2.process.model.Account;
 import com.cetiti.ddapv2.process.util.EncryptUtil;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:spring/acceptors.xml", "classpath:spring/store.xml"})
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@ContextConfiguration("classpath:spring/*.xml")
 public class AccountDaoImplTest {
 	
 	@Resource
@@ -26,17 +28,18 @@ public class AccountDaoImplTest {
 	public void setUp() throws Exception {
 	}
 
-	@Ignore
+	@Test
 	public void testInstetAccount() {
 		Account account = new Account();
-		account.setAccount("admin");
-		account.setPassword("admin123456");
+		account.setAccount("HIK82");
+		account.setPassword("123456");
 		account.setRole(Account.ROLE_ADMIN);
 		account.setPhone("88366841");
 		account.setAddress("海创园");
 		account.setEmail("admin@cetiti.com");
 		account.setUserKey(EncryptUtil.generateUserKey(account.getAccount()));
 		account.setUserSercret(EncryptUtil.generateUserSecret(account.getAccount()));
+		account.setPassword(EncryptUtil.md5(account.getAccount()+account.getPassword()));
 		accountDao.insertAccount(account);
 	}
 	
@@ -54,7 +57,7 @@ public class AccountDaoImplTest {
 		accountDao.updateAccount(account);
 	}
 	
-	@Test
+	@Ignore
 	public void testSelectAccount() {
 		System.out.println(accountDao.selectAccount("account"));
 	}

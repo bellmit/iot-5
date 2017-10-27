@@ -1,9 +1,0 @@
-[06-06 20:23:39:074][main][INFO][com.cetiti.ddapv2.process.Bootstrap]- processer startup. 
-[06-06 20:23:39:333][Thread-1][DEBUG][com.cetiti.ddapv2.process.acceptor.TcpAcceptor]- httpAcceptor start up at [10.70.7.72:80] 
-[06-06 20:23:39:333][Thread-0][DEBUG][com.cetiti.ddapv2.process.acceptor.TcpAcceptor]- demoAcceptor start up at [10.70.7.72:8090] 
-[06-30 16:55:27:237][main][INFO][com.cetiti.ddapv2.process.Bootstrap]- processer startup. 
-[06-30 16:55:27:388][com.cetiti.ddapv2.process.acceptor.TcpServerAcceptor][DEBUG][com.cetiti.ddapv2.process.acceptor.TcpServerAcceptor]- httpAcceptor start up at [10.70.7.72:80] 
-[06-30 16:55:27:388][com.cetiti.ddapv2.process.acceptor.TcpServerAcceptor][DEBUG][com.cetiti.ddapv2.process.acceptor.TcpServerAcceptor]- demoAcceptor start up at [10.70.7.72:8090] 
-[06-30 16:56:27:237][hubWatchDog][INFO][com.cetiti.ddapv2.process.Processer]- dog watching 
-[06-30 16:57:27:237][hubWatchDog][INFO][com.cetiti.ddapv2.process.Processer]- dog watching 
-[07-13 10:19:46:160][com.cetiti.ddapv2.process.web.WebServer][ERROR][com.cetiti.ddapv2.process.web.WebServer]- ddap-webserverinterrupt. [Insufficient threads: max=4 < needed(acceptors=0 + selectors=4 + request=1)] 

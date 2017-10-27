@@ -2,6 +2,7 @@ package com.cetiti.ddapv2.process.dao.support;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -95,6 +96,23 @@ public class DataDaoImpl implements DataDao {
 	    	
 	        return data;
 	    }
+	}
+
+	@Override
+	public int insertDatas(List<Data> dataList) {
+		if(null==dataList||dataList.size()<1){
+			return 0;
+		}
+		List<Object[]> batch = new ArrayList<>();
+		int timestamp = (int)new Date().getTime()/1000;
+		for(Data data:dataList){
+			Object[] values = new Object[]{data.getDeviceId(), data.getStrData(), timestamp};
+			batch.add(values);
+		}
+		int[] counts = this.jdbcTemplate.batchUpdate("insert into ddap_data (device_id, data, time_stamp ) "
+				+ "values (?, ?, ?)", batch);
+		
+		return counts.length;
 	}
 
 }

@@ -2,10 +2,12 @@ package com.cetiti.ddapv2.process.dao.support;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
+
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
@@ -38,8 +40,8 @@ public class DeviceDaoImpl implements DeviceDao{
 		device.setCreateTime(new Date());
 		device.setDataState(Device.STATE_NEW);
 		return this.jdbcTemplate.update("insert into ddap_device (id, serial_number, name, description, desc_attributes, "
-				+ "product_id, device_status, longitude, latitude, device_key, device_secret, data_state, owner, create_time) "
-				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+				+ "product_id, device_status, longitude, latitude, device_key, device_secret, data_state, owner, update_time, create_time) "
+				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 				new Object[]{
 						device.getId(),
 						device.getSerialNumber(),
@@ -54,18 +56,77 @@ public class DeviceDaoImpl implements DeviceDao{
 						device.getDeviceSecret(),
 						String.valueOf(device.getDataState()),
 						device.getOwner(),
+						device.getCreateTime(),
 						device.getCreateTime()
 				});
 	}
+	
+	@Override
+	public int insertDevices(List<Device> deviceList) {
+		if(null==deviceList||deviceList.size()<1){
+			return 0;
+		}
+		List<Object[]> batch = new ArrayList<>();
+		for(Device device:deviceList){
+			device.setId(Device.PREFIX_DEVICE+SequenceGenerator.next());
+			device.setCreateTime(new Date());
+			device.setDataState(Device.STATE_NEW);
+			Object[] values = new Object[]{
+					device.getId(),
+					device.getSerialNumber(),
+					device.getName(),
+					device.getDescription(),
+					device.getDescAttributes(),
+					device.getProductId(),
+					String.valueOf(device.getDeviceStatus()),
+					device.getLongitude(),
+					device.getLatitude(),
+					device.getDeviceKey(),
+					device.getDeviceSecret(),
+					String.valueOf(device.getDataState()),
+					device.getOwner(),
+					device.getCreateTime(),
+					device.getCreateTime()};
+			batch.add(values);
+		}
+		int[] counts = this.jdbcTemplate.batchUpdate("insert into ddap_device (id, serial_number, name, description, desc_attributes, "
+				+ "product_id, device_status, longitude, latitude, device_key, device_secret, data_state, owner, update_time, create_time) "
+				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", batch);
+		
+		return counts.length;
+	}
+
 
 	@Override
 	public int deleteDevice(String deviceId) {
 		return this.jdbcTemplate.update("delete from ddap_device where id = ?", deviceId);
 	}
+	
+	@Override
+	public int deleteOldDevice(String productId, Date updateTime) {
+		if(null==productId||null==updateTime){
+			return 0;
+		}
+		return this.jdbcTemplate.update("delete from ddap_device "
+				+ "where product_id = ? and update_time < ?", productId, updateTime);
+	}
+
 
 	@Override
 	public int updateDevice(Device device) {
 		Object[] update = buildUpdateSql(device);
+		if(null==update){
+			return 0;
+		}
+		String sql = (String)update[update.length-1];
+		Object[] values = new Object[update.length-1];
+		System.arraycopy(update, 0, values, 0, update.length-1);
+		return this.jdbcTemplate.update(sql, values);
+	}
+	
+	@Override
+	public int updateDeviceBySerialNumberAndProductId(Device device){
+		Object[] update = buildUpdateSqlBySerialNumberAndProductId(device);
 		if(null==update){
 			return 0;
 		}
@@ -303,5 +364,66 @@ public class DeviceDaoImpl implements DeviceDao{
 		
 		return retn;
 	}
+	
+	private Object[] buildUpdateSqlBySerialNumberAndProductId(Device device) {
+		if(null==device||null==device.getSerialNumber()||null==device.getProductId()){
+			return null;
+		}
+		StringBuilder update = new StringBuilder();
+		Object[] values = new Object[20];
+		int i = 0;
+		update.append("update ddap_device set update_time = ?");
+		values[i] = new Date(); 
+		i++;
+		if(StringUtils.hasText(device.getName())){
+			update.append(", name = ?");
+			values[i] = device.getName();
+			i++;
+		}
+		if(StringUtils.hasText(device.getDescription())){
+			update.append(", description = ?");
+			values[i] = device.getDescription();
+			i++;
+		}
+		if(StringUtils.hasText(device.getDescAttributes())){
+			update.append(", desc_attributes = ?");
+			values[i] = device.getDescAttributes();
+			i++;
+		}
+		if(!StringUtils.isEmpty(device.getDeviceStatus())){
+			update.append(", device_status = ?");
+			values[i] = String.valueOf(device.getDeviceStatus());
+			i++;
+		}
+		if(device.getLongitude()>0){
+			update.append(", longitude = ?");
+			values[i] = device.getLongitude();
+			i++;
+		}
+		if(device.getLatitude()>0){
+			update.append(", latitude = ?");
+			values[i] = device.getLatitude();
+			i++;
+		}
+		if(StringUtils.hasText(device.getOwner())){
+			update.append(", owner = ?");
+			values[i] = device.getOwner();
+			i++;
+		}
+		values[i] = device.getSerialNumber();
+		i++;
+		values[i] = device.getProductId();
+		i++;
+		
+		update.append(" where serial_number = ? and product_id = ?");
+		values[i] = update.toString();
+		i++;
+		
+		Object[] retn = new Object[i];
+		System.arraycopy(values, 0, retn, 0, i);
+		
+		return retn;
+	}
 
+	
 }

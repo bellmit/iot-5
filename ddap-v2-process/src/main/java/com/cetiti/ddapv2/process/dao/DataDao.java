@@ -8,6 +8,8 @@ import com.cetiti.ddapv2.process.model.Page;
 
 public interface DataDao {
 	
+	int insertDatas(List<Data> dataList);
+	
 	int insertData(String deviceId, String data);
 	
 	int insertData(String deviceId, String data, Date timpstamp);

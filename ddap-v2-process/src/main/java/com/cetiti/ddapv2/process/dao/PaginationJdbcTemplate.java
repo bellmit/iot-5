@@ -2,6 +2,8 @@ package com.cetiti.ddapv2.process.dao;
 
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.util.StringUtils;
@@ -14,10 +16,19 @@ import org.springframework.util.StringUtils;
  */
 public class PaginationJdbcTemplate extends JdbcTemplate {
 	
-	private static final String MYSQL = "mysql";
-	private static final String ORACLE = "oracle";
+	public static final String MYSQL = "mysql";
+	public static final String ORACLE = "oracle";
 	
 	private String dbType;
+	
+	public PaginationJdbcTemplate(DataSource dataSource) {
+		super(dataSource);
+	}
+	
+	public PaginationJdbcTemplate(DataSource dataSource, String dbType) {
+		super(dataSource);
+		this.dbType = dbType;
+	}
 	
 	public <T> List<T> queryPagination (String sql, Object[] args, 
 			int pageNum, int pageSize, RowMapper<T> mapper) {
@@ -51,6 +62,7 @@ public class PaginationJdbcTemplate extends JdbcTemplate {
 			pageSql.append(orginSql);
 			pageSql.append(" ) a WHERE ROWNUM <= ").append(pageNum*pageSize);
 			pageSql.append(") WHERE rn >= ").append(start);
+			break;
 		default:
 			throw new IllegalArgumentException("unsupported database type ["+this.dbType+"]");
 		}

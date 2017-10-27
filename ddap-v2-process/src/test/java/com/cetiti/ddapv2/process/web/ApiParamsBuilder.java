@@ -14,8 +14,8 @@ import java.util.UUID;
  */
 public class ApiParamsBuilder {
 
-	private String key = "ukcb96f4be242e891ff80e6e6c3805681c";
-	private String secret = "us46f8d57022061b570c1897901ea869f2";
+	private String key = "uk508595d7ec170d0c3392083e25411056";
+	private String secret = "us41db5af8b5e973d658e0d22fda570aac";
 	
 	public ApiParamsBuilder(String key, String secret) {
 		this.key = key;
