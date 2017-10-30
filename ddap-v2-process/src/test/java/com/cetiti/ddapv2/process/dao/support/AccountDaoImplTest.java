@@ -31,9 +31,11 @@ public class AccountDaoImplTest {
 	@Test
 	public void testInstetAccount() {
 		Account account = new Account();
-		account.setAccount("HIK82");
+		account.setAccount("test");
+		account.setName("testName");
+		account.setDataPostUrl("http://www.post.com");
 		account.setPassword("123456");
-		account.setRole(Account.ROLE_ADMIN);
+		account.setRole(Account.ROLE_PLATFORM);
 		account.setPhone("88366841");
 		account.setAddress("海创园");
 		account.setEmail("admin@cetiti.com");
@@ -43,10 +45,10 @@ public class AccountDaoImplTest {
 		accountDao.insertAccount(account);
 	}
 	
-	@Ignore
+	@Test
 	public void testUpdateAccount() {
 		Account account = new Account();
-		account.setAccount("admin");
+		account.setAccount("adminu");
 		account.setPassword(EncryptUtil.md5("admin123456"));
 		/*account.setRole(Account.ROLE_PLATFORM);
 		account.setPhone("88366841");
@@ -57,12 +59,12 @@ public class AccountDaoImplTest {
 		accountDao.updateAccount(account);
 	}
 	
-	@Ignore
+	@Test
 	public void testSelectAccount() {
 		System.out.println(accountDao.selectAccount("account"));
 	}
 	
-	@Ignore
+	@Test
 	public void testSelectAccountList(){
 		accountDao.selectAccountList(null).stream().forEach(System.out::println);
 	}

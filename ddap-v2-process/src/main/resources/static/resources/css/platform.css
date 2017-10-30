@@ -4,53 +4,43 @@
 body {
 	font-family:PingFangSC-Medium;
 }
-
-header>.wrapper {
-	margin-left:70px;
+header {
 	padding:20px;
+	background:#4285F7 100%;
 	overflow:hidden;
+	color:#FFFFFF
 }
+
 header h1 {
 	margin:0;
 	font-size: 24px;
-	color:  #4285F7;
 }
-.glyphicon-search {
-	border:none;
-	background:white;
+
+#searchInput{
+	border-radius: 5px;
 }
 .u-panel{
 	padding-top:10px;
 }
-
-#left-menu{
-	clear:both;
-	width:180px;
-	background:#4285F7 100%;
-	float:left;
+.u-panel a {
+	color:#FFFFFF;
 }
-#left-menu ul{
+
+#top-menu ul{
 	text-align:center;
 }
-#left-menu ul li {
+#top-menu ul li {
 	font-size: 16px;
-	padding:15px;
+	padding:5px;
 }
-#left-menu ul li a {
+#top-menu ul li a {
 	color: #AAC8FB;
 }
-#left-menu ul li.active a {
+#top-menu ul li.active a {
 	color: #FFFFFF;
 }
-#left-menu>span {
-	margin-left:155px;
-	margin-top:15px;
-}
-.nav-icon-active {
-	color: #FFFFFF;
-}
+
 #main {
-	float:left;
 	padding:15px;
 	/* background: #D8D8D8; */
 }

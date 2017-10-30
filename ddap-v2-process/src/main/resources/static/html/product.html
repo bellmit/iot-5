@@ -11,11 +11,23 @@
 </head>
 <body>
   <header>
-  	<div class="wrapper">
+  	<div class="container">
   	  <h1 class="col-md-3">物联网数据平台</h1>
-  	  <form class="col-md-offset-5 col-md-3 form-inline" role="search">
+  	  <nav id="top-menu" class="col-md-5" >
+	    <ul class="list-unstyled">
+	      <li class="col-md-3">
+	        <a href="product.html">产品管理</a>
+	      </li>
+	      <li class="col-md-3">
+	        <a href="device.html">设备管理</a>
+	      </li>
+	      <li class="col-md-3">
+	        <a href="rule.html">规则管理</a>
+	      </li>
+	    </ul>
+	  </nav>
+  	  <form class="col-md-3 form-inline" role="search">
   	  	<div class="input-group">
-  	  	  <span class="glyphicon glyphicon-search input-group-addon" aria-hidden="true"></span>
           <input id="searchInput" type="text" class="form-control" placeholder="搜索"> 
         </div>
   	  </form>
@@ -27,21 +39,7 @@
   	  
   </header>
   <div>
-    <nav id="left-menu" >
-      <span class="glyphicon glyphicon-align-justify nav-icon-active" aria-hidden="true"></span>
-      <ul class="list-unstyled">
-        <li>
-          <a href="product.html">产品管理</a>
-        </li>
-        <li>
-          <a href="device.html">设备管理</a>
-        </li>
-        <li>
-          <a href="rule.html">规则管理</a>
-        </li>
-      </ul>
-    </nav>
-    <div id="main">
+    <div id="main" class="container">
       <ul class="nav nav-tabs">
         <li class="active">
           <a href="#list" data-toggle="tab">产品列表</a>
@@ -177,7 +175,13 @@
   </div>
   
   <footer>
-    <p>Copyright©2017 中电海康集团有限公司  版权所有</p>
+	<nav class="navbar navbar-fixed-bottom half-height">
+	    <div class="navbar-inner navbar-content-center">
+	        <div class="text-center">
+				© <span>2017</span> <a href="http://www.cethik.com/">中电海康集团有限公司</a>, Inc. All Rights Reserved.
+			</div>
+	    </div>
+	</nav>
   </footer>
   
   <script src="/resources/js/jquery-1.12.3.min.js"></script>
@@ -197,17 +201,13 @@
 			}
 		})
 		
-		$("#left-menu li.active").removeClass("active")
-		$("#left-menu a[href^='product']").parent().addClass("active")
+		$("#top-menu li.active").removeClass("active")
+		$("#top-menu a[href^='product']").parent().addClass("active")
 		
 		$("#newTab").click(function(){
 			detailVue.add()
 		})
-		var computeStyle = function(){
-			$("#left-menu").css('min-height', ($(window).height() -100) + 'px')
-			$("#main").css('width', ($(window).width() -200) + 'px')
-		}
-		computeStyle()
+		
 	})
   
     var detailVue = new Vue({

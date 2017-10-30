@@ -14,9 +14,11 @@ public class Account extends DBModel {
 	public static final String ROLE_ADMIN = "A";
 	public static final String ROLE_PLATFORM = "P";
 	public static final String ROLE_GUEST = "G";
+	public static final String PASSWORD_DEFAULT = "123456";
 	
 	private String account;
 	private String password;
+	private String name;
 	private String role;
 	private List<String> privileges = new ArrayList<>();
 	
@@ -45,6 +47,12 @@ public class Account extends DBModel {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getRole() {
 		return role;

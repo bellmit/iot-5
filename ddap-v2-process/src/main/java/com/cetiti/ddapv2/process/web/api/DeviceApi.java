@@ -55,13 +55,10 @@ public class DeviceApi {
 		if(null==assistParams||!StringUtils.hasText(assistParams.getKey())) {
 			return RestResult.defaultFailResult(msgUtil.get("parameter.null", "key"));
 		}
-		Account account = new Account();
-		account.setUserKey(assistParams.getKey());
-		List<Account> accounts = accountService.getAccountList(account);
-		if(null==accounts||accounts.size()<1){
+		Account account = accountService.getAccountByKey(assistParams.getKey());
+		if(null==account){
 			return RestResult.defaultFailResult(msgUtil.get("parameter.not.exist", "key"));
 		}
-		account = accounts.get(0);
 		String descAttributes = device.getDescAttributes();
 		device.setDescAttributes(null);
 		Map<String, Object> map = new HashMap<>();

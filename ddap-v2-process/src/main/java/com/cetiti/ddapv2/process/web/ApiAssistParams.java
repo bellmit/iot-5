@@ -67,6 +67,21 @@ public class ApiAssistParams {
 		reqHistory.put(key, timestamp);
 		return true;
 	}
+	
+	public static void registRequest(String key, long timestamp){
+		if(null==key){
+			return;
+		}
+		reqHistory.put(key, timestamp);
+	}
+	
+	public static boolean isRequestExpired(String key, long timestamp){
+		if(null==key){
+			return false;
+		}
+		return null != reqHistory.getIfPresent(key) || System.currentTimeMillis() - timestamp
+				> TimeUnit.MINUTES.toMillis(ELE_LIFE_TIME_IN_MINUTES);
+	}
 
 	public boolean checkSign(String secret) {
 		if (!isValidReq()) {
