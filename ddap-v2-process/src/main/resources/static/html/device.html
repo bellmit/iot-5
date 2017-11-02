@@ -8,6 +8,7 @@
 <link href="/resources/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="/resources/css/dataTables.bootstrap.min.css" rel="stylesheet" />
 <link href="/resources/css/platform.css" rel="stylesheet">
+
 </head>
 <body>
   <header>
@@ -24,6 +25,9 @@
 	      <li class="col-md-3">
 	        <a href="rule.html">规则管理</a>
 	      </li>
+	      <li class="col-md-3">
+	        <a href="account.html">用户管理</a>
+	      </li>
 	    </ul>
 	  </nav>
   	  <form class="col-md-3 form-inline" role="search">
@@ -32,7 +36,13 @@
         </div>
   	  </form>
   	  <div class="col-md-1 u-panel">
-  	    <a href="#">登录</a>
+  	    <a href="#">{{online}}</a>
+  	    <div class="logout-panel">
+          <ul>
+            <li><a href="swagger-ui.html" >接口文档</a></li>
+            <li @click="logout()"><a href="#">退出</a></li>
+          </ul>
+        </div>
   	  </div>
  
   	</div>
@@ -76,9 +86,9 @@
         </div>
         <div id="detail" class="tab-pane fade">
           <fieldset>
-            <div class="col-md-6 border-right">
+            <div class="col-md-12">
               <h4>基本信息</h4>
-              <div class="col-md-6">
+              <div v-show="isNotNew" class="col-md-6">
 	            <label>编号</label>
 	            <div class="col-md-10">
 	              <input type="text" v-model="product.id"  readonly="true" class="form-control">
@@ -114,16 +124,16 @@
 	              <input type="text" v-model="product.latitude" class="form-control" >
 	            </div>
 	          </div>
-	          <div class="col-md-12">
+	          <div class="col-md-6">
 	            <label>描述</label>
-	            <div class="col-md-11">
+	            <div class="col-md-10">
 	              <input type="text" v-model="product.description" class="form-control" >
 	            </div>
 	          </div>
             </div>
-            <div class="col-md-6 border-left">
+            <div class="col-md-12">
               <h4>设备描述属性</h4>
-              <table>
+              <table class="attrTable">
               	<thead>
               	  <tr>
               	    <th>属性名称</th>
@@ -149,7 +159,7 @@
               </table>
             </div>
           </fieldset>
-          <div class="op-save">
+          <div class="col-md-1 op-save">
             <button class="btn btn-primary" @click="save()">保存</button>
           </div>
         </div>
@@ -187,6 +197,7 @@
   <script src="/resources/js/bootstrap.js"></script>
   <script src="/resources/js/vue.js"></script>
   <script src="/resources/js/jquery.dataTables.min.js"></script>
+  <script src="/resources/js/iot.public.js"></script>
   <script>
     $(function(){
 		$("#searchInput").keyup( function() {
@@ -228,7 +239,8 @@
       			latitude:null,
       			descAttributes:[]
       	  	},
-      	  	initProduct:{}
+      	  	initProduct:{},
+      	    isNotNew:false
         },
         created: function () {
         	this.initProduct = this.product
@@ -252,10 +264,12 @@
         		this.product.descAttributes.splice(index,1)
           	},
           	add: function() {
+          		this.isNotNew=false
           		this.init()
           		this.apiUrl='/device/new'
           	},
           	update: function(p) {
+          		this.isNotNew=true
           		this.setProduct(p)
           		this.apiUrl='/device/update'
           	},
@@ -306,10 +320,7 @@
     			//"ajax": "user/personUerList",
     			"ajax":{
     				"url":"/device/list",
-    				"contentType": "application/json",
-    				"data":function(d){
-    					return d.data
-    				}
+    				"contentType": "application/json"
     			},
     			"columnDefs": [
                 	{	                          

@@ -48,10 +48,8 @@ public class LocalCache {
 	@Resource
 	private AccountDao accountDao;
 	
-	
-	
 	public LocalCache() {
-		System.out.println("LocalCache initiated");
+		System.out.println("************LocalCache initiated***************");
 	}
 
 	private LoadingCache<String, Data> dataCache = CacheBuilder.newBuilder()

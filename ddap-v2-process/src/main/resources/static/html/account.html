@@ -9,6 +9,9 @@
 <link href="/resources/css/dataTables.bootstrap.min.css" rel="stylesheet" />
 <link href="/resources/css/platform.css" rel="stylesheet">
 
+<style type="text/css">
+	
+</style>
 </head>
 <body>
   <header>
@@ -53,13 +56,13 @@
     <div id="main" class="container">
       <ul class="nav nav-tabs">
         <li class="active">
-          <a href="#list" data-toggle="tab">规则列表</a>
+          <a href="#list" data-toggle="tab">账号列表</a>
         </li>
         <li>
-          <a id="detailTab" href="#detail" data-toggle="tab">规则详情</a>
+          <a id="detailTab" href="#detail" data-toggle="tab">账号详情</a>
         </li>
         <li>
-          <a id="newTab" href="#detail" data-toggle="tab">新建规则</a>
+          <a id="newTab" href="#detail" data-toggle="tab">新建账号</a>
         </li>
       </ul>
       <div class="tab-content">
@@ -69,12 +72,12 @@
 	    	<table id="listTable" class="table table-striped table-bordered"  >
 	    		<thead>
 	    			<tr>
-	    				<th class="col-md-2" >规则编号</th>
-	    				<th class="col-md-2" >规则名称</th>
-		    			<th class="col-md-3" >规则描述</th>
-		    			<th class="col-md-3" >产品编号</th>
-		    			<th class="col-md-3" >设备编号</th>
-		    			<th class="col-md-3" style="min-width:100px;" >规则表达式</th>
+	    				<th class="col-md-2" >账号</th>
+	    				<th class="col-md-2" >名称</th>
+		    			<th class="col-md-3" >角色</th>
+		    			<th class="col-md-3" >电话</th>
+		    			<th class="col-md-3" >邮箱</th>
+		    			<th class="col-md-3" style="min-width:100px;" >数据推送地址</th>
 		    			<!-- <th class="col-md-3" style="min-width:150px;">应用地址</th> -->
 		    			<th class="col-md-4" style="min-width:70px;" >操作</th>
 		    		</tr>
@@ -91,48 +94,72 @@
             <div>
              <!--  <h4>基本信息</h4> -->
               <div class="col-md-12">
-	              <div v-show="isNotNew" class="col-md-5 col-md-offset-1">
-		            <label>编号</label>
+	              <div class="col-md-5 col-md-offset-1">
+		            <label>账号</label>
 		            <div class="col-md-9">
-		              <input type="text" v-model="rule.id"  readonly="true" class="form-control">
+		              <input type="text" v-bind:readonly="isUpdate" v-model="account.account" class="form-control">
 		            </div>
 		          </div>
-		          <div class="col-md-5" v-bind:class="{'col-md-offset-1': !isNotNew }">
+		          <div class="col-md-5">
+		            <label>密码</label>
+		            <div class="col-md-9">
+		              <input type="password" v-model="account.password" class="form-control">
+		            </div>
+		          </div>
+	          </div>
+	          <div class="col-md-12">
+	          	  <div class="col-md-5 col-md-offset-1">
 		            <label>名称</label>
 		            <div class="col-md-9">
-		              <input type="text" v-model="rule.name" class="form-control" >
+		              <input type="text" v-model="account.name" class="form-control" >
+		            </div>
+		          </div>
+		          <div class="col-md-5">
+		            <label>角色</label>
+		            <div class="col-md-9">
+		              <select v-model="account.role" class="form-control">
+		              	<option value="P">应用系统</option>
+		              </select>
 		            </div>
 		          </div>
 	          </div>
 	          <div class="col-md-12">
 		          <div class="col-md-5 col-md-offset-1">
-		            <label>产品编号</label>
+		            <label>电话</label>
 		            <div class="col-md-9">
-		              <input type="text" v-model="rule.productId" class="form-control" >
+		              <input type="text" v-model="account.phone" class="form-control" >
 		            </div>
 		          </div>
 		          <div class="col-md-5">
-		            <label>设备编号</label>
+		            <label>邮箱</label>
 		            <div class="col-md-9">
-		              <input type="text" v-model="rule.deviceId" class="form-control" >
+		              <input type="text" v-model="account.email" class="form-control" >
 		            </div>
 		          </div>
 	          </div>
+	          <div v-show="isUpdate" class="col-md-12">
+		          <div class="col-md-5 col-md-offset-1">
+		            <label>u-key</label>
+		            <div class="col-md-9">
+		              <input type="text" v-model="account.userKey" class="form-control" >
+		            </div>
+		          </div>
+		          <div class="col-md-5">
+		            <label>u-secret</label>
+		            <div class="col-md-9">
+		              <input type="text" v-model="account.userSercret" class="form-control" >
+		            </div>
+		          </div>
+	          </div>
+	          
 	          <div class="col-md-12">
 		          <div class="col-md-5 col-md-offset-1">
-		            <label>规则表达式</label>
+		            <label>数据推送地址</label>
 		            <div class="col-md-9">
-		              <input type="text" v-model="rule.expression" class="form-control" >
-		            </div>
-		          </div>
-		          <div class="col-md-5">
-		            <label>描述</label>
-		            <div class="col-md-9">
-		              <input type="text" v-model="rule.description" class="form-control" >
+		              <input type="text" v-model="account.dataPostUrl" class="form-control" >
 		            </div>
 		          </div>
 	          </div>
-	         
             </div>
             
           </fieldset>
@@ -174,6 +201,7 @@
   <script src="/resources/js/bootstrap.js"></script>
   <script src="/resources/js/vue.js"></script>
   <script src="/resources/js/jquery.dataTables.min.js"></script>
+  <script src="/resources/js/jquery.md5.js"></script>
   <script src="/resources/js/iot.public.js"></script>
   <script>
     $(function(){
@@ -189,7 +217,7 @@
 		})
 		
 		$("#top-menu li.active").removeClass("active")
-		$("#top-menu a[href^='rule']").parent().addClass("active")
+		$("#top-menu a[href^='account']").parent().addClass("active")
 		
 		$("#newTab").click(function(){
 			detailVue.add()
@@ -200,49 +228,58 @@
         el: '#detail',
         data: {
         	apiUrl:'',
-      	  	rule: {
-      			id:'',
+      	  	account: {
+      	  	    account:'',
+      	  	    password:'',
       			name:'',
-      			description:'',
-      			productId:'',
-      			deviceId:'',
-      			expression:''
+      			role:'',
+      			phone:'',
+      			email:'',
+      			userKey:'',
+      			userSercret:'',
+      			dataPostUrl:''
       	  	},
-      	  	initRule:{},
-      	  	isNotNew:false
+      	  	initAccount:{},
+      	    isUpdate:false
         },
         created: function () {
-        	this.initRule = this.rule
+        	this.initAccount = this.account
         },
         methods: {
         	init: function() {
-        		this.rule = this.initRule;
+        		this.account = this.initAccount;
         	},
-          	setRule: function(rule){
-        		if(rule) { 
-        			this.rule = rule
+          	setAccount: function(account){
+        		if(account) { 
+        			account.password=''
+        			this.account = account
         		}
           	},
           	
           	add: function() {
-          		this.isNotNew=false
+          		this.isUpdate=false
           		this.init()
-          		this.apiUrl='/rule/new'
+          		this.apiUrl='/account/regist'
           	},
           	update: function(p) {
-          		this.isNotNew=true
-          		this.setRule(p)
-          		this.apiUrl='/rule/update'
+          		this.isUpdate=true
+          		this.setAccount(p)
+          		this.apiUrl='/account/update'
           	},
           	save: function(api) {
-        		var vm = this.rule
+        		var vm = this.account
+        		var password = ''
+        		if(vm.password){
+        			password = $.md5(vm.account+vm.password)
+        		}
         		var param = {
-	      			id:vm.id,
+        	      	account:vm.account,
+        	      	password:password,
 	      			name:vm.name,
-	      			description:vm.description,
-	      			productId:vm.productId,
-	      			deviceId:vm.deviceId,
-	      			expression:vm.expression
+	      			role:vm.role,
+	      			phone:vm.phone,
+	      			email:vm.email,
+	      			dataPostUrl:vm.dataPostUrl
 	      	  	}
         		//console.log(param)
         		$.ajax({
@@ -278,13 +315,25 @@
     			"bAutoWidth": false,
     			//"ajax": "user/personUerList",
     			"ajax":{
-    				"url":"/rule/list",
+    				"url":"/account/list",
     				"contentType": "application/json"
     			},
     			"columnDefs": [
                 	{	                          
                     	"defaultContent": "",
                         "targets": "_all"
+                   	},
+                   	{
+                   		"targets" : 2,
+						"render" : function(data, type, row) {
+							if('A'===data){
+								return '管理员'
+							}
+							if('P'===data){
+								return '应用系统'
+							}
+							return data
+						}
                    	},
                 	{
                    		"targets" : 6,
@@ -302,12 +351,12 @@
                    	}
                 ],	      
     			"columns":[
-    				{"data":"id"},
+    				{"data":"account"},
     				{"data":"name"},
-    				{"data":"description"},
-    				{"data":"productId"},
-    				{"data":"deviceId"},
-    				{"data":"expression"}
+    				{"data":"role"},
+    				{"data":"phone"},
+    				{"data":"email"},
+    				{"data":"dataPostUrl"}
     			],
     			"bStateSave": true,
     			"oLanguage": {
@@ -344,12 +393,12 @@
 	    		}
 	    		console.log(row);
 	    		$("#confirmModal .confirm-content").html(row.name)
-	    		$("#confirmModal button[name='submit']").attr("onclick","listTable.del('"+ row.id +"')")
+	    		$("#confirmModal button[name='submit']").attr("onclick","listTable.del('"+ row.account +"')")
 	    		$("#confirmModal").modal('show')
 	    	},
 	    	del:function(id){
 	    		var $this = this
-	    		$.post("/rule/delete", {ruleId:id}, function(data){
+	    		$.post("/account/delete", {account:id}, function(data){
 	    			$this.reload()
     				$("#confirmModal").modal('hide')
 	    		}, "json")

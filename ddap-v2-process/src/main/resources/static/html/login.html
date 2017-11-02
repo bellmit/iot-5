@@ -51,8 +51,8 @@
 					this.error=true
 					return
 				}
-				var token = new Date().getTime();
-				var password = $.md5($.md5(this.account+this.password)+token);
+				var token = new Date().getTime()
+				var password = $.md5($.md5(this.account+this.password)+token)
 	    		var _this = this
 				$.ajax({
 	    			type:"post",

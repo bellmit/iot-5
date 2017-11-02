@@ -9,12 +9,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.cetiti.ddapv2.process.util.JsonUtil;
 import com.cetiti.ddapv2.process.web.RestResult.CODE;
-
 
 /**
  * @Description TODO
@@ -23,36 +23,28 @@ import com.cetiti.ddapv2.process.web.RestResult.CODE;
  * 
  * https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc
  */
-public class LoginRestIntercepter extends HandlerInterceptorAdapter {
+@Component
+public class LoginIntercepter extends HandlerInterceptorAdapter {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(LoginRestIntercepter.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(LoginIntercepter.class);
 	private Set<String> bypassApiSet = new HashSet<>();
+	
 	@Resource
 	private JsonUtil jsonUtil;
 	
-	public LoginRestIntercepter(String bypassApis) {
-		if(null!=bypassApis){
-			Set<String> set = new HashSet<>();
-			for(String s: bypassApis.split(",")){
-				set.add(s);
-			}
-			this.bypassApiSet = set;
-		}
-	}
-
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		
+		String uri = request.getRequestURI();
+    	String context = request.getContextPath();
+    	String subUri = uri.substring(uri.indexOf(context)+context.length());
+    	
 		if(handler instanceof HandlerMethod){
 			/*HandlerMethod hm = (HandlerMethod)handler;
 			Method method = hm.getMethod();*/
-			String uri = request.getRequestURI();
-	    	String context = request.getContextPath();
-	    	String subUri = uri.substring(uri.indexOf(context)+context.length());
-	    	
 	    	if(!isLogedIn(request)&&!bypassApiSet.contains(subUri)){
-	    		RestResult result = new RestResult(CODE.RET_NOT_LOGGED_IN, "session expired", null);
+    			RestResult result = new RestResult(CODE.RET_NOT_LOGGED_IN, "session expired", null);
 	    		try {
 	    			response.setContentType("application/json");
 	    			PrintWriter out = response.getWriter();
@@ -60,11 +52,14 @@ public class LoginRestIntercepter extends HandlerInterceptorAdapter {
 	        		out.flush();
 	        		out.close();
 	    		} catch (Exception e) {
-	    			LOGGER.error("write response [{}] exception [{}]", jsonUtil.toJson(result), e.getMessage());
+	    			LOGGER.error("write response [{}] to [{}] exception [{}]", result, subUri, e.getMessage());
 	    		}
 	    		return false;
 	    	}
-	    	
+		}
+		
+		if(subUri.indexOf(".html")>0&&!isLogedIn(request)){
+			response.sendRedirect("login.html");
 		}
 
 		return true;
@@ -79,7 +74,9 @@ public class LoginRestIntercepter extends HandlerInterceptorAdapter {
 	}
 
 	public void setBypassApiSet(Set<String> bypassApiSet) {
-		this.bypassApiSet = bypassApiSet;
+		if(null!=bypassApiSet){
+			this.bypassApiSet = bypassApiSet;
+		}
 	}
 
 }

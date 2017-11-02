@@ -39,7 +39,7 @@ public class ExecuteTimeIntercepter extends HandlerInterceptorAdapter {
 		long endTime = System.currentTimeMillis();
 		long executeTime = endTime - startTime;
 		
-		LOGGER.debug("request [{}] finishe in  [{}] millisecond.", request.getRequestURI(), executeTime);
+		LOGGER.debug("request [{}] finished in  [{}] millisecond.", request.getRequestURI(), executeTime);
 	}
 
 }

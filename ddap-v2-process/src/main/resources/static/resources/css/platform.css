@@ -7,7 +7,7 @@ body {
 header {
 	padding:20px;
 	background:#4285F7 100%;
-	overflow:hidden;
+	/* overflow:hidden; */
 	color:#FFFFFF
 }
 
@@ -23,7 +23,33 @@ header h1 {
 	padding-top:10px;
 }
 .u-panel a {
+	color:#AAC8FB;
+}
+.u-panel a:hover {
 	color:#FFFFFF;
+}
+.u-panel>a {
+	padding:5px 10px;
+}
+.u-panel a:hover +div {
+	display: block;
+}
+.u-panel div:hover {
+	display: block;
+}
+.u-panel div {
+	display: none;
+}
+.logout-panel{
+	z-index: 99;
+	position: absolute;
+	background:#4285F7 100%;
+	border-radius: 5px;
+}
+
+.logout-panel ul li{
+	padding:5px 10px;
+	list-style-type:none;
 }
 
 #top-menu ul{
@@ -79,21 +105,16 @@ table+div.bottom {
 .attr-pannel {
 	border: solid 1px #ccc;
 }
-.border-bottom {
-	border-bottom: solid 1px #ccc;
-}
-.border-left {
-	border-left: solid 1px #ccc;
-	margin-left:-1px;
-}
-.border-right {
-	border-right: solid 1px #ccc;
-}
 
+#detail label {
+	min-width:85px;
+}
+.attrTable{
+	width:90%;
+	margin-left:6%;
+}
 .op-save {
-	padding:15px;
-	float:right;
-	margin-right:10px;
+	margin: 10px 0 50px 90%
 }
 footer{
 	clear:both;

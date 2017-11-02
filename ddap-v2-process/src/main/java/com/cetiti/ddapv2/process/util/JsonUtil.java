@@ -12,9 +12,15 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * @Description TODO
+ * @author Wuwuhao
+ * @date 2017年7月2日
+ * 
+ */
 @Component
 public class JsonUtil {
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(JsonUtil.class);
 	
 	private final ObjectMapper mapper = new ObjectMapper(); 

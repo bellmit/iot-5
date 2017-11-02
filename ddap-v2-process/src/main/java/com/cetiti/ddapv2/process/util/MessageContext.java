@@ -18,4 +18,11 @@ public class MessageContext {
 	public static String getMsg() {
 		return msgContext.get();
 	}
+	
+	public static String getThenRemoveMsg() {
+		String msg = msgContext.get();
+		msgContext.remove();
+		return msg;
+	}
+	
 }
