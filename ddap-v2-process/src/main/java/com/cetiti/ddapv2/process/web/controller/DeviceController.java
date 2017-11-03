@@ -1,15 +1,19 @@
 package com.cetiti.ddapv2.process.web.controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cetiti.ddapv2.process.model.Account;
 import com.cetiti.ddapv2.process.model.Device;
 import com.cetiti.ddapv2.process.service.DeviceService;
+import com.cetiti.ddapv2.process.util.DeviceFromExcel;
 import com.cetiti.ddapv2.process.util.MessageContext;
 import com.cetiti.ddapv2.process.web.RestResult;
 import com.cetiti.ddapv2.process.web.RestSecurity;
@@ -28,6 +32,8 @@ public class DeviceController {
 	
 	@Resource
 	private DeviceService deviceService;
+	@Resource
+	private DeviceFromExcel deviceFromExcel;
 	
 	@ApiOperation("新增设备")
 	@RequestMapping(value="/new", method=RequestMethod.POST)
@@ -38,6 +44,16 @@ public class DeviceController {
 		}else{
 			return RestResult.defaultFailResult(MessageContext.getMsg());
 		}
+	}
+	
+	@ApiOperation("从excel导入设备")
+	@RequestMapping(value="/importfromexcel", method=RequestMethod.POST)
+	public RestResult importDeviceFromExcel(MultipartFile excel, HttpServletRequest request){
+		Account account = RestSecurity.getSessionAccount(request);
+		if(null!=excel&&deviceService.importDevices(account, deviceFromExcel.readDeviceList(excel))){
+			return RestResult.defaultSuccessResult(excel.getName());
+		}
+		return RestResult.defaultFailResult(MessageContext.getMsg());
 	}
 	
 	@ApiOperation("修改设备")

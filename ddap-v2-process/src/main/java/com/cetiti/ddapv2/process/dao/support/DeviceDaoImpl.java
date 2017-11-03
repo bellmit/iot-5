@@ -366,7 +366,7 @@ public class DeviceDaoImpl implements DeviceDao{
 	}
 	
 	private Object[] buildUpdateSqlBySerialNumberAndProductId(Device device) {
-		if(null==device||null==device.getSerialNumber()||null==device.getProductId()){
+		if(null==device||null==device.getSerialNumber()){
 			return null;
 		}
 		StringBuilder update = new StringBuilder();

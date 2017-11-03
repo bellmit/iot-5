@@ -19,6 +19,8 @@ public interface DeviceService {
 	
 	boolean addDevice(Account account, Device device);
 	
+	boolean importDevices(Account account, List<Device> deviceList);
+	
 	boolean updateDevice(Account account, Device device);
 	
 	boolean deleteDevice(Account account, String deviceId);

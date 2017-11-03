@@ -9,6 +9,14 @@
 <link href="/resources/css/dataTables.bootstrap.min.css" rel="stylesheet" />
 <link href="/resources/css/platform.css" rel="stylesheet">
 
+<style type="text/css">
+#detail form:after{
+  content: "0"; 
+  display: block; 
+  clear: both; 
+  visibility: hidden;  
+}
+</style>
 </head>
 <body>
   <header>
@@ -87,47 +95,57 @@
         <div id="detail" class="tab-pane fade">
           <fieldset>
             <div class="col-md-12">
-              <h4>基本信息</h4>
+              <h4 style="float:left">基本信息</h4>
+              <form class="col-md-8 col-md-offset-3" enctype="multipart/form-data" action="/device/importfromexcel" method="POST">
+                <a class="col-md-3 col-md-offset-2" href="/resources/template/device.xlsx">下载excel模板</a>
+				<input class="col-md-5" type="file" name="excel" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
+				<input class="col-md-2" type="submit" name="submit" value="excel导入"> 
+        		<!-- <input class="col-md-2" type="reset" name="reset" value="重置">  -->
+			  </form>
+			  
               <div v-show="isNotNew" class="col-md-6">
 	            <label>编号</label>
 	            <div class="col-md-10">
-	              <input type="text" v-model="product.id"  readonly="true" class="form-control">
+	              <input type="text" v-model="device.id"  readonly="true" class="form-control">
 	            </div>
 	          </div>
 	          <div class="col-md-6">
 	            <label>产品</label>
 	            <div class="col-md-10">
-	              <input type="text" v-model="product.productId" class="form-control">
+	              <!-- <input type="text" v-model="device.productId" class="form-control"> -->
+	              <select v-model="device.productId" class="form-control">
+	              	<option v-for="(p, i) in products" v-bind:value="p.id" >{{p.name}}</option>
+	              </select>
 	            </div>
 	          </div>
 	          <div class="col-md-6">
 	            <label>序列号</label>
 	            <div class="col-md-10">
-	              <input type="text" v-model="product.serialNumber" class="form-control">
+	              <input type="text" v-model="device.serialNumber" class="form-control">
 	            </div>
 	          </div>
 	          <div class="col-md-6">
 	            <label>名称</label>
 	            <div class="col-md-10">
-	              <input type="text" v-model="product.name" class="form-control" >
+	              <input type="text" v-model="device.name" class="form-control" >
 	            </div>
 	          </div>
 	           <div class="col-md-6">
 	            <label>经度</label>
 	            <div class="col-md-10">
-	              <input type="text" v-model="product.longitude" class="form-control" >
+	              <input type="text" v-model="device.longitude" class="form-control" >
 	            </div>
 	          </div>
 	          <div class="col-md-6">
 	            <label>纬度</label>
 	            <div class="col-md-10">
-	              <input type="text" v-model="product.latitude" class="form-control" >
+	              <input type="text" v-model="device.latitude" class="form-control" >
 	            </div>
 	          </div>
 	          <div class="col-md-6">
 	            <label>描述</label>
 	            <div class="col-md-10">
-	              <input type="text" v-model="product.description" class="form-control" >
+	              <input type="text" v-model="device.description" class="form-control" >
 	            </div>
 	          </div>
             </div>
@@ -143,7 +161,7 @@
               	  </tr>
               	</thead>
               	<tbody>
-              	  <tr v-for="(attr, i) in product.descAttributes">
+              	  <tr v-for="(attr, i) in device.descAttributes">
               	    <td>{{attr.key}}</td>
               	    <td>{{attr.value}}</td>
               	    <td>{{attr.label}}</td>
@@ -229,7 +247,7 @@
 	      		key:'',
 	      		value:''
 	      	},
-      	  	product: {
+      	  	device: {
       			id:'',
       			productId:'',
       			name:'',
@@ -239,29 +257,39 @@
       			latitude:null,
       			descAttributes:[]
       	  	},
-      	  	initProduct:{},
-      	    isNotNew:false
+      	  	initDevice:{},
+      	    isNotNew:false,
+      	    products:[]
         },
         created: function () {
-        	this.initProduct = this.product
+        	this.initDevice = this.device
+        	this.setProducts()
         },
         methods: {
         	init: function() {
-        		this.product = this.initProduct;
+        		this.device = this.initDevice;
         		this.descAttr = {label:'', key:'', value:''}
         	},
-          	setProduct: function(product){
-        		if(product) { 
-        			this.product = product
-        			this.$set(this.product, 'descAttributes', JSON.parse(product.descAttributes))	
+        	setDevice: function(device){
+        		if(device) { 
+        			this.device = device
+        			this.$set(this.device, 'descAttributes', JSON.parse(device.descAttributes))	
         		}
           	},
+          	setProducts: function(){
+          		var _this = this
+          		$.get('/product/list',function(data){
+          			if('0'===data.code){
+          				_this.products = data.data
+          			}
+          		})
+          	},
           	addDescAttr: function(){
-        		this.product.descAttributes.push(this.descAttr)
+        		this.device.descAttributes.push(this.descAttr)
         		this.descAttr = {label:'', key:'', value:''}
          	},
           	deleteDescAttr: function(index) {
-        		this.product.descAttributes.splice(index,1)
+        		this.device.descAttributes.splice(index,1)
           	},
           	add: function() {
           		this.isNotNew=false
@@ -270,11 +298,11 @@
           	},
           	update: function(p) {
           		this.isNotNew=true
-          		this.setProduct(p)
+          		this.setDevice(p)
           		this.apiUrl='/device/update'
           	},
           	save: function(api) {
-        		var vm = this.product
+        		var vm = this.device
         		var param = {
 	      			id:vm.id,
 	      			productId:vm.productId,
@@ -296,7 +324,6 @@
 			  		}
 		    	}) 
        		}
-        
          }
 	})
     
@@ -352,7 +379,7 @@
     			"bStateSave": true,
     			"oLanguage": {
 					"sLengthMenu": "每页显示 _MENU_ 条记录",
-				    "sZeroRecords": "<p>对不起，查询不到任何相关数据</p> <span onclick='application.addModal();' class='btn btn-default btn-xs'>新增</span>",
+				    "sZeroRecords": "<p>暂无数据</p> <span onclick='listTable.addModal();' class='btn btn-default btn-xs'>新增</span>",
 				    "sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
 				    "sInfoEmtpy": "找不到相关数据",
 				    "sInfoFiltered": "数据表中共为 _MAX_ 条记录)",
@@ -377,6 +404,9 @@
     		},
     		reload:function(){
     			this.table.ajax.reload()
+	    	},
+	    	addModal:function(){
+	    		$("#newTab").click()
 	    	},
 	    	deleteModal:function(row){
 	    		if(!row){

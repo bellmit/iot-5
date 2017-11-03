@@ -361,7 +361,7 @@
     			"bStateSave": true,
     			"oLanguage": {
 					"sLengthMenu": "每页显示 _MENU_ 条记录",
-				    "sZeroRecords": "<p>对不起，查询不到任何相关数据</p> <span onclick='application.addModal();' class='btn btn-default btn-xs'>新增</span>",
+				    "sZeroRecords": "<p>暂无数据</p> <span onclick='listTable.addModal();' class='btn btn-default btn-xs'>新增</span>",
 				    "sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
 				    "sInfoEmtpy": "找不到相关数据",
 				    "sInfoFiltered": "数据表中共为 _MAX_ 条记录)",
@@ -386,6 +386,9 @@
     		},
     		reload:function(){
     			this.table.ajax.reload()
+	    	},
+	    	addModal:function(){
+	    		$("#newTab").click()
 	    	},
 	    	deleteModal:function(row){
 	    		if(!row){

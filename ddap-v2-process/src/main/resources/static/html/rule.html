@@ -108,13 +108,17 @@
 		          <div class="col-md-5 col-md-offset-1">
 		            <label>产品编号</label>
 		            <div class="col-md-9">
-		              <input type="text" v-model="rule.productId" class="form-control" >
+		              <select v-model="rule.productId" class="form-control">
+		              	<option v-for="(p, i) in products" v-bind:value="p.id" >{{p.name}}</option>
+		              </select>
 		            </div>
 		          </div>
 		          <div class="col-md-5">
 		            <label>设备编号</label>
 		            <div class="col-md-9">
-		              <input type="text" v-model="rule.deviceId" class="form-control" >
+		              <select v-model="rule.deviceId" class="form-control">
+		              	<option v-for="(d, i) in devices" v-bind:value="d.id">{{d.name}}</option>
+		              </select>
 		            </div>
 		          </div>
 	          </div>
@@ -208,22 +212,41 @@
       			deviceId:'',
       			expression:''
       	  	},
+      	  	products:[],
+      	    devices:[],
       	  	initRule:{},
       	  	isNotNew:false
         },
         created: function () {
         	this.initRule = this.rule
+        	this.setDevices()
+    		this.setProducts()
         },
         methods: {
         	init: function() {
-        		this.rule = this.initRule;
+        		this.rule = this.initRule
         	},
           	setRule: function(rule){
         		if(rule) { 
         			this.rule = rule
         		}
           	},
-          	
+          	setDevices: function(){
+          		var _this = this
+          		$.get('/device/list',function(data){
+          			if('0'===data.code){
+          				_this.devices = data.data
+          			}
+          		})
+          	},
+          	setProducts: function(){
+          		var _this = this
+          		$.get('/product/list',function(data){
+          			if('0'===data.code){
+          				_this.products = data.data
+          			}
+          		})
+          	},
           	add: function() {
           		this.isNotNew=false
           		this.init()
@@ -312,7 +335,7 @@
     			"bStateSave": true,
     			"oLanguage": {
 					"sLengthMenu": "每页显示 _MENU_ 条记录",
-				    "sZeroRecords": "<p>对不起，查询不到任何相关数据</p> <span onclick='application.addModal();' class='btn btn-default btn-xs'>新增</span>",
+				    "sZeroRecords": "<p>暂无数据</p> <span onclick='listTable.addModal();' class='btn btn-default btn-xs'>新增</span>",
 				    "sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
 				    "sInfoEmtpy": "找不到相关数据",
 				    "sInfoFiltered": "数据表中共为 _MAX_ 条记录)",
@@ -337,6 +360,9 @@
     		},
     		reload:function(){
     			this.table.ajax.reload()
+	    	},
+	    	addModal:function(){
+	    		$("#newTab").click()
 	    	},
 	    	deleteModal:function(row){
 	    		if(!row){

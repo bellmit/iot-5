@@ -33,10 +33,10 @@ public class GzipUtil {
 	 	    gis.close(); 
 	        data = os.toByteArray();  
 	    }catch (IOException e) {
-	    	LOGGER.error("gzip decompress exception! [{}]", e.getMessage());
+	    	LOGGER.error("gzip decompress [{}] exception! [{}]", data, e.getMessage());
 			data = new byte[0];
 		}
-    	 
+    	
         return data;  
     }  
 	
@@ -51,7 +51,7 @@ public class GzipUtil {
             gzip.write(str.getBytes(encoding));  
             gzip.close();  
         } catch (IOException e) {  
-        	LOGGER.error("gzip compress excption! [{}]", e.getMessage());
+        	LOGGER.error("gzip compress [{}] encoding [{}] excption! [{}]", str, encoding, e.getMessage());
         }  
         return out.toByteArray();  
     }  

@@ -20,6 +20,7 @@ import com.cetiti.ddapv2.process.util.EncryptUtil;
 import com.cetiti.ddapv2.process.util.LocalCache;
 import com.cetiti.ddapv2.process.util.MessageContext;
 import com.cetiti.ddapv2.process.util.MessageUtil;
+import com.greenpineyu.fel.parser.FelParser.relationalExpression_return;
 
 
 /**
@@ -54,6 +55,26 @@ public class DeviceServiceImpl implements DeviceService {
 			LOGGER.error("addDevice [{}] exception [{}] ", device, e.getMessage());
 			return false;
 		}
+		return true;
+	}
+	
+	@Override
+	public boolean importDevices(Account account, List<Device> deviceList) {
+		if(null==account||null==deviceList){
+			return false;
+		}
+		deviceList.parallelStream().filter((Device d)->null!=d.getSerialNumber()).forEach((d)->{
+			try{
+				if(null==d.getOwner()){
+					d.setOwner(account.getAccount());
+				}
+				if(0==deviceDao.updateDeviceBySerialNumberAndProductId(d)){
+					deviceDao.insertDevice(d);
+				}
+			}catch (Exception e) {
+				LOGGER.error("importDevices [{}] exception [{}] ", d, e.getMessage());
+			}
+		});
 		return true;
 	}
 	
@@ -179,7 +200,5 @@ public class DeviceServiceImpl implements DeviceService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
-	
 
 }
