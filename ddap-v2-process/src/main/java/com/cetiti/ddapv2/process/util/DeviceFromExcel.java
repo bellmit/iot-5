@@ -162,6 +162,10 @@ public class DeviceFromExcel {
 			device.setSerialNumber(valueMap.get("serialNumber"));
 			valueMap.remove("serialNumber");
 		}
+		if(null!=valueMap.get("address")){
+			device.setAddress(valueMap.get("address"));
+			valueMap.remove("address");
+		}
 		if(null!=valueMap.get("longitude")){
 			try{
 				device.setLongitude(Double.parseDouble(valueMap.get("longitude")));

@@ -104,6 +104,18 @@
 	              <input type="text" v-model="product.description" class="form-control" >
 	            </div>
 	          </div>
+	          <div v-show="isNotNew" class="col-md-6">
+	            <label>p-key</label>
+	            <div class="col-md-10">
+	              <input type="text" v-model="product.productKey" readonly="true" class="form-control" >
+	            </div>
+	          </div>
+	          <div v-show="isNotNew" class="col-md-6">
+	            <label>p-secret</label>
+	            <div class="col-md-10">
+	              <input type="text" v-model="product.productSecret" readonly="true" class="form-control" >
+	            </div>
+	          </div>
             </div>
             <div class="col-md-12">
               <h4>产品描述属性</h4>
@@ -241,6 +253,8 @@
       			name:'',
       			description:'',
       			protocol:'',
+      			productKey:'',
+      			productSecret:'',
       			descAttributes:[],
       			dataAttributes:[]
       	  	},

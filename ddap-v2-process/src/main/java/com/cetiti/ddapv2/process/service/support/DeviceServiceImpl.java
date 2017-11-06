@@ -20,7 +20,6 @@ import com.cetiti.ddapv2.process.util.EncryptUtil;
 import com.cetiti.ddapv2.process.util.LocalCache;
 import com.cetiti.ddapv2.process.util.MessageContext;
 import com.cetiti.ddapv2.process.util.MessageUtil;
-import com.greenpineyu.fel.parser.FelParser.relationalExpression_return;
 
 
 /**
@@ -69,6 +68,8 @@ public class DeviceServiceImpl implements DeviceService {
 					d.setOwner(account.getAccount());
 				}
 				if(0==deviceDao.updateDeviceBySerialNumberAndProductId(d)){
+					d.setDeviceKey(EncryptUtil.generateDeviceKey(d));
+					d.setDeviceSecret(EncryptUtil.generateDeviceSecret(d));
 					deviceDao.insertDevice(d);
 				}
 			}catch (Exception e) {

@@ -14,9 +14,12 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
+
 import com.cetiti.ddapv2.process.dao.DeviceDao;
 import com.cetiti.ddapv2.process.model.Device;
 import com.cetiti.ddapv2.process.model.Item;
@@ -24,8 +27,9 @@ import com.cetiti.ddapv2.process.model.Page;
 import com.cetiti.ddapv2.process.util.EncryptUtil;
 import com.cetiti.ddapv2.process.util.JsonUtil;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:spring/acceptors.xml", "classpath:spring/store.xml","classpath:spring/httpClient.xml"})
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@ContextConfiguration("classpath:spring/*.xml")
 public class DeviceDaoImplTest extends AbstractJUnit4SpringContextTests{
 	
 	@Resource
@@ -37,7 +41,7 @@ public class DeviceDaoImplTest extends AbstractJUnit4SpringContextTests{
 	public void setUp() throws Exception {
 	}
 
-	@Ignore
+	@Test
 	public void testInsertDevice() {
 		Device device = new Device();
 		device.setSerialNumber("004a770124000725");
@@ -54,21 +58,22 @@ public class DeviceDaoImplTest extends AbstractJUnit4SpringContextTests{
 		device.setDeviceStatus(Device.STATUS_ONLINE);
 		device.setLongitude(120.123456789);
 		device.setLatitude(30.123456789);
+		device.setAddress("test address");
 		device.setDeviceKey(EncryptUtil.generateDeviceKey(device));
 		device.setDeviceSecret(EncryptUtil.generateDeviceSecret(device));
 		device.setOwner("admin");
 		deviceDao.insertDevice(device);
 	}
 
-	@Ignore
+	@Test
 	public void testDeleteDevice() {
 		deviceDao.deleteDevice("D1501489788148");
 	}
 
-	@Ignore
+	@Test
 	public void testUpdateDevice() {
 		Device device = new Device();
-		device.setId("D1505467027745");
+		device.setId("D1509936872303");
 		device.setSerialNumber("004a770124000726");
 		device.setName("sensor2u");
 		device.setDescription("ddap sensoru");
@@ -86,15 +91,16 @@ public class DeviceDaoImplTest extends AbstractJUnit4SpringContextTests{
 		device.setOwner("adminu");
 		device.setLongitude(119.87451236);
 		device.setLatitude(29.985461237);
+		device.setAddress("test address update");
 		deviceDao.updateDevice(device);
 	}
 
-	@Ignore
+	@Test
 	public void testSelectDeviceList() {
 		System.out.println(deviceDao.selectDevice("D1505467027745"));
 	}
 
-	@Ignore
+	@Test
 	public void testSelectDevice() {
 		Device device = new Device();
 		device.setSerialNumber("004a770124000725");
@@ -105,7 +111,7 @@ public class DeviceDaoImplTest extends AbstractJUnit4SpringContextTests{
 		device.setProductId("P1501488322947");
 		device.setDeviceStatus(Device.STATUS_OFFLINE);
 		device.setOwner("adminu");
-		
+		device.setAddress("test address");
 		deviceDao.selectDeviceList(device).stream().forEach(System.out::println);
 	}
 	

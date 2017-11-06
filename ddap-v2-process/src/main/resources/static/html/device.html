@@ -143,9 +143,27 @@
 	            </div>
 	          </div>
 	          <div class="col-md-6">
+	            <label>地址</label>
+	            <div class="col-md-10">
+	              <input type="text" v-model="device.address" class="form-control" >
+	            </div>
+	          </div>
+	          <div class="col-md-6">
 	            <label>描述</label>
 	            <div class="col-md-10">
 	              <input type="text" v-model="device.description" class="form-control" >
+	            </div>
+	          </div>
+	          <div v-show="isNotNew" class="col-md-6">
+	            <label>d-key</label>
+	            <div class="col-md-10">
+	              <input type="text" v-model="device.deviceKey" readonly="true" class="form-control" >
+	            </div>
+	          </div>
+	          <div v-show="isNotNew" class="col-md-6">
+	            <label>d-secret</label>
+	            <div class="col-md-10">
+	              <input type="text" v-model="device.deviceSecret" readonly="true" class="form-control" >
 	            </div>
 	          </div>
             </div>
@@ -255,6 +273,9 @@
       			serialNumber:'',
       			longitude:null,
       			latitude:null,
+      			address:'',
+      			deviceKey:'',
+      			deviceSecret:'',
       			descAttributes:[]
       	  	},
       	  	initDevice:{},
@@ -311,6 +332,7 @@
 	      			serialNumber:vm.serialNumber,
 	      			longitude:vm.longitude,
 	      			latitude:vm.latitude,
+	      			address:vm.address,
 	      			descAttributes:JSON.stringify(vm.descAttributes)
 	      	  	}
         		console.log('url'+this.apiUrl)

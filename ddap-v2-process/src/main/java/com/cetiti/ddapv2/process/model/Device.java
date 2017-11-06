@@ -26,6 +26,7 @@ public class Device extends Thing{
 	private char deviceStatus;
 	private double longitude;
 	private double latitude;
+	private String address;
 	@ApiModelProperty(hidden=true)
 	private String deviceKey;
 	@ApiModelProperty(hidden=true)
@@ -85,6 +86,12 @@ public class Device extends Thing{
 	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
 	
 	@Override
 	public Map<String, Object> toMap() {
@@ -110,6 +117,9 @@ public class Device extends Thing{
 		if(StringUtils.hasText(this.deviceSecret)){
 			map.put("deviceSecret", this.deviceSecret);
 		}
+		if(StringUtils.hasText(this.address)){
+			map.put("address", this.address);
+		}
 		return map;
 	}
 	
@@ -117,8 +127,8 @@ public class Device extends Thing{
 	public String toString() {
 		return "Device [productId=" + productId + ", serialNumber=" + serialNumber + ", product=" + product + ", data="
 				+ data + ", deviceStatus=" + deviceStatus + ", longitude=" + longitude + ", latitude=" + latitude
-				+ ", deviceKey=" + deviceKey + ", deviceSecret=" + deviceSecret + ", id=" + id + ", toString()="
-				+ super.toString() + "]";
+				+ ", address=" + address + ", deviceKey=" + deviceKey + ", deviceSecret=" + deviceSecret + ", id=" + id
+				+ ", toString()=" + super.toString() + "]";
 	}
 	
 }

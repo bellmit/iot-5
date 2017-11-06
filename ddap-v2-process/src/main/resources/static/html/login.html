@@ -16,7 +16,7 @@
         <input v-model="account" @focus="hideMsg" name="account" type="text" placeholder="请输入用户名" >
       </div>
       <div class="input-group error">
-        <p v-show="error" class="info-msg">用户名或密码错误</p>
+        <p class="info-msg">{{error}}</p>
       </div>
       <div class="input-group">
         <input v-model="password" @focus="hideMsg" name="password" type="password" placeholder="请输入密码" >
@@ -41,14 +41,14 @@
 	var loginVue = new Vue({
 		el:"form",
 		data:{
-			error:false,
+			error:'',
 			account:'',
 			password:''
 		},
 		methods:{
 			login:function(){
 				if(!this.account||!this.password){
-					this.error=true
+					this.error='用户名或密码错误'
 					return
 				}
 				var token = new Date().getTime()
@@ -67,13 +67,13 @@
 	    				if(data.code==="0"){
 	    					window.location='device.html'
 	    				}else{
-	    					_this.error=true
+	    					_this.error='用户名或密码错误'
 	    				}
 	    			}
 	    		})
 			},
 			hideMsg:function(){
-				this.error=false
+				this.error=''
 			}
 		}	
 	})

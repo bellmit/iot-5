@@ -40,8 +40,8 @@ public class DeviceDaoImpl implements DeviceDao{
 		device.setCreateTime(new Date());
 		device.setDataState(Device.STATE_NEW);
 		return this.jdbcTemplate.update("insert into ddap_device (id, serial_number, name, description, desc_attributes, "
-				+ "product_id, device_status, longitude, latitude, device_key, device_secret, data_state, owner, update_time, create_time) "
-				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+				+ "product_id, device_status, longitude, latitude, address, device_key, device_secret, data_state, owner, update_time, create_time) "
+				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 				new Object[]{
 						device.getId(),
 						device.getSerialNumber(),
@@ -52,6 +52,7 @@ public class DeviceDaoImpl implements DeviceDao{
 						String.valueOf(device.getDeviceStatus()),
 						device.getLongitude(),
 						device.getLatitude(),
+						device.getAddress(),
 						device.getDeviceKey(),
 						device.getDeviceSecret(),
 						String.valueOf(device.getDataState()),
@@ -81,6 +82,7 @@ public class DeviceDaoImpl implements DeviceDao{
 					String.valueOf(device.getDeviceStatus()),
 					device.getLongitude(),
 					device.getLatitude(),
+					device.getAddress(),
 					device.getDeviceKey(),
 					device.getDeviceSecret(),
 					String.valueOf(device.getDataState()),
@@ -90,8 +92,8 @@ public class DeviceDaoImpl implements DeviceDao{
 			batch.add(values);
 		}
 		int[] counts = this.jdbcTemplate.batchUpdate("insert into ddap_device (id, serial_number, name, description, desc_attributes, "
-				+ "product_id, device_status, longitude, latitude, device_key, device_secret, data_state, owner, update_time, create_time) "
-				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", batch);
+				+ "product_id, device_status, longitude, latitude, address, device_key, device_secret, data_state, owner, update_time, create_time) "
+				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", batch);
 		
 		return counts.length;
 	}
@@ -140,7 +142,7 @@ public class DeviceDaoImpl implements DeviceDao{
 	public Device selectDevice(String deviceId) {
 		return this.jdbcTemplate.queryForObject("select "
 				+ "id, serial_number, name, description, desc_attributes, product_id, device_status, longitude, "
-				+ "latitude, device_key, device_secret, data_state, owner "
+				+ "latitude, address, device_key, device_secret, data_state, owner "
 				+ "from ddap_device where id = ?", 
 				new Object[]{deviceId},  new DeviceMapper());
 	}
@@ -189,6 +191,7 @@ public class DeviceDaoImpl implements DeviceDao{
 	    	}
 	    	device.setLongitude(rs.getDouble("longitude"));
 	    	device.setLatitude(rs.getDouble("latitude"));
+	    	device.setAddress(rs.getString("address"));
 	    	device.setDeviceKey(rs.getString("device_key"));
 	    	device.setDeviceSecret(rs.getString("device_secret"));
 	    	String state = rs.getString("data_state");
@@ -246,9 +249,14 @@ public class DeviceDaoImpl implements DeviceDao{
 			values[i] = device.getLatitude();
 			i++;
 		}
+		if(StringUtils.hasText(device.getAddress())){
+			select.append(" and address like ?");
+			values[i] = device.getAddress();
+			i++;
+		}
 		if(StringUtils.hasText(device.getDeviceKey())){
 			select.append(" and device_key = ?");
-			values[i] = device.getDeviceKey();
+			values[i] = "%"+device.getDeviceKey()+"%";
 			i++;
 		}
 		if(StringUtils.hasText(device.getDeviceSecret())){
@@ -337,6 +345,11 @@ public class DeviceDaoImpl implements DeviceDao{
 			values[i] = device.getLatitude();
 			i++;
 		}
+		if(StringUtils.hasText(device.getAddress())){
+			update.append(", address = ?");
+			values[i] = device.getAddress();
+			i++;
+		}
 		if(StringUtils.hasText(device.getDeviceKey())){
 			update.append(", device_key = ?");
 			values[i] = device.getDeviceKey();
@@ -403,6 +416,11 @@ public class DeviceDaoImpl implements DeviceDao{
 		if(device.getLatitude()>0){
 			update.append(", latitude = ?");
 			values[i] = device.getLatitude();
+			i++;
+		}
+		if(StringUtils.hasText(device.getAddress())){
+			update.append(", address = ?");
+			values[i] = device.getAddress();
 			i++;
 		}
 		if(StringUtils.hasText(device.getOwner())){
