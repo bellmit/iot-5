@@ -1,6 +1,6 @@
 package com.cetiti.ddapv2.process.spi;
 
-import java.util.Map;
+import com.cetiti.ddapv2.process.model.Data;
 
 /**
  * @Description TODO
@@ -8,12 +8,12 @@ import java.util.Map;
  * @date 2017年7月11日
  * 
  */
-public interface Codec {
+public interface Codec<T, R> {
 	
 	/*判断数据与编解码实现与数据流是否匹配*/
-	boolean isMatch(String id);
+	boolean isMatch(String productId);
 	
-	Map<String, Object> decode(byte[] payload);
-	
-	byte[] encode(String command);
+	Data decode(T payload);
+	//if R not null, then write R to response
+	R encode(T payload);
 }

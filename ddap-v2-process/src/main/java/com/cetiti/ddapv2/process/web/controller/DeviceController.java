@@ -15,7 +15,7 @@ import com.cetiti.ddapv2.process.model.Device;
 import com.cetiti.ddapv2.process.service.DeviceService;
 import com.cetiti.ddapv2.process.util.DeviceFromExcel;
 import com.cetiti.ddapv2.process.util.MessageContext;
-import com.cetiti.ddapv2.process.web.RestResult;
+import com.cetiti.ddapv2.process.util.RestResult;
 import com.cetiti.ddapv2.process.web.RestSecurity;
 
 import io.swagger.annotations.ApiOperation;

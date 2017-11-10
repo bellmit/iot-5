@@ -107,6 +107,25 @@ public class LocalCache {
 				}
 			});
 	
+	private LoadingCache<String, String> serialNumberCache = CacheBuilder.newBuilder()
+			.maximumSize(MAX_SIZE)
+			.expireAfterAccess(EXPIRE_IN_MINUTE, TimeUnit.MINUTES)
+			.build(new CacheLoader<String, String>() {
+
+				@Override
+				public String load(String serialNumberAndProductId) throws Exception {
+					String[] keys = serialNumberAndProductId.split("/");
+					Device device = new Device();
+					device.setSerialNumber(keys[0]);
+					device.setProductId(keys[1]);
+					List<Device> deviceList = deviceDao.selectDeviceList(device);
+					if(null!=deviceList&&deviceList.size()>0){
+						return deviceList.get(0).getId();
+					}
+					return null;
+				}
+			});
+	
 	public Data getData(String deviceId){
 		if(!StringUtils.hasText(deviceId)){
 			return null;
@@ -217,6 +236,21 @@ public class LocalCache {
 			return accountCache.get(account);
 		}catch (ExecutionException | UncheckedExecutionException e) {
 			LOGGER.error("getAccount [{}] exception [{}]", account, e.getMessage());
+		}catch (InvalidCacheLoadException e) {
+			//null value
+		}
+		return null;
+	}
+	
+	public String getDeviceIdBySerialNumberAndProductId(String serialNumber, String productId){
+		if(!StringUtils.hasText(serialNumber)){
+			return null;
+		}
+		try{
+			return serialNumberCache.get(serialNumber+"/"+productId);
+		}catch (ExecutionException | UncheckedExecutionException e) {
+			LOGGER.error("getDeviceIdBySerialNumberAndProductIdt [{}, {}] exception [{}]", 
+					serialNumber, productId, e.getMessage());
 		}catch (InvalidCacheLoadException e) {
 			//null value
 		}

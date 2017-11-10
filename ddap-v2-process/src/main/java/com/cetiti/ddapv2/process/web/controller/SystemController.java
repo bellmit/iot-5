@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cetiti.ddapv2.process.acceptor.hk8200.CrossingDao;
 import com.cetiti.ddapv2.process.model.Account;
 import com.cetiti.ddapv2.process.util.MessageUtil;
-import com.cetiti.ddapv2.process.web.RestResult;
+import com.cetiti.ddapv2.process.util.RestResult;
 import com.cetiti.ddapv2.process.web.RestSecurity;
 
 import io.swagger.annotations.ApiOperation;

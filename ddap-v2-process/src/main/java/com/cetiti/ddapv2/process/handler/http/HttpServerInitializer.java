@@ -15,6 +15,9 @@
  */
 package com.cetiti.ddapv2.process.handler.http;
 
+import javax.annotation.Resource;
+
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -22,6 +25,9 @@ import io.netty.handler.codec.http.HttpRequestDecoder;
 import io.netty.handler.codec.http.HttpResponseEncoder;
 
 public class HttpServerInitializer extends ChannelInitializer<SocketChannel> {
+	
+	@Resource(name="httpServerHandler")
+    private ChannelHandler httpServerHandler;
 
     @Override
     public void initChannel(SocketChannel ch) {
@@ -33,7 +39,7 @@ public class HttpServerInitializer extends ChannelInitializer<SocketChannel> {
         p.addLast(new HttpResponseEncoder());
         // Remove the following line if you don't want automatic content compression.
         //p.addLast(new HttpContentCompressor());
-        p.addLast(new HttpServerHandler());
+        p.addLast(httpServerHandler);
     }
 
 }

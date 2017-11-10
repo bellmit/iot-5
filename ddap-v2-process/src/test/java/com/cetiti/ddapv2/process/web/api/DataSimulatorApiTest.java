@@ -18,7 +18,7 @@ public class DataSimulatorApiTest {
 	public void setUp() throws Exception {
 	}
 
-	@Test
+	@Ignore
 	public void testUploadData() {
 		RestTemplate restTemplate = new RestTemplate();
 		Map<String, Object> data = new HashMap<>();
@@ -37,6 +37,17 @@ public class DataSimulatorApiTest {
 		data.put("data", System.currentTimeMillis());
 		String retn = restTemplate.postForObject(TestUtils.baseUrl+"/api/simulator/v1/warndata", data, String.class);
 		//System.out.println(retn); http://10.70.7.72:8090/api/simulator/v1/warndata
+	}
+	
+	@Test
+	public void testHttpAcceptor() {
+		RestTemplate restTemplate = new RestTemplate();
+		Map<String, Object> data = new HashMap<>();
+		data.put("deviceId", "D1505467235604");
+		data.put("temperature", 50);
+		data.put("humidity", 90);
+		String retn = restTemplate.postForObject(TestUtils.baseUrl+"/api/acceptor/http/easylink", data, String.class);
+		System.out.println(retn);
 	}
 
 }

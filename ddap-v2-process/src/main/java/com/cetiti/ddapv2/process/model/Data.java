@@ -9,11 +9,11 @@ import org.springframework.util.StringUtils;
 
 public class Data {
 	
-	public static final char STATE_NOMAL = '0';
+	public static final char STATE_NORMAL = '0';
 	public static final char STATE_WARNING = '1';
 	
 	private String deviceId;
-	
+
 	private byte[] rawData;
 	
 	private String strData;
@@ -22,7 +22,7 @@ public class Data {
 	
 	private List<DataItem> objData;
 	
-	private char warningState = STATE_NOMAL;
+	private char warningState = STATE_NORMAL;
 	
 	private String warningRuleId;
 	

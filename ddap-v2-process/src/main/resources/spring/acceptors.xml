@@ -14,14 +14,6 @@
     
     <context:property-placeholder location="classpath:config.properties,classpath:ddapHttpClient.properties"/>
     
-    <bean id="demoChannelInitializer" class="com.cetiti.ddapv2.process.handler.demo.DemoChannelInitializer" />
-    <bean id="demoAcceptor" class="com.cetiti.ddapv2.process.acceptor.TcpServerAcceptor">
-	    <constructor-arg name="name" value="${tcp.server.demoAcceptor.name}"/>
-	    <constructor-arg name="port" value="${tcp.server.demoAcceptor.port}"/>
-    	<property name="channelHandler" ref="demoChannelInitializer"/>
-    </bean>
-   
-    
     <bean id="httpChannelInitializer" class="com.cetiti.ddapv2.process.handler.http.HttpServerInitializer" />
     <bean id="httpAcceptor" class="com.cetiti.ddapv2.process.acceptor.TcpServerAcceptor">
 	    <constructor-arg name="name" value="${tcp.server.httpAcceptor.name}"/>
@@ -29,12 +21,18 @@
     	<property name="channelHandler" ref="httpChannelInitializer"/>
     </bean>
     
+    <bean id="defaultTcpServerInitializer" class="com.cetiti.ddapv2.process.handler.json.DefaultTcpServerInitializer" />
+    <bean id="defaultTcpAcceptor" class="com.cetiti.ddapv2.process.acceptor.TcpServerAcceptor">
+	    <constructor-arg name="name" value="${tcp.server.defaultAcceptor.name}"/>
+	    <constructor-arg name="port" value="${tcp.server.defaultAcceptor.port}"/>
+    	<property name="channelHandler" ref="defaultTcpServerInitializer"/>
+    </bean>
+    
     <bean id="processer" class="com.cetiti.ddapv2.process.Processer">
         <property name="acceptors">
         	<list>
-	        	<ref bean="demoAcceptor"/>
 	        	<ref bean="httpAcceptor"/> 
-	        	<!-- <ref bean="webServerAcceptor"/> -->
+	        	<ref bean="defaultTcpAcceptor"/>
         	</list>
         </property>
     </bean>

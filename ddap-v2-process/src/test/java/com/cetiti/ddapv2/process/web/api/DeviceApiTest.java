@@ -56,7 +56,7 @@ public class DeviceApiTest {
         	form.add(entry.getKey(), entry.getValue().toString());
         }
        
-        String result = restTemplate.postForObject("http://10.0.30.33:8080/api/device/v1/list", form, String.class);  
+        String result = restTemplate.postForObject(TestUtils.baseUrl+"/api/device/v1/list", form, String.class);  
         System.out.println(result);
         assertTrue(TestUtils.isSuccessResult(result));
 	}

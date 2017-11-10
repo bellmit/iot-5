@@ -13,7 +13,7 @@ import com.cetiti.ddapv2.process.service.AccountService;
 import com.cetiti.ddapv2.process.service.DataService;
 import com.cetiti.ddapv2.process.util.JsonUtil;
 import com.cetiti.ddapv2.process.util.MessageUtil;
-import com.cetiti.ddapv2.process.web.RestResult;
+import com.cetiti.ddapv2.process.util.RestResult;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;

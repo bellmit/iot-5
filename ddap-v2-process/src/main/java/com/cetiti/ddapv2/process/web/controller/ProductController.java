@@ -11,7 +11,7 @@ import com.cetiti.ddapv2.process.model.Account;
 import com.cetiti.ddapv2.process.model.Product;
 import com.cetiti.ddapv2.process.service.ProductService;
 import com.cetiti.ddapv2.process.util.MessageContext;
-import com.cetiti.ddapv2.process.web.RestResult;
+import com.cetiti.ddapv2.process.util.RestResult;
 import com.cetiti.ddapv2.process.web.RestSecurity;
 
 import io.swagger.annotations.ApiOperation;

@@ -16,9 +16,9 @@ import com.cetiti.ddapv2.process.service.AccountService;
 import com.cetiti.ddapv2.process.service.RuleService;
 import com.cetiti.ddapv2.process.util.MessageContext;
 import com.cetiti.ddapv2.process.util.MessageUtil;
+import com.cetiti.ddapv2.process.util.RestResult;
 import com.cetiti.ddapv2.process.web.ApiAssistParams;
 import com.cetiti.ddapv2.process.web.DateConverter;
-import com.cetiti.ddapv2.process.web.RestResult;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

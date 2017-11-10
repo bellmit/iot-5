@@ -27,5 +27,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="src/test/java/com/cetiti/ddapv2/process/spi/bar-p.jar"/>
+	<classpathentry kind="lib" path="src/test/java/com/cetiti/ddapv2/process/spi/foo-p.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

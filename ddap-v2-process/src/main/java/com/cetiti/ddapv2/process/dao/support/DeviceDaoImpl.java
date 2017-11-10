@@ -140,11 +140,15 @@ public class DeviceDaoImpl implements DeviceDao{
 	
 	@Override
 	public Device selectDevice(String deviceId) {
-		return this.jdbcTemplate.queryForObject("select "
+		List<Device> list = this.jdbcTemplate.query("select "
 				+ "id, serial_number, name, description, desc_attributes, product_id, device_status, longitude, "
 				+ "latitude, address, device_key, device_secret, data_state, owner "
 				+ "from ddap_device where id = ?", 
 				new Object[]{deviceId},  new DeviceMapper());
+		if(null==list||list.size()<1){
+			return null;
+		}
+		return list.get(0);
 	}
 	
 	@Override

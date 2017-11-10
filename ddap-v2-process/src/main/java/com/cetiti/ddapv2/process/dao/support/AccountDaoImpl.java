@@ -267,6 +267,16 @@ public class AccountDaoImpl implements AccountDao {
 			values[i] = account.getDataPostUrl();
 			i++;
 		}
+		if(StringUtils.hasText(account.getUserKey())){
+			select.append(" and u_key = ?");
+			values[i] = account.getUserKey();
+			i++;
+		}
+		if(StringUtils.hasText(account.getUserSercret())){
+			select.append(" and u_secret = ?");
+			values[i] = account.getUserSercret();
+			i++;
+		}
 		
 		values[i] = select.toString();
 		i++;

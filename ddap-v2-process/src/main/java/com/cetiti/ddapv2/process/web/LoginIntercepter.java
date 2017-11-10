@@ -14,7 +14,8 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.cetiti.ddapv2.process.util.JsonUtil;
-import com.cetiti.ddapv2.process.web.RestResult.CODE;
+import com.cetiti.ddapv2.process.util.RestResult;
+import com.cetiti.ddapv2.process.util.RestResult.CODE;
 
 /**
  * @Description TODO
