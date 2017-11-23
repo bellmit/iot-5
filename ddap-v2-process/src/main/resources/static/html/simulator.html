@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>模拟器</title>
+
+<link rel="shortcut icon" href="/resources/images/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/resources/images/favicon.ico" type="image/x-icon">
+<link href="/resources/css/bootstrap.css" rel="stylesheet">
+<link href="/resources/css/jquery.dataTables.min.css" rel="stylesheet" >
+<link href="/resources/css/dataTables.bootstrap.min.css" rel="stylesheet" >
+<link href="/resources/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+<link href="/resources/css/platform.css" rel="stylesheet">
+
+<style type="text/css">
+
+h3 {
+	text-align:center;
+}
+</style>
+</head>
+<body>
+  <div class="container">
+    <fieldset id="sensor" >
+     <h3>测试数据上报</h3>
+     <div class="col-md-12">
+       <div class="col-md-6">
+         <label>产品</label>
+         <div class="col-md-9">
+           <select v-model="device.productId" @change="setDevices" class="form-control">
+             <option v-for="(p, i) in products" v-bind:value="p.id" >{{p.name}}</option>
+           </select>
+         </div>
+       </div>
+       <div class="col-md-6">
+         <label>设备</label>
+         <div class="col-md-9">
+           <select v-model="device.deviceId" class="form-control">
+             <option v-for="(d, i) in devices" v-bind:value="d.id">{{d.name}}</option>
+           </select>
+         </div>
+       </div>
+       <div v-for="(attr, i) in dataAttr" class="col-md-6">
+         <label>{{attr.label}}</label>
+         <div class="col-md-9">
+           <input type="text" v-model="attr.value" class="form-control" >
+         </div>
+         <span>{{attr.unit}}</span>
+       </div>
+      
+     </div>
+     <div class="col-md-12">
+       <div class="col-md-5">
+       	 <p style="text-align:right; padding:5px">{{uploadMsg}}</p>
+       </div>
+       <div class="col-md-2" style="text-align:center;">
+         <button class="btn btn-primary" @click="upload()">上报</button>
+       </div>
+     </div>
+    </fieldset>
+    
+    <fieldset id="app" >
+     <h3>测试数据接口</h3>
+     <div class="col-md-12">
+       <div class="col-md-6">
+         <label>产品</label>
+         <div class="col-md-9">
+           <select v-model="device.productId" @change="setDevices" class="form-control">
+             <option v-for="(p, i) in products" v-bind:value="p.id" >{{p.name}}</option>
+           </select>
+         </div>
+       </div>
+       <div class="col-md-6">
+         <label>设备</label>
+         <div class="col-md-9">
+           <select v-model="device.deviceId" class="form-control">
+             <option v-for="(d, i) in devices" v-bind:value="d.id">{{d.name}}</option>
+           </select>
+         </div>
+       </div>
+       <div class="col-md-6">
+         <label>页码</label>
+         <div class="col-md-9">
+           <input type="text" v-model="pageNum" class="form-control" >
+         </div>
+       </div>
+       <div class="col-md-6">
+         <label>每页条数</label>
+         <div class="col-md-9">
+           <input type="text" v-model="pageSize" class="form-control" >
+         </div>
+       </div>
+       <div class="col-md-6">
+         <label>起始时间</label>
+         <div class="input-group date form_datetime col-md-9" style="padding:0 15px;" data-link-field="dtp_start">
+           <input class="form-control" size="16" type="text" value="" readonly>
+		   <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+         </div>
+         <input type="hidden" id="dtp_start" /><br/>
+	   </div>
+	   <div class="col-md-6">
+         <label>结束时间</label>
+         <div class="input-group date form_datetime col-md-9" style="padding:0 15px;" data-link-field="dtp_end">
+           <input class="form-control" size="16" type="text" value="" readonly>
+		   <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+         </div>
+         <input type="hidden" id="dtp_end" /><br/>
+	   </div>
+     </div>
+     <div class="col-md-12">
+       <div class="col-md-6" style="text-align: right;">
+         <button class="btn btn-primary" @click="latest()">查询最新数据</button>
+       </div>
+       <div class="col-md-6">
+         <button class="btn btn-primary" @click="history()">查询历史数据</button>
+       </div>
+     </div>
+     <div class="col-md-12" style="text-align: center;">
+       <textarea v-model="respData" rows="10" cols="130" >
+       </textarea>
+     </div>
+    
+    </fieldset>
+
+  </div>
+  
+  <script src="/resources/js/jquery-1.12.3.min.js"></script>
+  <script src="/resources/js/bootstrap.js"></script>
+  <script src="/resources/js/vue.js"></script>
+  <script src="/resources/js/jquery.dataTables.min.js"></script>
+  <script src="/resources/js/jquery.md5.js"></script>
+  <script src="/resources/js/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
+  <script src="/resources/js/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+  <script>
+  
+    var sensorVue = new Vue({
+      el: '#sensor',
+      data: {
+   	  	device: {
+   			deviceId:'',
+   			name:'',
+   			productId:'',
+   			productName:''
+   	  	},
+   	    dataAttr:[],
+   	  	products:[],
+   	    devices:[],
+   	  	initDevice:{},
+   	  	uploadMsg:''
+      },
+      created: function () {
+      	this.initDevice = this.device
+      	this.setDevices()
+  		this.setProducts()
+      },
+      methods: {
+      	init: function() {
+      		this.device = this.initDevice
+      	},
+       	setDevices: function(){
+       		var _this = this
+       		if(!_this.device.productId){
+       			return
+       		}
+       		var attrStr = _this.products.find(function(p){return p.id===_this.device.productId}).dataAttributes;
+       		if(attrStr){
+       			_this.dataAttr = JSON.parse(attrStr)
+       		}
+       		$.get('/device/list', {productId:_this.device.productId}, function(data){
+       			if('0'===data.code){
+       				_this.devices = data.data
+       			}
+       		})
+       	},
+       	setProducts: function(){
+       		var _this = this
+       		$.get('/product/list', function(data){
+       			if('0'===data.code){
+       				_this.products = data.data
+       			}
+       		})
+       	},
+       	upload:function(){
+       		var data = {}
+       		if(!this.device.deviceId){
+       			return
+       		}
+       		if(this.dataAttr.length<1||!this.dataAttr[0].value){
+       			return
+       		}
+       		data.deviceId = this.device.deviceId
+       		var array = this.dataAttr
+       		for(var i in array) {
+       			data[array[i].key] = Number(array[i].value)
+       		}
+       		var _this = this
+       		$.ajax({
+		  		type:"post",
+		  		url:"/api/simulator/v1/upload",
+		  		dataType:"json",
+		  		contentType: "application/json; charset=utf-8",
+		  		data: JSON.stringify(data),
+		  		success:function(data){
+		  			if(data.code==0){
+		  				_this.uploadMsg = "数据上报成功"
+		  			}else{
+		  				_this.uploadMsg = data.message
+		  			}
+		  			window.setTimeout(function(){_this.uploadMsg = ""}, 2000)
+		  		}
+	    	})
+       	}
+      }
+    })
+    
+    var appVue = new Vue({
+      el: '#app',
+      data: {
+   	  	device: {
+   			deviceId:'',
+   			productId:''
+   	  	},
+   	  	assistParam: {
+   	        key:'',
+   	        secret:''
+   	  	},
+   	    pageNum: 1,
+   	    pageSize: 10,
+   	    dataAttr:[],
+   	  	products:[],
+   	    devices:[],
+   	  	initDevice:{},
+   	  	respData:''
+      },
+      created: function () {
+      	this.initDevice = this.device
+      	this.setDevices()
+  		this.setProducts()
+  		this.setAssistParam()
+      },
+      methods: {
+      	init: function() {
+      		this.device = this.initDevice
+      	},
+      	setAssistParam: function() {
+      		var _this=this
+			$.get('/account/session', function(data){
+			    if('0'===data.code){
+				    _this.assistParam.key=data.data.userKey
+				    _this.assistParam.secret=data.data.userSercret
+				}else{
+					 window.location='login.html'
+				}
+			})
+      	},
+       	setDevices: function(){
+       		var _this = this
+       		if(!_this.device.productId){
+       			return
+       		}
+       		var attrStr = _this.products.find(function(p){return p.id===_this.device.productId}).dataAttributes;
+       		if(attrStr){
+       			_this.dataAttr = JSON.parse(attrStr)
+       		}
+       		$.get('/device/list', {productId:_this.device.productId}, function(data){
+       			if('0'===data.code){
+       				_this.devices = data.data
+       			}
+       		})
+       	},
+       	setProducts: function(){
+       		var _this = this
+       		$.get('/product/list', function(data){
+       			if('0'===data.code){
+       				_this.products = data.data
+       			}
+       		})
+       	},
+       	latest:function(){
+       		if(!this.device.deviceId){
+       			return
+       		}
+       		var params = {}
+       		params.deviceId = this.device.deviceId
+       		params = buildParams(this.assistParam.key, this.assistParam.secret, params)
+       		
+       		var _this = this
+       		$.ajax({
+		  		type:"post",
+		  		url:"/api/data/v1/latest",
+		  		dataType:"json",
+		  		data: params,
+		  		success:function(data){
+					_this.respData = JSON.stringify(data)
+		  		}
+	    	})
+       	},
+       	history:function(){
+       		if(!this.device.deviceId){
+       			return
+       		}
+       		var params = {}
+       		params.deviceId = this.device.deviceId
+       		params.startTime = $("#dtp_start").val()
+       		params.endTime = $("#dtp_end").val()
+       		params.pageNum = Number(this.pageNum)
+       		params.pageSize = Number(this.pageSize)
+       		params = buildParams(this.assistParam.key, this.assistParam.secret, params)
+       		
+       		var _this = this
+       		$.ajax({
+		  		type:"post",
+		  		url:"/api/data/v1/history",
+		  		dataType:"json",
+		  		data: params,
+		  		success:function(data){
+					_this.respData = JSON.stringify(data)
+		  		}
+	    	})
+       	}
+      }
+    })
+    
+    $(".form_datetime").datetimepicker({
+    	language:  'zh-CN',
+	    format: "yyyy-MM-dd hh:mm:ss",
+	    autoclose: true,
+	    todayBtn: true,
+	    pickerPosition: "bottom-left"
+	})
+	
+	
+    function buildParams(key, secret, params) {
+	   	function keys(o) {
+	   		if(typeof o !== "object") {
+	   			throw TypeError()
+	   		}
+	   		var result = []
+	   		for(var p in o) {
+	   			if(o.hasOwnProperty(p)&&typeof o[p] !== "function") {
+	   				result.push(p)
+	   			}
+	   		}
+	   		return result
+	   	}
+	   	function merge(from, to) {
+	   		for(p in from) {
+	   			if(to.hasOwnProperty[p]) {
+	   				continue
+	   			}
+	   			to[p] = from[p]
+	   		}
+	   		return to
+	   	}
+	   	var bps = {}
+	   	merge(params, bps)
+	   	bps.timestamp = new Date().getTime()
+	   	bps.randomStr = Math.ceil(100000*Math.random())
+	   	bps.key = key
+	   	
+	   	var keyset = keys(bps).sort()
+	   	var signStr = secret
+	   	for(var i=0; i<keyset.length; i++) {
+	   		if(!keyset[i]){
+	   			continue
+	   		}
+	   		signStr += keyset[i]+bps[keyset[i]]
+	   	}
+	   	signStr += secret
+	   	//console.log(signStr)
+	   	bps.sign = $.md5(signStr)
+	   	
+	   	return bps
+    }
+  	
+  </script>
+  
+</body>
+</html>
