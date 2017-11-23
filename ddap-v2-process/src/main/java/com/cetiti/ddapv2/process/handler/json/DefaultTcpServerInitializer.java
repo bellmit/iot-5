@@ -19,7 +19,6 @@ public class DefaultTcpServerInitializer extends ChannelInitializer<SocketChanne
 		p.addLast(new JsonObjectDecoder(true));
         p.addLast(new StringDecoder(CharsetUtil.UTF_8));
         p.addLast(defaultTcpServerHandler);
-		
 	}
 
 }

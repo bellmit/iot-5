@@ -43,7 +43,7 @@ public class DataSimulatorApi {
 	@ApiOperation("模拟数据上报")
 	@RequestMapping(value="/v1/upload", method=RequestMethod.POST)
 	public RestResult uploadData(@RequestBody String data){
-		System.out.println("data: "+ data);
+		//System.out.println("data: "+ data);
 		if(!StringUtils.hasText(data)) {
 			return RestResult.defaultFailResult("data null");
 		}

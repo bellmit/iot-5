@@ -24,18 +24,19 @@ public class HttpServerHandlerTest {
 	public void setUp() throws Exception {
 	}
 
-	@Ignore
+	@Test
 	public void test() {
 		RestTemplate restTemplate = new RestTemplate();
-		Map<String, Object> data = new HashMap<>();
+		/*Map<String, Object> data = new HashMap<>();
 		data.put("deviceId", "D1505467235604");
 		data.put("temperature", 50);
-		data.put("humidity", 90);
+		data.put("humidity", 90);*/
 		LoraData loraData = new LoraData();
 		loraData.setMac("12456");
 		loraData.setAppeui("313213");
 		loraData.setData("10");
-		String retn = restTemplate.postForObject("http://101.68.88.222:8188/easylinkin", loraData, String.class);
+		//String retn = restTemplate.postForObject("http://101.68.88.222:8188/easylinkin", loraData, String.class);
+		String retn = restTemplate.postForObject("http://10.70.7.72:8090", loraData, String.class);
 		System.out.println(retn);
 		
 		Map<String, Codec<?, ?>> map = new HashMap<>();
@@ -43,12 +44,13 @@ public class HttpServerHandlerTest {
 		//map.put("123", new Data());
 	}
 	
-	@Test
+	@Ignore
 	public void testParseJson(){
 		JsonUtil jsonUtil = new JsonUtil();
 		String json = "{\"mac\":\"004a770124000725\",\"appeui\":\"2c26c5012483a00d\",\"last_update_time\":\"20171016113011\",\"data\":\"64ffe60200ff\",\"reserver\":\"null\",\"data_type\":223,\"gateways\":null}";
 		LoraData lora = jsonUtil.beanFromJson(json, LoraData.class);
 		System.out.println(lora);
+		System.out.println(jsonUtil.toJson(lora));
 	}
 
 }

@@ -35,6 +35,7 @@ public class Processer {
 		int i = 0;
 		for(Acceptor acceptor:acceptors) {
 			workers[i] = new Thread(acceptor, acceptor.getClass().getName());
+			workers[i].setDaemon(true);
 			workers[i].start();
 			i++;
 		}
@@ -55,6 +56,7 @@ public class Processer {
 				}
 			}
 		}, "PS-WatchDog");
+		
 		watchDog.start();
 	}
 	
@@ -85,6 +87,7 @@ public class Processer {
 					if(workers[i].getName().equals(acceptor.getClass().getName())){
 						acceptor.stop();
 						workers[i] = new Thread(acceptor, acceptor.getClass().getName());
+						workers[i].setDaemon(true);
 						workers[i].start();
 						LOGGER.info("restart worker [{}]", workers[i].getName());
 					}

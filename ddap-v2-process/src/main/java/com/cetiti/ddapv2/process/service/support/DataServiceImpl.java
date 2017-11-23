@@ -2,6 +2,7 @@ package com.cetiti.ddapv2.process.service.support;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -81,17 +82,29 @@ public class DataServiceImpl implements DataService {
 			if(!legal){
 				data.setWarningState(Data.STATE_WARNING);
 				data.setWarningRuleId(rule.getId());
-				dispatch(data, rule.getOwner());
+				dispatch(data, rule);
+				break;
 			}
 		}
 	}
 
-	private void dispatch(Data data, String account) {
-		Account user = cache.getAccount(account);
+	private void dispatch(Data data, RuleExpression rule) {
+		Account user = cache.getAccount(rule.getOwner());
 		if(null==user){
 			return;
 		}
-		httpClient.post(user.getDataPostUrl(), data);
+		httpClient.post(user.getDataPostUrl(), buildPostPayload(data, rule));
+	}
+	
+	private String buildPostPayload(Data data, RuleExpression rule) {
+		Map<String, Object> map = new HashMap<>();
+		Device device = cache.getDevice(data.getDeviceId());
+		if(null!=device){
+			map.put("device", device.toMap());
+		}
+		map.put("data", data.toMap());
+		map.put("rule", rule.toMap());
+		return jsonUtil.toJson(map);
 	}
 
 	private boolean isDataValid(Data data) {

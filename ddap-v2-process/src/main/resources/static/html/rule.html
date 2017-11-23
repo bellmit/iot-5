@@ -4,9 +4,11 @@
 <meta charset="UTF-8">
 <title>物联网数据平台</title>
 
+<link rel="shortcut icon" href="/resources/images/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/resources/images/favicon.ico" type="image/x-icon">
 <link href="/resources/css/bootstrap.css" rel="stylesheet">
-<link href="/resources/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="/resources/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="/resources/css/jquery.dataTables.min.css" rel="stylesheet" >
+<link href="/resources/css/dataTables.bootstrap.min.css" rel="stylesheet" >
 <link href="/resources/css/platform.css" rel="stylesheet">
 
 </head>
@@ -40,6 +42,7 @@
   	    <div class="logout-panel">
           <ul>
             <li><a href="swagger-ui.html" >接口文档</a></li>
+            <li><a href="simulator.html" >模拟器</a></li>
             <li @click="logout()"><a href="#">退出</a></li>
           </ul>
         </div>
@@ -106,7 +109,7 @@
 	          </div>
 	          <div class="col-md-12">
 		          <div class="col-md-5 col-md-offset-1">
-		            <label>产品编号</label>
+		            <label>产品</label>
 		            <div class="col-md-9">
 		              <select v-model="rule.productId" class="form-control">
 		              	<option v-for="(p, i) in products" v-bind:value="p.id" >{{p.name}}</option>
@@ -114,7 +117,7 @@
 		            </div>
 		          </div>
 		          <div class="col-md-5">
-		            <label>设备编号</label>
+		            <label>设备</label>
 		            <div class="col-md-9">
 		              <select v-model="rule.deviceId" class="form-control">
 		              	<option v-for="(d, i) in devices" v-bind:value="d.id">{{d.name}}</option>
@@ -127,6 +130,7 @@
 		            <label>规则表达式</label>
 		            <div class="col-md-9">
 		              <input type="text" v-model="rule.expression" class="form-control" >
+		              <p>说明：表达式描述感知数据的正常范围，如 temperature&lt;40&amp;&amp;himidity&gt;50 当数据不在此范围时会触发告警</p>
 		            </div>
 		          </div>
 		          <div class="col-md-5">

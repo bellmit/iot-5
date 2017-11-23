@@ -48,7 +48,7 @@ public class DeviceApiTest {
         MultiValueMap<String, String> form = new LinkedMultiValueMap<>();
         ApiParamsBuilder builder = new ApiParamsBuilder("uk508595d7ec170d0c3392083e25411056", "us41db5af8b5e973d658e0d22fda570aac");
         Map<String, Object> params = new HashMap<>();
-        params.put("productId", "PHIK82CROSSING");
+        params.put("productId", "P1510639112578");
         params.put("pageNum", 1);
 		params.put("pageSize", 10);
         

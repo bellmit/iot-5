@@ -4,9 +4,11 @@
 <meta charset="UTF-8">
 <title>物联网数据平台</title>
 
+<link rel="shortcut icon" href="/resources/images/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/resources/images/favicon.ico" type="image/x-icon">
 <link href="/resources/css/bootstrap.css" rel="stylesheet">
-<link href="/resources/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="/resources/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="/resources/css/jquery.dataTables.min.css" rel="stylesheet" >
+<link href="/resources/css/dataTables.bootstrap.min.css" rel="stylesheet" >
 <link href="/resources/css/platform.css" rel="stylesheet">
 
 <style type="text/css">
@@ -48,6 +50,7 @@
   	    <div class="logout-panel">
           <ul>
             <li><a href="swagger-ui.html" >接口文档</a></li>
+            <li><a href="simulator.html" >模拟器</a></li>
             <li @click="logout()"><a href="#">退出</a></li>
           </ul>
         </div>
@@ -330,11 +333,17 @@
 	      			name:vm.name,
 	      			description:vm.description,
 	      			serialNumber:vm.serialNumber,
-	      			longitude:vm.longitude,
-	      			latitude:vm.latitude,
+	      			/* longitude:vm.longitude,
+	      			latitude:vm.latitude, */
 	      			address:vm.address,
 	      			descAttributes:JSON.stringify(vm.descAttributes)
 	      	  	}
+        		if(Number(vm.longitude)){
+        			param.longitude = vm.longitude
+        		}
+        		if(Number(vm.latitude)){
+        			param.latitude = vm.latitude
+        		}
         		console.log('url'+this.apiUrl)
         		$.ajax({
 			  		type:"post",

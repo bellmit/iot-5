@@ -18,7 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-import com.cetiti.ddapv2.process.model.Data;
 
 /**
  * @Description TODO
@@ -48,16 +47,16 @@ public class HttpClient {
 		}
 	});
 	
-	public void post(String url, Data data){
+	public void post(String url, String data){
 		executor.execute(new postThread(url, data));
 	}
 	
 	private class postThread implements Runnable{
 		
 		private String url;
-		private Data data;
+		private String data;
 		
-		public postThread(String url, Data data) {
+		public postThread(String url, String data) {
 			this.url = url;
 			this.data = data;
 		}
@@ -68,9 +67,8 @@ public class HttpClient {
 		}
 	}
 	
-	private String doPost(String url, Data data) {
-		String payLoad = null;
-		if(!StringUtils.hasText(url)||!StringUtils.hasText(payLoad=buildPostPayload(data))){
+	private String doPost(String url, String data) {
+		if(!StringUtils.hasText(url)){
 			return null;
 		}
 		HttpPost httpPost = null;
@@ -82,7 +80,7 @@ public class HttpClient {
 		}
 		httpPost.setConfig(requestConfig);
 		try {
-			StringEntity entity = new StringEntity(payLoad, ContentType.APPLICATION_JSON);
+			StringEntity entity = new StringEntity(data, ContentType.APPLICATION_JSON);
 			httpPost.setEntity(entity);
 			CloseableHttpResponse response = this.closeableHttpClient.execute(httpPost);
 			if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
@@ -92,14 +90,6 @@ public class HttpClient {
 			LOGGER.error("post url[{}] data[{}] exception [{}]", url, data, e.getMessage());
 		}
 		return null;
-	}
-	
-	private String buildPostPayload(Data data) {
-		if(null==data){
-			return null;
-		}
-		
-		return jsonUtil.toJson(data.toMap());
 	}
 
 }
